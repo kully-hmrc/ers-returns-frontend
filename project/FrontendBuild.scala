@@ -11,17 +11,17 @@ private object AppDependencies {
   import play.core.PlayVersion
 
   private val playHealthVersion = "1.1.0"
-  private val frontendBootstrapVersion = "6.4.0"
+  private val frontendBootstrapVersion = "6.7.0"
   private val govukTemplateVersion = "4.0.0"
-  private val playUiVersion = "4.10.0"
+  private val playUiVersion = "4.16.0"
   private val playAuthFrontendVersion = "4.7.0"
-  private val playConfigVersion = "2.0.1"
+  private val playConfigVersion = "2.1.0"
   private val metricsPlayVersion = "0.2.1"
   private val metricsGraphiteVersion = "3.0.2"
-  private val domainVersion = "3.5.0"
+  private val domainVersion = "3.7.0"
   private val httpCachingVersion = "5.3.0"
-  private val httpHerbsVersion = "3.3.0"
-  private val playPartialVersion = "4.2.0"
+  private val httpHerbsVersion = "5.0.0"
+  private val playPartialVersion = "4.6.0"
   private val jsonLoggerVersion = "2.1.1"
 
   val compile = Seq(
@@ -68,7 +68,7 @@ private object AppDependencies {
     }.test
   }
 
-  private val hmrcTestVersion = "1.6.0"
+  private val hmrcTestVersion = "1.8.0"
 
   object IntegrationTest {
     def apply() = new TestDependencies {
