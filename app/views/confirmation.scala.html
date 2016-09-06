@@ -1,0 +1,32 @@
+@* Confirmation Template File *@
+@import utils.CacheUtil
+@(dateSubmitted: String, bundle: String, taxYear: String, url: String)(implicit request: Request[AnyRef])
+@schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
+@schemeRef = @{CacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get("screenSchemeInfo").get)}
+@taxYearFull = @{request.session.get("screenSchemeInfo").get.split(" - ")(4)}
+
+@import views.html.templates._
+@import utils.PageBuilder._
+@import utils.ContentUtil
+
+@ers_main(title = Messages("ers.confirmation.page_title")) {
+
+	@reference()
+	<div class="success-banner"  id="confirmation-text-box">
+		<p>
+			<span class="heading-xlarge"><img src="assets/images/tick.png" alt="tick.">&nbsp;@Html(Messages("ers_confirmation.submitted",ContentUtil.getSchemeName(schemeId)))<br></span>
+			<span class="heading-large">@Html(Messages("ers_confirmation.tax_year",taxYearFull))</span>
+		</p>
+		<p class="font-medium">@Html(Messages("ers_confirmation.submission_ref"))<br>@bundle<br>@dateSubmitted</p>
+	</div>
+	<p>@Html(Messages("ers_confirmation.pdf_info"))</p>
+	<div>
+		<a class="button" role="button" href="@routes.PdfGenerationController.buildPdfForBundle(bundle, dateSubmitted)" target="_blank" id="download-confirmation-button">@Html(Messages("ers_confirmation.download_confirmation", 15))</a>
+	</div>
+	<div>
+		<h2 class="heading-medium">@Html(Messages("ers_confirmation.sub_heading"))</h2>
+		<p>@Html(Messages("ers_confirmation.instructions"))</p>
+		<p><a href="@url">@Html(Messages("ers_confirmation.return"))</a></p>
+		<a href='@Html(getPageElement(schemeId, PAGE_CONFIRMATION, "finished"))' id="finished">@Html(Messages("ers_confirmation.feedback"))</a>&nbsp;@Html(Messages("ers_confirmation.feedback_time"))
+	</div>
+}

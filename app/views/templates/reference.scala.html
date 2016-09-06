@@ -1,0 +1,11 @@
+@(screenSchemeInfo: Option[String] = None)(implicit request: Request[AnyRef])
+<div class="reference">
+    <p class="font-xsmall">
+        <span class="visuallyhidden">@Html(Messages("ers.reference.info"))</span>
+        @if(screenSchemeInfo.isDefined) {
+            @Html(screenSchemeInfo.get.drop(3).take(100))
+        } else {
+            @Html(request.session.get("screenSchemeInfo").get.drop(3).take(100))
+        }
+    </p>
+</div>

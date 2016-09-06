@@ -1,0 +1,9 @@
+@(loginScreenUrl: String)(implicit request: Request[AnyContent])
+
+@import views.html.templates._
+@import utils.ContentUtil._
+
+@ers_main(title = Messages("ers.app_title"), scripts=Html(""), showSignOutLink = false){
+	<p>@Html(Messages("ers_signed_out.info"))</p>
+	<p><a href="@loginScreenUrl">@Html(Messages("ers_signed_out.link"))</a></p>
+}

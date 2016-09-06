@@ -1,0 +1,5 @@
+@(showSignOutLink: Boolean)
+
+@import controllers.auth.ExternalUrls
+
+@if(showSignOutLink) {<li><a href="@ExternalUrls.signOut" id="sign-out">@Html(Messages("ers.signout"))</a></li>}

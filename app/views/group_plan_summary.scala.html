@@ -1,0 +1,66 @@
+@(groupSchemeType: String, companies: CompanyDetailsList)(implicit request: Request[AnyRef], flash: Flash)
+@* Is a group scheme template *@
+@schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
+@import views.html.templates._
+@import utils.PageBuilder._
+@import utils.CountryCodes._
+
+@ers_main(title = getPageElement(schemeId, "ers", "group_summary.page_title") + " " + Messages("ers.title.postfix")) {
+
+	@reference()
+
+	<p class="font-xsmall"><a href="@getPageBackLink(schemeId,PAGE_GROUP_SUMMARY,groupSchemeType)" class="link-back">@Html(Messages("ers.back"))</a></p>
+
+	@header(getPageElement(schemeId, PAGE_GROUP_SUMMARY, "title"))
+
+	<div class="clear">
+		@uk.gov.hmrc.play.views.html.helpers.form(action = routes.GroupSchemeController.groupPlanSummaryContinue(schemeId)) {
+			@if(groupSchemeType == OPTION_MANUAL) {
+			<div class="panel-indent">
+				<a href="@routes.GroupSchemeController.manualCompanyDetailsPage()">@Html(getPageElement(schemeId, PAGE_GROUP_SUMMARY, "add_company"))</a>
+			</div>
+			}
+			@for((company, index) <- companies.companies.zipWithIndex) {
+			<table>
+			  <thead>
+				<tr>
+					<th scope="col" id="group-plan-summary-name">@company.companyName</th>
+					<th id="group-plan-summary-address" class="group-plan-summary-action-text-align"><a href="@routes.GroupSchemeController.editCompany(index)">@Html(Messages("ers.change_this"))</a>&nbsp;&nbsp;&nbsp;<a href="@routes.GroupSchemeController.deleteCompany(index)">@Html(Messages("ers.delete"))</a></th>
+				</tr>
+			  </thead>
+			  <tbody>
+
+				<tr>
+				  <td class="group-plan-name-summary-text-align">@Html(Messages("ers_group_summary.address"))</td>
+				  <td class="group-plan-name-summary-text-align">
+					  @company.addressLine1@if(company.addressLine2.getOrElse("") != ""){, @company.addressLine2}@if(company.addressLine3.getOrElse("") != ""){, @company.addressLine3}@if(company.addressLine4.getOrElse("") != ""){, @company.addressLine4}@if(company.postcode.getOrElse("") != ""){, @company.postcode}@if(company.country.getOrElse("") != ""){, @getCountry(company.country.get)}
+				  </td>
+				</tr>
+				@if(company.country != None){@if(company.country.get == DEFAULT_COUNTRY) {
+					@if(company.companyReg != None) {
+						<tr>
+							<td class="group-plan-name-summary-text-align">@Html(Messages("ers_group_summary.crn"))</td>
+							<td class="group-plan-summary-text-align">@company.companyReg</td>
+						</tr>
+					}
+					@if(company.corporationRef != None) {
+						<tr>
+							<td class="group-plan-name-summary-text-align">@Html(Messages("ers_group_summary.ctr"))</td>
+							<td class="group-plan-summary-text-align">@company.corporationRef</td>
+						</tr>
+					}
+				}}
+			  </tbody>
+			</table>
+			}
+			@if(groupSchemeType == OPTION_CSV) {
+			<h2>@Html(Messages("ers_group_summary.notice"))</h2>
+			<p class="text">@Html(getPageElement(schemeId, PAGE_GROUP_SUMMARY, "notice_info"))&nbsp;<a href="routes.GroupSchemeController.groupCheckCSVFilePage()" id="check-another-return-file-link">@Html(Messages("ers_group_summary.notice_info2"))</a>.<p/>
+			}
+			<div @if(groupSchemeType == OPTION_MANUAL) {class="group-plan-summary-margin"}>
+			<button role="button" id="continue" class="button" type="submit" @if(companies.companies.length == 0) {disabled="disabled"}>@Html(Messages("ers.continue"))</button>
+			</div>
+		}
+	</div>
+
+}

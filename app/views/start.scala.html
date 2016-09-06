@@ -1,0 +1,44 @@
+@* start Template File *@
+@(screenSchemeInfo:String)(implicit request: Request[AnyRef])
+@schemeId = @{screenSchemeInfo.split(" - ").head}
+@import views.html.templates._
+@import utils.PageBuilder._
+@import utils.ContentUtil._
+
+
+@ers_main(title = Messages("ers.start.page_title")) {
+
+	@reference(Some(screenSchemeInfo))
+
+	@header(Messages("ers_start.page_title", getSchemeName(schemeId)))
+
+	<p class="font-medium">@Html(getPageElement(schemeId, PAGE_START, "intro_para"))</p>
+
+	<h2 class="heading-medium">@Html(Messages("ers_start.sub_title"))</h2>
+
+	<div class="panel-indent">
+		<p>@Html(Messages("ers_start.help"))</p>
+	</div>
+
+	<p>@Html(Messages("ers_start.you_need"))</p>
+
+	<ul class='list-bullet space'>
+		<li>@Html(getPageElement(schemeId, PAGE_START, "bullet_1"))</li>
+		<li>@Html(getPageElement(schemeId, PAGE_START, "bullet_2"))</li>
+		@if(schemeId == SCHEME_CSOP || schemeId == SCHEME_SAYE || schemeId == SCHEME_SIP) {
+		<li>@Html(getPageElement(schemeId, PAGE_START, "bullet_3"))</li>
+		}
+		@if(schemeId == SCHEME_SIP) {
+		<li>@Html(getPageElement(schemeId, PAGE_START, "bullet_4"))</li>
+		}
+	</ul>
+
+	<h2 class="heading-small">@Html(Messages("ers_start.large_files"))</h2>
+
+	<p>@Html(Messages("ers_start.filesize"))</p>
+
+	<div class="form-group">
+		<a role="button" href="@routes.ReportableEventsController.reportableEventsPage" class="button button-get-started" id="start-button">@Html(Messages("ers_start.start_now_button"))</a>
+	</div>
+
+}

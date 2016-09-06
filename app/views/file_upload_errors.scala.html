@@ -1,0 +1,32 @@
+@(scheme: String, schemeRef: String, sr: String, fileType: String)(implicit request: Request[AnyRef])
+@schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
+@import views.html.templates._
+@import utils.PageBuilder._
+@import utils.ContentUtil._
+
+@ers_main(title = Messages("file_upload_errors.title") + " " + Messages("ers.title.postfix")) {
+
+	@reference()
+
+	@if(fileType == OPTION_ODS){
+		<p class="font-xsmall"><a href="@routes.FileUploadController.uploadFilePage" class="link-back">@Html(Messages("ers.back"))</a></p>
+	} else {
+		<p class="font-xsmall"><a href="@routes.CsvFileUploadController.uploadFilePage" class="link-back">@Html(Messages("ers.back"))</a></p>
+	}
+
+	@header(Messages("file_upload_errors.title"))
+
+	<div class="panel-indent">
+		@if(fileType == OPTION_ODS) {
+			<p>@Html(Messages("file_upload_errors.para1")) <a href="@routes.FileUploadController.uploadFilePage()">@Html(Messages("file_upload_errors.upload_link"))</a>.</p>
+		} else {
+			<p>@Html(Messages("file_upload_errors.para1")) <a href="@routes.CheckCsvFilesController.checkCsvFilesPage()">@Html(Messages("file_upload_errors.upload_link"))</a>.</p>
+		}
+	</div>
+
+	<h2>@Html(Messages("file_upload_errors.go_fix"))</h2>
+
+	<p><a href="/check-your-ers-files">@Html(Messages("file_upload_errors.check_file"))</a> @Html(Messages("file_upload_errors.info"))</p>
+
+
+}
