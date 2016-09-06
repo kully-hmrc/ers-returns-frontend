@@ -1,0 +1,91 @@
+# microservice specific routes
+
+->          /template                                       template.Routes
+
+GET         /assets/*file                                   controllers.AssetsController.at(path="/public", file)
+
+
+GET         /upload-ods-file                                controllers.FileUploadController.uploadFilePage()
+GET         /errors-have-been-found-ods                     controllers.FileUploadController.validationFailure()
+GET         /file-upload/failure                            controllers.FileUploadController.failure()
+GET         /if-there-are-no-errors-ods                     controllers.FileUploadController.success()
+POST        /file-upload/callback                           controllers.FileUploadCallbackController.callback()
+
+GET         /upload-csv                                     controllers.CsvFileUploadController.uploadFilePage()
+GET         /errors-have-been-found-csv                     controllers.CsvFileUploadController.validationFailure()
+GET         /csv-file-upload/failure                        controllers.CsvFileUploadController.failure()
+GET         /if-there-are-no-errors-csv                     controllers.CsvFileUploadController.success()
+POST        /csv-file-upload/callback                       controllers.CsvFileUploadCallbackController.callback()
+
+GET 		/                                               controllers.ReturnServiceController.hmacCheck()
+GET 		/start                                          controllers.ReturnServiceController.startPage()
+#GET		/startnew						                controllers.StartController.startPage()
+
+#GET 		/check-file					                    controllers.ReturnServiceController.checkFilePage()
+#GET 		/check-csv-file				                    controllers.ReturnServiceController.checkCSVFilePage()
+
+#POST 		/check-csv-file				                    controllers.UploadController.uploadCSVFiles(fileId: String)
+
+
+GET 		/reportable-events			                    controllers.ReportableEventsController.reportableEventsPage()
+POST 		/reportable-events			                    controllers.ReportableEventsController.reportableEventsSelected()
+
+
+GET         /unauthorised                                   controllers.ApplicationController.unauthorised
+GET         /file-validation-results                        controllers.FileUploadController.validationResults()
+GET         /csv-file-validation-results                    controllers.CsvFileUploadController.validationResults()
+
+GET 		/not-authorised                                 controllers.AuthorizationController.notAuthorised()
+GET 		/signed-out                 	                controllers.AuthorizationController.timedOut()
+
+GET         /choose-csv-files                               controllers.CheckCsvFilesController.checkCsvFilesPage()
+POST        /choose-csv-files                               controllers.CheckCsvFilesController.checkCsvFilesPageSelected()
+
+GET 		/group-scheme   			                    controllers.GroupSchemeController.groupSchemePage()
+POST 		/group-scheme   				                controllers.GroupSchemeController.groupSchemeSelected(scheme: String)
+
+#GET 		/group-type					                    controllers.GroupSchemeController.groupSchemeTypePage()
+#POST 		/group-type						                controllers.GroupSchemeController.groupSchemeTypeSelected(scheme: String)
+
+GET 		/subsidiary-company-summary	                    controllers.GroupSchemeController.groupPlanSummaryPage()
+POST 		/subsidiary-company-summary		                controllers.GroupSchemeController.groupPlanSummaryContinue(scheme: String)
+
+#GET 		/group-check-csv-file		                    controllers.GroupSchemeController.groupCheckCSVFilePage()
+
+GET         /choose-file-type				                controllers.CheckFileTypeController.checkFileTypePage()
+POST        /choose-file-type				                controllers.CheckFileTypeController.checkFileTypeSelected()
+
+GET         /alterations-or-a-variation 	                controllers.AltAmendsController.altActivityPage()
+POST        /alterations-or-a-variation			            controllers.AltAmendsController.altActivitySelected()
+
+GET         /select-alterations-or-a-variation              controllers.AltAmendsController.altAmendsPage()
+POST        /select-alterations-or-a-variation              controllers.AltAmendsController.altAmendsSelected()
+
+GET         /add-trustee       				                controllers.TrusteeController.trusteeDetailsPage(index: Int = 10000)
+POST        /add-trustee      					            controllers.TrusteeController.trusteeDetailsSubmit(index: Int)
+GET         /add-trustee/:index/delete                      controllers.TrusteeController.deleteTrustee(index: Int)
+GET         /add-trustee/:index/edit     	                controllers.TrusteeController.editTrustee(index: Int)
+
+GET         /trustees       				                controllers.TrusteeController.trusteeSummaryPage()
+POST        /trustees       				                controllers.TrusteeController.trusteeSummaryContinue()
+
+GET 		/add-subsidiary-company   		        		controllers.GroupSchemeController.manualCompanyDetailsPage(index: Int = 10000)
+POST 		/add-subsidiary-company       					controllers.GroupSchemeController.manualCompanyDetailsSubmit(index: Int)
+GET 		/add-subsidiary-company/:index/delete       	controllers.GroupSchemeController.deleteCompany(index: Int)
+GET 		/add-subsidiary-company/:index/edit 	    	controllers.GroupSchemeController.editCompany(index: Int)
+
+GET 		/company-details  		                        controllers.SchemeOrganiserController.schemeOrganiserPage()
+POST 		/company-details 			                    controllers.SchemeOrganiserController.schemeOrganiserSubmit()
+
+GET 		/annual-return-summary		                    controllers.SummaryDeclarationController.summaryDeclarationPage()
+
+GET 		/confirmation                                   controllers.ConfirmationPageController.confirmationPage()
+
+GET 		/confirmation/:bundle 		                    controllers.PdfGenerationController.buildPdfForBundle(bundle: String, dateSubmitted: String)
+
+GET         /retrieve-submission-data                       controllers.SubmissionDataController.retrieveSubmissionData()
+
+
+
+
+

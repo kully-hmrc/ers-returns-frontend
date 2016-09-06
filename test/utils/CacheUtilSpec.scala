@@ -1,0 +1,503 @@
+/*
+ * Copyright 2016 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package utils
+
+import java.util.NoSuchElementException
+import models._
+import org.joda.time.DateTime
+import org.mockito.Mockito._
+import org.mockito.Matchers._
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.mock.MockitoSugar
+import play.api.libs.json
+import play.api.libs.json.{JsValue, Json}
+import play.api.mvc.Request
+import play.api.test.FakeRequest
+import uk.gov.hmrc.http.cache.client.{ShortLivedCache, CacheMap}
+import uk.gov.hmrc.play.http.HeaderCarrier
+import uk.gov.hmrc.play.http.logging.SessionId
+import uk.gov.hmrc.play.test.{WithFakeApplication, UnitSpec}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
+class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach with WithFakeApplication {
+
+  implicit val hc: HeaderCarrier = new HeaderCarrier(sessionId = Some(SessionId("sessionId")))
+  implicit val request = FakeRequest()
+  val mockShortLivedCache = mock[ShortLivedCache]
+
+  override def beforeEach() = {
+    super.beforeEach()
+    reset(mockShortLivedCache)
+  }
+
+  "calling cache" should {
+
+    val cacheUtil: CacheUtil = new CacheUtil {
+      override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+    }
+
+    "saves entry to shortLivedCache" in {
+      val altAmends = AltAmends(Option("0"),Option("0"),Option("0"),Option("0"),Option("0"))
+      when(
+        mockShortLivedCache.cache[AltAmends](anyString(), anyString(), any[AltAmends]())(any(), any())
+      ).thenReturn(
+        Future.successful(mock[CacheMap])
+      )
+      val result = await(cacheUtil.cache[AltAmends](CacheUtil.ALT_AMENDS_CACHE_CONTROLLER, altAmends, "123"))
+      result.isInstanceOf[CacheMap] shouldBe true
+    }
+
+    "saves entry to shortLivedCache by given key and body" in {
+      val altAmends = AltAmends(Option("0"),Option("0"),Option("0"),Option("0"),Option("0"))
+      when(
+        mockShortLivedCache.cache[AltAmends](anyString(), anyString(), any[AltAmends]())(any(), any())
+      ).thenReturn(
+        Future.successful(mock[CacheMap])
+      )
+      val result = await(cacheUtil.cache[AltAmends](CacheUtil.ALT_AMENDS_CACHE_CONTROLLER, altAmends))
+      result.isInstanceOf[CacheMap] shouldBe true
+    }
+
+  }
+
+  "calling fetch with key" should {
+
+    "return required value from cache if no cacheId is given" in {
+      val altAmends = AltAmends(Option("0"),Option("0"),Option("0"),Option("0"),Option("0"))
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      when(
+        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
+      ).thenReturn(
+        Future.successful(
+          Some(Json.toJson(altAmends))
+        )
+      )
+      val result = await(cacheUtil.fetch[AltAmends]("key"))
+      result shouldBe altAmends
+    }
+
+    "throw NoSuchElementException if value is not found in cache" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      when(
+        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
+      ).thenReturn(
+        Future.failed(new NoSuchElementException)
+      )
+      intercept[NoSuchElementException] {
+        await(cacheUtil.fetch[AltAmends]("key"))
+      }
+    }
+
+    "throw Exception if an exception occurs" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      when(
+        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
+      ).thenReturn(
+        Future.failed(new RuntimeException)
+      )
+      intercept[Exception] {
+        await(cacheUtil.fetch[AltAmends]("key"))
+      }
+    }
+
+    "return Future[Something] if given value from cache" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      val anyVal = "abc"
+      when(mockShortLivedCache.fetchAndGetEntry[JsValue](anyVal, anyVal)).thenReturn(Option(Json.toJson[String](anyVal)))
+      await(cacheUtil.fetch[String](anyVal, anyVal)) shouldBe anyVal
+    }
+
+    "throw an NoSuchElementException if nothing is found in the cache" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      val anyVal = "abc"
+      when(mockShortLivedCache.fetchAndGetEntry[JsValue](anyVal, anyVal)).thenReturn(Future.failed(new NoSuchElementException))
+      intercept[NoSuchElementException] {
+        await(cacheUtil.fetch[String](anyVal, anyVal))
+      }
+    }
+
+    "throw an exception if an acception occurs" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      val anyVal = "abc"
+      when(mockShortLivedCache.fetchAndGetEntry[JsValue](anyVal, anyVal)).thenReturn(Future.failed(new RuntimeException))
+      intercept[Exception] {
+        await(cacheUtil.fetch[String](anyVal, anyVal))
+      }
+    }
+  }
+
+  "calling fetchOption with key" should {
+    val cacheUtil: CacheUtil = new CacheUtil {
+      override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+    }
+
+    "return value from cache if it exists" in {
+      when(
+        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any())
+      ).thenReturn(
+        Future.successful(Some(""))
+      )
+      val result = await(cacheUtil.fetchOption[String]("key", "cacheId"))
+      result shouldBe Some("")
+    }
+
+    "throw NoSuchElementException if value doesn't exist" in {
+      when(
+        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any())
+      ).thenReturn(
+        Future.failed(new NoSuchElementException)
+      )
+      intercept[NoSuchElementException] {
+        await(cacheUtil.fetchOption[String]("key", "cacheId"))
+      }
+    }
+
+    "throw Exception if exception occurs" in {
+      when(
+        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any())
+      ).thenReturn(
+        Future.failed(new RuntimeException)
+      )
+      intercept[Exception] {
+        await(cacheUtil.fetchOption[String]("key", "cacheId"))
+      }
+    }
+  }
+
+  "calling fetchAll with key" should {
+    "return Future[CacheMap] if given value from cache" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      val anyVal = "abc"
+      val cMap = CacheMap(anyVal, Map((anyVal,Json.toJson(anyVal))))
+      when(mockShortLivedCache.fetch(anyVal)).thenReturn(Future(Option(cMap)))
+      await(cacheUtil.fetchAll(anyVal)) shouldBe cMap
+    }
+
+    "throw a NoSuchElementException if nothing is found in the cache" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      val anyVal = "abc"
+      when(mockShortLivedCache.fetch(anyVal)).thenReturn(Future.failed(new NoSuchElementException))
+      intercept[NoSuchElementException] {
+        await(cacheUtil.fetchAll(anyVal))
+      }
+    }
+
+    "throw an exception if an exception occurs" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      }
+      val anyVal = "abc"
+      when(mockShortLivedCache.fetch(anyVal)).thenReturn(Future.failed(new RuntimeException))
+      intercept[Exception] {
+        await(cacheUtil.fetchAll(anyVal))
+      }
+    }
+  }
+
+  "calling getAllData" should {
+    val schemeInfo =  SchemeInfo("AA0000000000000", DateTime.now, "1" ,"2016","CSOP 2015/16", "CSOP")
+    val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
+
+    "return valid ERSSummary data" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.reportableEvents => Future(Some(ReportableEvents(Some(PageBuilder.OPTION_NIL_RETURN)).asInstanceOf[T]))
+            case CacheUtil.FILE_TYPE_CACHE => None
+            case CacheUtil.SCHEME_ORGANISER_CACHE => None
+            case CacheUtil.TRUSTEES_CACHE => None
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => None
+            case CacheUtil.altAmendsActivity => None
+            case CacheUtil.ALT_AMENDS_CACHE_CONTROLLER => Some(AlterationAmends(Some("1"), Some("1"), Some("1"), Some("1"), Some("1")).asInstanceOf[T])
+          }
+        }
+      }
+      val result = await(cacheUtil.getAllData("bundleRef", rsc))
+      result.isNilReturn shouldBe PageBuilder.OPTION_NIL_RETURN
+    }
+
+    "return valid ERSSummary data with correct file type" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.reportableEvents => Future(Some(ReportableEvents(Some(PageBuilder.OPTION_NIL_RETURN)).asInstanceOf[T]))
+            case CacheUtil.FILE_TYPE_CACHE => Future(Some(CheckFileType(Some("ods")).asInstanceOf[T]))
+            case CacheUtil.SCHEME_ORGANISER_CACHE => None
+            case CacheUtil.TRUSTEES_CACHE => None
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => None
+            case CacheUtil.altAmendsActivity => None
+            case CacheUtil.ALT_AMENDS_CACHE_CONTROLLER => Some(AlterationAmends(Some("1"), Some("1"), Some("1"), Some("1"), Some("1")).asInstanceOf[T])
+          }
+        }
+      }
+      val result = await(cacheUtil.getAllData("bundleRef", rsc))
+      result.isNilReturn shouldBe PageBuilder.OPTION_NIL_RETURN
+      result.fileType shouldBe Option("ods")
+    }
+
+    "throws Exception if data is not found" in {
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.reportableEvents => Future.failed(new NoSuchElementException)
+            case CacheUtil.FILE_TYPE_CACHE => Future[Option[T]](Option("ods".asInstanceOf[T]))
+            case CacheUtil.SCHEME_ORGANISER_CACHE => None
+            case CacheUtil.TRUSTEES_CACHE => None
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => None
+            case CacheUtil.altAmendsActivity => None
+            case CacheUtil.ALT_AMENDS_CACHE_CONTROLLER => Some(AlterationAmends(Some("1"), Some("1"), Some("1"), Some("1"), Some("1")).asInstanceOf[T])
+          }
+        }
+      }
+      intercept[Exception] {
+        await(cacheUtil.getAllData("bundleRef", rsc))
+      }
+    }
+  }
+
+
+
+
+  "calling getAltAmmendsData" should {
+
+    "return (AltAmendsActivity = None, AlterationAmends = None) if AltAmendsActivity = None and AlterationAmends are defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.altAmendsActivity => None
+            case CacheUtil.ALT_AMENDS_CACHE_CONTROLLER => Some(AlterationAmends(Some("1"), Some("1"), Some("1"), Some("1"), Some("1")).asInstanceOf[T])
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getAltAmmendsData(""))
+      result._1 shouldBe None
+      result._2 shouldBe None
+
+    }
+
+    "return (AltAmendsActivity = Some(AltAmendsActivity(\"2\")), AlterationAmends = None) if AltAmendsActivity = \"2\" and AlterationAmends are defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.altAmendsActivity => Some(AltAmendsActivity(PageBuilder.OPTION_NO).asInstanceOf[T])
+            case CacheUtil.ALT_AMENDS_CACHE_CONTROLLER => Some(AlterationAmends(Some("1"), Some("1"), Some("1"), Some("1"), Some("1")).asInstanceOf[T])
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getAltAmmendsData(""))
+      result._1 shouldBe Some(AltAmendsActivity("2"))
+      result._2 shouldBe None
+
+    }
+
+    "return (AltAmendsActivity = Some(AltAmendsActivity(\"1\")), AlterationAmends = AlterationAmends(Some(\"1\"), Some(\"1\"), Some(\"1\"), Some(\"1\"), Some(\"1\"))) if AltAmendsActivity = \"1\" and AlterationAmends are defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.altAmendsActivity => Some(AltAmendsActivity(PageBuilder.OPTION_YES).asInstanceOf[T])
+            case CacheUtil.ALT_AMENDS_CACHE_CONTROLLER => Some(AlterationAmends(Some("1"), Some("1"), Some("1"), Some("1"), Some("1")).asInstanceOf[T])
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getAltAmmendsData(""))
+      result._1 shouldBe Some(AltAmendsActivity("1"))
+      result._2 shouldBe Some(AlterationAmends(Some("1"), Some("1"), Some("1"), Some("1"), Some("1")))
+
+    }
+
+    "return (AltAmendsActivity = Some(AltAmendsActivity(\"1\")), AlterationAmends = None) if AltAmendsActivity = \"1\" and AlterationAmends are not defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.altAmendsActivity => Some(AltAmendsActivity(PageBuilder.OPTION_YES).asInstanceOf[T])
+            case CacheUtil.ALT_AMENDS_CACHE_CONTROLLER => None
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getAltAmmendsData(""))
+      result._1 shouldBe Some(AltAmendsActivity("1"))
+      result._2 shouldBe None
+
+    }
+
+  }
+
+  "calling getGroupSchemeData" should {
+
+    val schemeCompanies = CompanyDetailsList(
+      List(
+        CompanyDetails("Company name", "Company address", None, None, None, None, None, None, None)
+      )
+    )
+
+    "return (GroupSchemeInfo = None, CompanyDetailsList = None) if GroupSchemeInfo = None and CompanyDetailsList is defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => None
+            case CacheUtil.GROUP_SCHEME_COMPANIES => Some(schemeCompanies.asInstanceOf[T])
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getGroupSchemeData(""))
+      result._1 shouldBe None
+      result._2 shouldBe None
+
+    }
+
+    "return (GroupSchemeInfo = Some(GroupSchemeInfo(None, Some(\"\"))), CompanyDetailsList = None) if GroupSchemeInfo.groupScheme = None and CompanyDetailsList are defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => Some(GroupSchemeInfo(None, Some("")).asInstanceOf[T])
+            case CacheUtil.GROUP_SCHEME_COMPANIES => Some(schemeCompanies.asInstanceOf[T])
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getGroupSchemeData(""))
+      result._1 shouldBe Some(GroupSchemeInfo(None, Some("")))
+      result._2 shouldBe None
+
+    }
+
+    "return (GroupSchemeInfo = Some(GroupSchemeInfo(Some(\"1\"), Some(\"\"))), CompanyDetailsList = schemeCompanies) if GroupSchemeInfo.groupScheme = 1 and CompanyDetailsList is defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => Some(GroupSchemeInfo(Some("1"), Some("")).asInstanceOf[T])
+            case CacheUtil.GROUP_SCHEME_COMPANIES => Some(schemeCompanies.asInstanceOf[T])
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getGroupSchemeData(""))
+      result._1 shouldBe Some(GroupSchemeInfo(Some("1"), Some("")))
+      result._2 shouldBe Some(schemeCompanies)
+
+    }
+
+    "return (GroupSchemeInfo = Some(GroupSchemeInfo(Some(\"1\"), Some(\"\"))), CompanyDetailsList = None) if GroupSchemeInfo.groupScheme = 1 and CompanyDetailsList is not defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => Some(GroupSchemeInfo(Some("1"), Some("")).asInstanceOf[T])
+            case CacheUtil.GROUP_SCHEME_COMPANIES => None
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getGroupSchemeData(""))
+      result._1 shouldBe Some(GroupSchemeInfo(Some("1"), Some("")))
+      result._2 shouldBe None
+
+    }
+
+    "return (GroupSchemeInfo = Some(GroupSchemeInfo(Some(\"2\"), Some(\"\"))), CompanyDetailsList = None) if GroupSchemeInfo.groupScheme = 2 and CompanyDetailsList are defined" in {
+
+      val cacheUtil: CacheUtil = new CacheUtil {
+        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
+        override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
+          key match {
+            case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => Some(GroupSchemeInfo(Some("2"), Some("")).asInstanceOf[T])
+            case CacheUtil.GROUP_SCHEME_COMPANIES => Some(schemeCompanies.asInstanceOf[T])
+          }
+        }
+      }
+
+      val result = await(cacheUtil.getGroupSchemeData(""))
+      result._1 shouldBe Some(GroupSchemeInfo(Some("2"), Some("")))
+      result._2 shouldBe None
+
+    }
+
+  }
+
+  "getSchemeRef" should {
+
+    val cacheUtil: CacheUtil = new CacheUtil {
+      override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+    }
+
+    "return schemeRef from given string" in {
+      val screenSchemeInfo = "metaData.schemeInfo.schemeId - metaData.schemeInfo.schemeType - metaData.schemeInfo.schemeName - metaData.schemeInfo.schemeRef - taxYear"
+      cacheUtil.getSchemeRefFromScreenSchemeInfo(screenSchemeInfo) shouldBe "metaData.schemeInfo.schemeRef"
+    }
+
+    "throw NoSuchElementException if hyphens are replaced" in {
+      val screenSchemeInfo = "metaData.schemeInfo.schemeId | metaData.schemeInfo.schemeType | metaData.schemeInfo.schemeName | metaData.schemeInfo.schemeRef | taxYear"
+      intercept[NoSuchElementException]{
+        cacheUtil.getSchemeRefFromScreenSchemeInfo(screenSchemeInfo) shouldBe "metaData.schemeInfo.schemeRef"
+      }
+    }
+
+  }
+
+}

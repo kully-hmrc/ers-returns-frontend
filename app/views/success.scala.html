@@ -1,0 +1,64 @@
+@(fileNames : Option[CsvFilesCallbackList], ODSFileName: Option[String])(implicit request: Request[AnyRef])
+@schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
+@import views.html.templates._
+@import utils.PageBuilder._
+
+@scripts = {
+<script src='@routes.AssetsController.at("javascripts/ers_scripts.js")'> </script>
+<script src='@routes.AssetsController.at("javascripts/ers_ods_scripts.js")'> </script>
+}
+
+
+@ers_main(title = Messages("ers.if_there_are_no_errors.page_title"), scripts) {
+
+	@reference()
+
+	@if(fileNames.isDefined){
+		<p class="font-xsmall"><a href="@routes.CsvFileUploadController.uploadFilePage" class="link-back">@Html(Messages("ers.back"))</a></p>
+	} else {
+		<p class="font-xsmall"><a href="@routes.FileUploadController.uploadFilePage" class="link-back">@Html(Messages("ers.back"))</a></p>
+	}
+
+	@if(fileNames.isDefined && fileNames.get.files.size > 1){
+		@header(getPageElement(schemeId, PAGE_SUCCESS, "info", "these files"))
+	}else {
+		@header(getPageElement(schemeId, PAGE_SUCCESS, "info", "this file"))
+	}
+
+	<h2 id="files-list" class="heading-small">
+		@if(fileNames.isDefined) {
+			@if(fileNames.get.files.size == 1) {
+				@Html(Messages("csv_file_upload.file_to_upload_title"))
+			} else {
+				@Html(Messages("csv_file_upload.files_to_upload_title"))
+			}
+		}
+		@if(ODSFileName.isDefined) {
+			@Html(Messages("csv_file_upload.file_to_upload_title"))
+		}
+	</h2>
+	<p>
+		@if(fileNames.isDefined) {
+			@for(fileName <- fileNames.get.files){
+				@Html(getPageElement(schemeId, PAGE_CHECK_CSV_FILE, fileName.fileId + ".description")) - UPLOADED<br>
+			}
+		}
+		@if(ODSFileName.isDefined) {
+			@ODSFileName - UPLOADED
+		}
+	</p>
+
+	@if(fileNames.isDefined){
+		@uk.gov.hmrc.play.views.html.helpers.form(action = routes.CsvFileUploadController.validationResults) {
+		<input role="button" id="continue" class="button" type="submit" value="@Html(Messages("ers.continue"))">
+		@spinner()
+		}
+	}else {
+		@uk.gov.hmrc.play.views.html.helpers.form(action = routes.FileUploadController.validationResults) {
+		<input role="button" id="continue" class="button" type="submit" value="@Html(Messages("ers.continue"))">
+		@spinner()
+		}
+	}
+
+
+}
