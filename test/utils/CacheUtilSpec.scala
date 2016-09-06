@@ -209,7 +209,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
       val anyVal = "abc"
       when(mockShortLivedCache.fetch(anyVal)).thenReturn(Future.failed(new NoSuchElementException))
       intercept[NoSuchElementException] {
-        await(CacheUtil.fetchAll(anyVal))
+        await(cacheUtil.fetchAll(anyVal))
       }
     }
 
