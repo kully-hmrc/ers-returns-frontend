@@ -43,7 +43,9 @@ class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
     groupService = Some(Fixtures.groupScheme),
     schemeOrganiser = Some(Fixtures.schemeOrganiserDetails),
     companies = None,
-    trustees = None
+    trustees = None,
+    nofOfRows = None,
+    transferStatus = None
   )
 
   // a function to get matching an instance to be of certain type
@@ -68,7 +70,8 @@ class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
 
     "add 5 decorators" in {
 
-      val ersSummary = ErsSummary("testbundle", "1", None, new DateTime(2016, 6, 8, 11, 45), metaData = Fixtures.EMIMetaData, None, None, Some(Fixtures.groupScheme), Some(Fixtures.schemeOrganiserDetails), Some(Fixtures.companiesList), None)
+      val ersSummary = ErsSummary("testbundle", "1", None, new DateTime(2016, 6, 8, 11, 45), metaData = Fixtures.EMIMetaData, None, None,
+        Some(Fixtures.groupScheme), Some(Fixtures.schemeOrganiserDetails), Some(Fixtures.companiesList), None, None,None)
       val decoratorController = PdfDecoratorControllerFactory.createPdfDecoratorControllerForScheme("emi", ersSummary, None)
 
       val decorators = decoratorController.getDecorators

@@ -49,7 +49,7 @@ class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplicati
   "calling callback" should {
 
     "return OK if attachments retun valid callback data and storing callback data is successful" in {
-      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("John"), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"))
+      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("John"), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
 
       reset(mockSessionService)
       when(
@@ -66,7 +66,8 @@ class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplicati
     }
 
     "return INTERNAL_SERVER_ERROR if attachments retun invalid callback data and storing callback data is successful" in {
-      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"))
+      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("John"), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
+
 
       reset(mockSessionService)
       when(
@@ -84,7 +85,7 @@ class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplicati
     }
 
     "return INTERNAL_SERVER_ERROR if storing callback data fails" in {
-      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"))
+      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
 
       reset(mockSessionService)
       when(

@@ -44,7 +44,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None,None)
       val trustee = TrusteeDetails("Name","1 The Street",None,None,None,Some("UK"),None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
@@ -177,7 +177,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None,None,None)
       val trustee = TrusteeDetails("Name", "1 The Street", None, None, None, Some("UK"), None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
@@ -249,7 +249,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
       val trustee = TrusteeDetails("Name", "1 The Street", None, None, None, Some("UK"), None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
@@ -324,7 +324,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
       val trustee = TrusteeDetails("Name", "1 The Street", None, None, None, Some("UK"), None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]

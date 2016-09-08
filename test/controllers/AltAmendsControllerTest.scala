@@ -45,7 +45,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
 
       val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now, "1" ,"2016","CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None, None, None)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       override val ersConnector: ErsConnector = mockErsConnector
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
@@ -187,7 +187,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
       val altAmends = AltAmends(Some("0"), Some("1"), Some("1"), Some("1"), Some("0"))
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       override val ersConnector: ErsConnector = mockErsConnector

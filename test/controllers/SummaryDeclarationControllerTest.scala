@@ -29,6 +29,7 @@ import play.api.libs.json._
 import play.api.mvc.Request
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import services.SessionService
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.http.cache.client.{CacheMap, ShortLivedCache}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
@@ -41,7 +42,7 @@ class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplication 
 
 	val mockHttp = mock[HttpPost]
 	val mockHttpGet = mock[HttpGet]
-
+	val mockSessionCache = mock[SessionService]
 	def buildFakeSummaryDeclarationController() = new SummaryDeclarationController {
 
 		var fetchAllMapVal = "e"
@@ -65,7 +66,7 @@ class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplication 
 		when(mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200)))
 
 		override val cacheUtil: CacheUtil = new CacheUtil {
-
+			override val sessionService: SessionService = mockSessionCache
 			override def cache[T](key: String, body: T, cacheId: String)(implicit hc: HeaderCarrier,  formats: json.Format[T], request: Request[AnyRef]) = {
 				Future.successful(null)
 			}
@@ -137,7 +138,7 @@ class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplication 
 				val reportableEvents: ReportableEvents = new ReportableEvents(Some(PageBuilder.OPTION_YES))
 				val fileTypeCSV: CheckFileType = new CheckFileType(Some(PageBuilder.OPTION_CSV))
 				val fileTypeODS: CheckFileType = new CheckFileType(Some(PageBuilder.OPTION_ODS))
-				val callbackData: CallbackData = new CallbackData("","",0,None,None,None,None)
+				val callbackData: CallbackData = new CallbackData("","",0,None,None,None,None,None)
 				val csvFilesCallBack = new CsvFilesCallback("file0", Some(callbackData))
 				val csvFilesCallbackList: CsvFilesCallbackList = new CsvFilesCallbackList(List(csvFilesCallBack))
 				val trustees : TrusteeDetails = new TrusteeDetails("T Name","T Add 1",None,None,None,None,None)
@@ -242,7 +243,7 @@ class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplication 
 			}
 
 			override def getAllData(bundleRef: String, ersMetaData: ErsMetaData)(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[AnyRef]): Future[ErsSummary] = {
-				Future.successful(new ErsSummary("testbundle", "false", None, DateTime.now,ersMetaData, None, None, None, None, None, None))
+				Future.successful(new ErsSummary("testbundle", "false", None, DateTime.now,ersMetaData, None, None, None, None, None, None, None, None))
 			}
 
 			override def shortLivedCache: ShortLivedCache = ???

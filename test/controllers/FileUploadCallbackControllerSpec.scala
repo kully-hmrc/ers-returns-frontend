@@ -53,7 +53,7 @@ class FileUploadCallbackControllerSpec extends PlaySpec with MockitoSugar{
     "firstForename" -> Fixtures.firstName
   )
 
-  val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"))
+  val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
 
   val fakeRequest = FakeRequest(method = "POST", uri = "", headers = FakeHeaders(Seq("Content-type" -> Seq("application/json"))), body = Json.toJson(callbackData))
   
@@ -76,7 +76,7 @@ class FileUploadCallbackControllerSpec extends PlaySpec with MockitoSugar{
 
     "successfully store and validates callback data when callbackData doesn't have session id" in {
       val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"),
-        customMetadata = None, sessionId = None)
+        customMetadata = None, sessionId = None, noOfRows = None)
 
       val fakeRequest = FakeRequest(method = "POST", uri = "", headers = FakeHeaders(Seq("Content-type" -> Seq("application/json"))), body = Json.toJson(callbackData))
       when(mockSessionService.storeCallbackData(Matchers.any[CallbackData]())(Matchers.any[Request[_]](),Matchers.any[HeaderCarrier]())).thenReturn(Future.successful(Some(callbackData)))
@@ -90,7 +90,7 @@ class FileUploadCallbackControllerSpec extends PlaySpec with MockitoSugar{
 
     "fail storing data with missing session id" in {
       val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"),
-        customMetadata = None, sessionId = Some("testId"))
+        customMetadata = None, sessionId = Some("testId"), noOfRows = None)
 
       val fakeRequest = FakeRequest(method = "POST", uri = "", headers = FakeHeaders(Seq("Content-type" -> Seq("application/json"))), body = Json.toJson(callbackData))
       when(mockSessionService.storeCallbackData(Matchers.any[CallbackData]())(Matchers.any[Request[_]](),Matchers.any[HeaderCarrier]())).thenReturn(Future.successful(None))

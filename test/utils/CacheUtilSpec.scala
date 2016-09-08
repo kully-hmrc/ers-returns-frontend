@@ -27,29 +27,34 @@ import play.api.libs.json
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Request
 import play.api.test.FakeRequest
+import services.SessionService
 import uk.gov.hmrc.http.cache.client.{ShortLivedCache, CacheMap}
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.play.test.{WithFakeApplication, UnitSpec}
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
 
 class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach with WithFakeApplication {
 
   implicit val hc: HeaderCarrier = new HeaderCarrier(sessionId = Some(SessionId("sessionId")))
   implicit val request = FakeRequest()
   val mockShortLivedCache = mock[ShortLivedCache]
+  val mockSessionCache = mock[SessionService]
 
   override def beforeEach() = {
     super.beforeEach()
     reset(mockShortLivedCache)
   }
 
-  "calling cache" should {
+  val cacheUtil: CacheUtil = new CacheUtil {
+    override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+    override val sessionService: SessionService = mockSessionCache
+  }
 
-    val cacheUtil: CacheUtil = new CacheUtil {
-      override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-    }
+
+  "calling cache" should {
 
     "saves entry to shortLivedCache" in {
       val altAmends = AltAmends(Option("0"),Option("0"),Option("0"),Option("0"),Option("0"))
@@ -79,9 +84,6 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
     "return required value from cache if no cacheId is given" in {
       val altAmends = AltAmends(Option("0"),Option("0"),Option("0"),Option("0"),Option("0"))
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
       when(
         mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
       ).thenReturn(
@@ -94,9 +96,6 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     }
 
     "throw NoSuchElementException if value is not found in cache" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
       when(
         mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
       ).thenReturn(
@@ -108,9 +107,6 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     }
 
     "throw Exception if an exception occurs" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
       when(
         mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
       ).thenReturn(
@@ -122,19 +118,13 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     }
 
     "return Future[Something] if given value from cache" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
-      val anyVal = "abc"
+       val anyVal = "abc"
       when(mockShortLivedCache.fetchAndGetEntry[JsValue](anyVal, anyVal)).thenReturn(Option(Json.toJson[String](anyVal)))
       await(cacheUtil.fetch[String](anyVal, anyVal)) shouldBe anyVal
     }
 
     "throw an NoSuchElementException if nothing is found in the cache" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
-      val anyVal = "abc"
+       val anyVal = "abc"
       when(mockShortLivedCache.fetchAndGetEntry[JsValue](anyVal, anyVal)).thenReturn(Future.failed(new NoSuchElementException))
       intercept[NoSuchElementException] {
         await(cacheUtil.fetch[String](anyVal, anyVal))
@@ -142,10 +132,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     }
 
     "throw an exception if an acception occurs" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
-      val anyVal = "abc"
+       val anyVal = "abc"
       when(mockShortLivedCache.fetchAndGetEntry[JsValue](anyVal, anyVal)).thenReturn(Future.failed(new RuntimeException))
       intercept[Exception] {
         await(cacheUtil.fetch[String](anyVal, anyVal))
@@ -154,9 +141,6 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
   }
 
   "calling fetchOption with key" should {
-    val cacheUtil: CacheUtil = new CacheUtil {
-      override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-    }
 
     "return value from cache if it exists" in {
       when(
@@ -193,9 +177,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
   "calling fetchAll with key" should {
     "return Future[CacheMap] if given value from cache" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
+
       val anyVal = "abc"
       val cMap = CacheMap(anyVal, Map((anyVal,Json.toJson(anyVal))))
       when(mockShortLivedCache.fetch(anyVal)).thenReturn(Future(Option(cMap)))
@@ -203,9 +185,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     }
 
     "throw a NoSuchElementException if nothing is found in the cache" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
+
       val anyVal = "abc"
       when(mockShortLivedCache.fetch(anyVal)).thenReturn(Future.failed(new NoSuchElementException))
       intercept[NoSuchElementException] {
@@ -214,9 +194,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     }
 
     "throw an exception if an exception occurs" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
-        override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-      }
+
       val anyVal = "abc"
       when(mockShortLivedCache.fetch(anyVal)).thenReturn(Future.failed(new RuntimeException))
       intercept[Exception] {
@@ -232,7 +210,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     "return valid ERSSummary data" in {
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.reportableEvents => Future(Some(ReportableEvents(Some(PageBuilder.OPTION_NIL_RETURN)).asInstanceOf[T]))
@@ -252,7 +230,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     "return valid ERSSummary data with correct file type" in {
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.reportableEvents => Future(Some(ReportableEvents(Some(PageBuilder.OPTION_NIL_RETURN)).asInstanceOf[T]))
@@ -273,7 +251,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     "throws Exception if data is not found" in {
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.reportableEvents => Future.failed(new NoSuchElementException)
@@ -301,7 +279,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.altAmendsActivity => None
@@ -320,7 +298,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.altAmendsActivity => Some(AltAmendsActivity(PageBuilder.OPTION_NO).asInstanceOf[T])
@@ -339,7 +317,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.altAmendsActivity => Some(AltAmendsActivity(PageBuilder.OPTION_YES).asInstanceOf[T])
@@ -358,7 +336,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.altAmendsActivity => Some(AltAmendsActivity(PageBuilder.OPTION_YES).asInstanceOf[T])
@@ -387,7 +365,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
-
+        override val sessionService: SessionService = mockSessionCache
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
             case CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER => None
@@ -406,6 +384,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+        override val sessionService: SessionService = mockSessionCache
 
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
@@ -425,6 +404,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+        override val sessionService: SessionService = mockSessionCache
 
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
@@ -444,6 +424,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+        override val sessionService: SessionService = mockSessionCache
 
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
@@ -463,6 +444,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
       val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+        override val sessionService: SessionService = mockSessionCache
 
         override def fetchOption[T](key: String, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]): Future[Option[T]] = {
           key match {
@@ -484,6 +466,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
     val cacheUtil: CacheUtil = new CacheUtil {
       override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      override val sessionService: SessionService = mockSessionCache
     }
 
     "return schemeRef from given string" in {
@@ -498,6 +481,35 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
       }
     }
 
+  }
+
+  "cacheUtil" should {
+    val cacheUtil: CacheUtil = new CacheUtil {
+      override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+      val postData = CallbackData(id = "theid", collection = "thecollection", length = 1000L, name = Some("thefilename"), contentType = None, sessionId = Some("testId"), customMetadata
+        = None, noOfRows = Some(1000))
+      override val sessionService: SessionService = mockSessionCache
+      when(sessionService.retrieveCallbackData()(any(), any())).thenReturn(Future.successful(Some
+        (postData)))
+
+    }
+    "check Nil Return " in {
+      cacheUtil.isNilReturn("2") shouldBe true
+      cacheUtil.isNilReturn("1") shouldBe false
+    }
+    "get No of rows of a submission" in {
+      val result = Await.result(cacheUtil.getNoOfRows("2"), 10 seconds)
+      result shouldBe None
+      val result1 = Await.result(cacheUtil.getNoOfRows("1"), 10 seconds)
+      result1.get shouldBe 1000
+
+    }
+
+    "getStatus" in {
+      cacheUtil.getStatus(Some(20000)).get shouldBe "largefiles"
+      cacheUtil.getStatus(Some(10000)).get shouldBe "saved"
+      cacheUtil.getStatus(Some(9000)).get shouldBe "saved"
+    }
   }
 
 }

@@ -50,7 +50,7 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplication wi
 
       val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle",isNilReturn, None, DateTime.now,rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle",isNilReturn, None, DateTime.now,rsc, None, None, None, None, None, None, None, None)
       override val jsonParser:JsonParser = mock[JsonParser]
       override val metrics = mockMetrics
       val mockErsConnector: ErsConnector = mock[ErsConnector]
@@ -199,7 +199,7 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplication wi
   "calling saveAndSubmit" should {
     val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
     val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-    val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None)
+    val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None,None,None)
 
     def buildFakeConfirmationPageController(saveMetadataRes: Boolean = true, saveMetadataResponse: Int = 200, submitReturnToBackendResponse: Int = 200) = new ConfirmationPageController {
       override val jsonParser:JsonParser = mock[JsonParser]

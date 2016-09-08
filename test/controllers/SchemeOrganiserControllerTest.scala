@@ -40,7 +40,7 @@ class SchemeOrganiserControllerTest extends UnitSpec with ERSFakeApplication wit
 
       val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now, "1" ,"2016","CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None, None, None)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
       override val cacheUtil: CacheUtil = mockCacheUtil
@@ -132,7 +132,7 @@ class SchemeOrganiserControllerTest extends UnitSpec with ERSFakeApplication wit
 
       val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now, "1" ,"2016","CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None)
+      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None, None, None)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
       override val cacheUtil: CacheUtil = mockCacheUtil

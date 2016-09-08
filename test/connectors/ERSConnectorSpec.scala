@@ -54,8 +54,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplicati
       name = Some(Fixtures.firstName),
       contentType = Some("content-type"),
       sessionId = Some("testId"),
-      customMetadata = Some(Json.obj("sessionId" -> "testId"))
-    )
+      customMetadata = Some(Json.obj("sessionId" -> "testId")), noOfRows = None)
 
     val ersConnector:  ErsConnector = new ErsConnector {
       override val metrics:Metrics = mock[Metrics]
