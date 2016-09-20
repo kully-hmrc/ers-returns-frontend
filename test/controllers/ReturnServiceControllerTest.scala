@@ -31,6 +31,7 @@ import play.api.libs.json
 import play.api.libs.json.{JsValue, _}
 import play.api.mvc.{Action, Request, Results}
 import play.api.test.{FakeRequest, Helpers}
+import services.SessionService
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.http.cache.client.ShortLivedCache
 import uk.gov.hmrc.play.frontend.auth.AuthContext
@@ -49,6 +50,7 @@ class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplication with 
 
   val mockHttp = mock[HttpPost]
   val mockHttpGet = mock[HttpGet]
+  val mockSessionCache = mock[SessionService]
   val ExpectedRedirectionUrlIfNotSignedIn = "/gg/sign-in?continue=/submit-your-ers-return"
   val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
   val rsc: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
@@ -66,7 +68,7 @@ class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplication with 
     )
 
     override val cacheUtil: CacheUtil = new CacheUtil {
-
+      override val sessionService: SessionService = mockSessionCache
       override def cache[T](key: String, body: T, cacheId: String)(implicit hc: HeaderCarrier, formats: json.Format[T], request: Request[AnyRef]) = {
         Future.successful(null)
       }

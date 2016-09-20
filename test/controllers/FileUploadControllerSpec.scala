@@ -48,7 +48,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
 
   val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
   val validErsMetaData: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-  val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"))
+  val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
 
   val schemeInfoInvalidTimeStamp =  SchemeInfo("XA1100000000000", DateTime.now, "1" ,"2016","EMI", "EMI")
   val invalidErsMetaData: ErsMetaData = new ErsMetaData(schemeInfoInvalidTimeStamp, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
@@ -63,7 +63,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
   val jv :JsValue = Json.parse("""{}""")
   val s :  Seq[(String, JsValue)] = List(("",jv))
   val js = new JsObject(s)
-  val cb = new CallbackData("File","File",100.toLong,Some("File"),Some("File"),Some("File"),Some(js))
+  val cb = new CallbackData("File","File",100.toLong,Some("File"),Some("File"),Some("File"),Some(js), noOfRows = None)
   val csvFileData = new CsvFilesCallback("file0", Some(cb))
   val csvCallBackList = new CsvFilesCallbackList(List(csvFileData,csvFileData,csvFileData))
 
@@ -304,7 +304,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
       when(
         mockSessionService.retrieveCallbackData()(any(), any())
       ).thenReturn(
-        Future.successful(Some(CallbackData("", "", 0, Some(""), None, None, None)))
+        Future.successful(Some(CallbackData("", "", 0, Some(""), None, None, None,None)))
       )
 
       reset(mockCacheUtil)
@@ -324,7 +324,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
       when(
         mockSessionService.retrieveCallbackData()(any(), any())
       ).thenReturn(
-        Future.successful(Some(CallbackData("","",5,Some("file_name"),None,None,None)))
+        Future.successful(Some(CallbackData("","",5,Some("file_name"),None,None,None,None)))
       )
 
       reset(mockCacheUtil)

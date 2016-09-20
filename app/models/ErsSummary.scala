@@ -95,7 +95,9 @@ case class ErsSummary(
                         groupService: Option[GroupSchemeInfo],
                         schemeOrganiser: Option[SchemeOrganiserDetails],
                         companies: Option[CompanyDetailsList],
-                        trustees: Option[TrusteeDetailsList]
+                        trustees: Option[TrusteeDetailsList],
+                        nofOfRows: Option[Int],
+                        transferStatus: Option[String]
                         )
 
 object ErsModelFormats {
@@ -115,7 +117,7 @@ object ErsModelFormats {
 }
 
 case class CallbackData(collection: String, id: String, length: Long, name: Option[String], contentType: Option[String],
-                        sessionId: Option[String], customMetadata: Option[JsObject])
+                        sessionId: Option[String], customMetadata: Option[JsObject], noOfRows:Option[Int])
 
 object CallbackData {
   implicit val format = Json.format[CallbackData]

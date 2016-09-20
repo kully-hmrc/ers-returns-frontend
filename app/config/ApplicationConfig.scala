@@ -42,7 +42,7 @@ trait ApplicationConfig {
   val failureCsvPageUrl: String
   val callbackCsvPageUrl: String
   val enableRetrieveSubmissionData: Boolean
-
+  val sentViaSchedulerNoOfRowsLimit: Int
 }
 
 object ApplicationConfig extends ApplicationConfig with ServicesConfig {
@@ -75,5 +75,9 @@ object ApplicationConfig extends ApplicationConfig with ServicesConfig {
   override lazy val callbackCsvPageUrl: String = platformHostUrl + loadConfig(s"$env.microservice.services.ers-returns-frontend.csv-callback-page")
 
   override lazy val enableRetrieveSubmissionData: Boolean = Try(loadConfig(s"$env.settings.enable-retrieve-submission-data").toBoolean).getOrElse(false)
+  override lazy val sentViaSchedulerNoOfRowsLimit: Int = {
+    Logger.info("sent-via-scheduler-noofrows vakue is " + Try(loadConfig("sent-via-scheduler-noofrows").toInt).getOrElse(10000))
+    Try(loadConfig("sent-via-scheduler-noofrows").toInt).getOrElse(10000)
+  }
 
 }

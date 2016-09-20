@@ -19,7 +19,6 @@ package controllers
 
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
-import org.joda.time.DateTime
 
 import _root_.models._
 import connectors.ErsConnector
@@ -123,25 +122,30 @@ trait ConfirmationPageController extends ERSReturnBaseController with Authentica
       res.status match {
         case 200 => {
           val startTime = System.currentTimeMillis()
-          ersConnector.submitReturnToBackend(alldata).map { response =>
-            response.status match {
-              case 200 => {
-                AuditEvents.ErsSubmissionAuditEvent(all, bundle)
-                metrics.submitReturnToBackend(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
-                Logger.info(s"Submitting return to backend success with status ${response.status}.")
+          Logger.info("alldata.transferStatus  is " + alldata.transferStatus)
+          alldata.transferStatus.get == CacheUtil.largeFileStatus match {
+            case true => None
+            case _    => ersConnector.submitReturnToBackend(alldata).map { response =>
+                response.status match {
+                  case 200 => {
+                    AuditEvents.ErsSubmissionAuditEvent(all, bundle)
+                    metrics.submitReturnToBackend(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
+                    Logger.info(s"Submitting return to backend success with status ${response.status}.")
+                  }
+                  case _ => {
+                    metrics.submitReturnToBackend(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
+                    Logger.info(s"Submitting return to backend failed with status ${response.status}.")
+                  }
+                }
+                Logger.info(s"Process data ends: ${System.currentTimeMillis()}")
+              } recover {
+                case e: Throwable => {
+                  Logger.error(s"Submitting return to backend failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
+                  AuditEvents.auditRunTimeError(e.getCause, e.getMessage, all, bundle)
+                }
               }
-              case _ => {
-                metrics.submitReturnToBackend(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
-                Logger.info(s"Submitting return to backend failed with status ${response.status}.")
-              }
-            }
-            Logger.info(s"Process data ends: ${System.currentTimeMillis()}")
-          } recover {
-            case e: Throwable => {
-              Logger.error(s"Submitting return to backend failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
-              AuditEvents.auditRunTimeError(e.getCause, e.getMessage, all, bundle)
-            }
           }
+
           Logger.warn(s"Submission completed for schemeInfo: ${all.schemeInfo.toString}, bundle: ${bundle} ")
           val url: String = ExternalUrls.portalDomain
           Ok(views.html.confirmation(dateTimeSubmitted, bundle, all.schemeInfo.taxYear, url)(request)).withSession(request.session + ("bundelRef" -> bundle) + ("dateTimeSubmitted" -> dateTimeSubmitted ))

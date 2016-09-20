@@ -246,7 +246,7 @@ class CsvFileUploadControllerSpec extends UnitSpec with ERSFakeApplication with 
   }
 
   "calling modifyCachedCallbackData" should {
-    val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("CSOP_OptionsExercised_V3.csv"), contentType = Some("content-type"), customMetadata = None, sessionId = Some("testId"))
+    val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("CSOP_OptionsExercised_V3.csv"), contentType = Some("content-type"), customMetadata = None, sessionId = Some("testId"), noOfRows = None)
 
     val mockCacheUtil: CacheUtil = mock[CacheUtil]
     val csvFileUploadController: CsvFileUploadController = new CsvFileUploadController {
@@ -327,7 +327,7 @@ class CsvFileUploadControllerSpec extends UnitSpec with ERSFakeApplication with 
       CsvFilesCallback("file2", None)
     )
 
-    val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("CSOP_OptionsExercised_V3.csv"), contentType = Some("content-type"), customMetadata = None, sessionId = Some("testId"))
+    val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("CSOP_OptionsExercised_V3.csv"), contentType = Some("content-type"), customMetadata = None, sessionId = Some("testId"), noOfRows = None)
 
     "should add callbackData to relevent element in CsvFilesCallbackList" in {
       val result = await(csvFileUploadController.updateCallbackData(Some(callbackData), csvFilesCallbackList)(Fixtures.buildFakeUser, Fixtures.buildFakeRequestWithSessionIdCSOP("GET"), hc))

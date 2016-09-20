@@ -18,12 +18,14 @@ package utils
 
 import java.util.concurrent.TimeUnit
 
+import config.ApplicationConfig
 import models._
 import org.joda.time.DateTime
 import play.api.Logger
 import play.api.libs.json
 import play.api.libs.json.JsValue
 import play.api.mvc.Request
+import services.SessionService
 import uk.gov.hmrc.http.cache.client.{CacheMap, ShortLivedCache}
 import uk.gov.hmrc.play.http.HeaderCarrier
 
@@ -33,10 +35,13 @@ import scala.concurrent.{ExecutionContext, Future}
 object CacheUtil extends CacheUtil {
   def shortLivedCache = config.ShortLivedCache
   private def getCacheId (implicit hc: HeaderCarrier): String = ""
+  val sessionService = SessionService
 }
 
 trait CacheUtil {
-
+  val sessionService: SessionService
+  val largeFileStatus = "largefiles"
+  val savedStatus = "saved"
   val ersMetaData: String = "ErsMetaData"
   val reportableEvents = "ReportableEvents"
   val GROUP_SCHEME_CACHE_CONTROLLER: String = "group-scheme-controller"
@@ -204,9 +209,15 @@ trait CacheUtil {
         fetchOption[SchemeOrganiserDetails](CacheUtil.SCHEME_ORGANISER_CACHE, schemeRef).flatMap { soc =>
           fetchOption[TrusteeDetailsList](CacheUtil.TRUSTEES_CACHE, schemeRef).flatMap { td =>
             getGroupSchemeData(schemeRef).flatMap { gc =>
-              getAltAmmendsData(schemeRef).map { altData =>
-                val fileType = if (checkFileType.isDefined) {Some(checkFileType.get.checkFileType.get)} else None
-                new ErsSummary(bundleRef, repEvents.get.isNilReturn.get, fileType, DateTime.now, metaData = ersMetaData, altAmendsActivity = altData._1, alterationAmends = altData._2, groupService = gc._1, schemeOrganiser = soc, companies = gc._2, trustees = td)
+              getAltAmmendsData(schemeRef).flatMap { altData =>
+                getNoOfRows(repEvents.get.isNilReturn.get).map { trows =>
+                  val fileType = if (checkFileType.isDefined) {
+                    Some(checkFileType.get.checkFileType.get)
+                  } else None
+                  new ErsSummary(bundleRef, repEvents.get.isNilReturn.get, fileType, DateTime.now, metaData = ersMetaData,
+                    altAmendsActivity = altData._1, alterationAmends = altData._2, groupService = gc._1,
+                    schemeOrganiser = soc, companies = gc._2, trustees = td, nofOfRows = trows, transferStatus = getStatus(trows) )
+                }
               }
             }
           }
@@ -218,6 +229,19 @@ trait CacheUtil {
     }
   }
 
+  def getStatus(tRows:Option[Int]): Some[String] = {
+    (tRows.isDefined && (tRows.get > ApplicationConfig.sentViaSchedulerNoOfRowsLimit)) match {
+    case true => Some(largeFileStatus)
+    case _ => Some(savedStatus)
+  }}
+
+  def getNoOfRows(nilReturn:String)(implicit hc: HeaderCarrier, ec: ExecutionContext, request: Request[AnyRef]): Future[Option[Int]] = {
+    isNilReturn(nilReturn:String) match {
+      case true => Future(None)
+      case _ => sessionService.retrieveCallbackData().map(res=> res.get.noOfRows)
+    }
+  }
+
   private def getCacheId (implicit hc: HeaderCarrier): String = {
     hc.sessionId.getOrElse(throw new RuntimeException("")).value
   }
@@ -225,4 +249,6 @@ trait CacheUtil {
   def getSchemeRefFromScreenSchemeInfo(screenSchemeInfo:String):String = {
     screenSchemeInfo.split(" - ").init.last
   }
+  def isNilReturn(nilReturn:String) :Boolean = (nilReturn == PageBuilder.OPTION_NIL_RETURN)
+
 }

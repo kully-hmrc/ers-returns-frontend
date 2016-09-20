@@ -125,7 +125,8 @@ object Fixtures {
 	val groupScheme  = GroupSchemeInfo(Some("1"), Some("emi"))
 
   val companiesList = CompanyDetailsList(List(companyDetails))
-	val ersSummary = ErsSummary("testbundle", "1", None, new DateTime(2016,6,8,11,5), metaData = EMIMetaData, None, None, Some(groupScheme), Some(schemeOrganiserDetails), Some(companiesList), None)
+	val ersSummary = ErsSummary("testbundle", "1", None, new DateTime(2016,6,8,11,5), metaData = EMIMetaData, None, None, Some(groupScheme), Some(schemeOrganiserDetails),
+		Some(companiesList), None,None,None)
 
 	val metadataJson: JsObject = Json.toJson(EMIMetaData).as[JsObject]
 

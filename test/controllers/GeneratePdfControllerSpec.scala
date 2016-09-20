@@ -37,7 +37,7 @@ class GeneratePdfControllerSpec extends UnitSpec with ERSFakeApplication with Mo
   val cache = mock[CacheUtil]
   val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
   val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-  val ersSummary = ErsSummary("testbundle", "2", None, DateTime.now, rsc, None, None, None, None, None, None)
+  val ersSummary = ErsSummary("testbundle", "2", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
   val cacheMap = mock[CacheMap]
 
   def createController(fetchAllRes: Boolean = true, getAllDataRes : Boolean = true, isNilReturn: Boolean = true, fileTypeCSV: Boolean = true): PdfGenerationController = new PdfGenerationController {
@@ -45,7 +45,7 @@ class GeneratePdfControllerSpec extends UnitSpec with ERSFakeApplication with Mo
     override val cacheUtil: CacheUtil = cache
     override val pdfBuilderService: ErsReceiptPdfBuilderService = pdfBuilderMock
 
-    val callbackData: CallbackData = new CallbackData("","",0,None,None,None,None)
+    val callbackData: CallbackData = new CallbackData("","",0,None,None,None,None,None)
     val csvFilesCallBack = new CsvFilesCallback("file0", Some(callbackData))
     val csvFilesCallbackList: CsvFilesCallbackList = new CsvFilesCallbackList(List(csvFilesCallBack))
 
