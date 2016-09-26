@@ -28,7 +28,7 @@ object ExternalUrls extends RunMode {
   val loginPath = s"${Play.configuration.getString(s"$env.microservice.services.auth.login_path").getOrElse("sign-in")}"
   
   
-  val signIn = s"$companyAuthHost/gg/$loginPath?continue=$loginCallback"
+  val signIn = s"$companyAuthHost/gg/$loginPath" //?continue=$loginCallback"
   val ytaUrl = s"${Play.configuration.getString(s"govuk-tax.$env.yta.url").getOrElse("/gg")}"
   val signOut = s"$companyAuthHost/gg/sign-out"
   val ersServiceUrl = s"${Play.configuration.getString(s"govuk-tax.$env.services.ers.url").getOrElse("")}"

@@ -165,7 +165,7 @@ class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplication with 
       implicit val fakeRequest = Fixtures.buildFakeRequestWithSessionId("?")
       val controllerUnderTest = buildFakeReturnServiceController(accessThresholdValue = 0)
       val result = await(controllerUnderTest.hmacCheck()(fakeRequest))
-      Helpers.redirectLocation(result) should be(Some(ExternalUrls.signIn))
+      Helpers.redirectLocation(result).get.startsWith(ExternalUrls.signIn) shouldBe true
     }
   }
 
@@ -174,7 +174,7 @@ class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplication with 
       implicit val fakeRequest = Fixtures.buildFakeRequestWithSessionId("?")
       val controllerUnderTest = buildFakeReturnServiceController(accessThresholdValue = 0)
       val result = await(controllerUnderTest.startPage()(fakeRequest))
-      Helpers.redirectLocation(result) should be(Some(ExternalUrls.signIn))
+      Helpers.redirectLocation(result).get.startsWith(ExternalUrls.signIn) shouldBe true
     }
   }
 

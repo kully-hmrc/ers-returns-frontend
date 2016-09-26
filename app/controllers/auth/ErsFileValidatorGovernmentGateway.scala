@@ -19,5 +19,6 @@ package controllers.auth
 import uk.gov.hmrc.play.frontend.auth.GovernmentGateway
 
 object ErsFileValidatorGovernmentGateway extends GovernmentGateway {
-  override val login = ExternalUrls.signIn
+  override def continueURL = ExternalUrls.loginCallback
+  override def loginURL = ExternalUrls.signIn
 }

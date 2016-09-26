@@ -34,7 +34,7 @@ trait ERSUsers {
   def withAuthorisedUser(test: FakeRequest[AnyContentAsEmpty.type] => Any) {
     val userId = s"user-${UUID.randomUUID}"
     when(mockAuthConnector.currentAuthority(Matchers.any[HeaderCarrier]())) thenReturn {
-      Future.successful(Some(Authority(userId, Accounts(sa = Some(SaAccount("",SaUtr("1234567890"))), vat = Some(VatAccount("", Vrn("123456789"))), epaye = Some(EpayeAccount("", EmpRef("000", "AA00000")))), None, None, CredentialStrength.Strong, ConfidenceLevel.L50)))
+      Future.successful(Some(Authority(userId, Accounts(sa = Some(SaAccount("",SaUtr("1234567890"))), vat = Some(VatAccount("", Vrn("123456789"))), epaye = Some(EpayeAccount("", EmpRef("000", "AA00000")))), None, None, CredentialStrength.Strong, ConfidenceLevel.L50, None, None)))
     }
     val sessionId = s"session-${UUID.randomUUID}"
     lazy val request = FakeRequest().withSession(

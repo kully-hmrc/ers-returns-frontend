@@ -23,7 +23,7 @@ class ERSFileValidatorGovernmentGatewaySpec extends PlaySpec with OneServerPerSu
   "ERSFileValidatorGovernmentGateway" must {
     
     "have login value overridden" in {
-      ErsFileValidatorGovernmentGateway.login must be(ExternalUrls.signIn)
+      ErsFileValidatorGovernmentGateway.loginURL must be(ExternalUrls.signIn)
     }
     
   }

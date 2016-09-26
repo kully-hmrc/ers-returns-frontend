@@ -45,7 +45,7 @@ object Fixtures {
 
 	val accounts =  Accounts(None,		epaye = Some(EpayeAccount(s"/epaye/empRef", EmpRef("ABC", "1234"))))
 	val loggedInuser = LoggedInUser("userId", Some(DateTime.now), Some(DateTime.now), Some("governmentGatewayToken"), CredentialStrength.Strong, L500)
-	def buildFakeUser = AuthContext(loggedInuser,Principal(Some("name"), accounts),Some(Attorney("name", Link("url", "text"))))
+	def buildFakeUser = AuthContext(loggedInuser,Principal(Some("name"), accounts),Some(Attorney("name", Link("url", "text"))), None, None)
 
 	def buildFakeRequestWithSessionId(method: String) = FakeRequest().withSession(("sessionId" -> "FAKE_SESSION_ID"),("screenSchemeInfo" -> "2 - EMI - MYScheme - XX12345678 - 2016"))
 	def buildFakeRequestWithSessionIdCSOP(method: String) = FakeRequest().withSession(("sessionId" -> "FAKE_SESSION_ID"),("screenSchemeInfo" -> "1 - CSOP - MYScheme - XX12345678 - 2016"))
