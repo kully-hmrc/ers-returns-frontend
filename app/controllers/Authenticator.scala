@@ -112,7 +112,7 @@ trait Authenticator extends Actions  with ErsConstants{
       epaye = Some(EpayeAccount(s"/epaye/$empRef", EmpRef(twoPartKey(0), twoPartKey(1)))))
 
 
-    AuthContext(authContext.user,Principal(authContext.principal.name, accounts),authContext.attorney)
+    AuthContext(authContext.user,Principal(authContext.principal.name, accounts),authContext.attorney, None, None)
   }
 
 }
