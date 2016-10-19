@@ -32,8 +32,9 @@ with AuthenticationConnector
 with Authenticator {
 
   def notAuthorised() = AuthorisedForAsync() {
-    implicit user => implicit request =>
-      Future.successful(Ok(views.html.not_authorised.render(request)))
+    implicit user =>
+      implicit request =>
+      Future.successful(Ok(views.html.not_authorised.render(request, context)))
   }
 
   def timedOut() = UnauthorisedAction {

@@ -28,6 +28,7 @@ import play.api.mvc._
 import uk.gov.hmrc.play.frontend.auth.{AllowAll, AuthContext}
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
+import config._
 import scala.concurrent.Future
 
 object ReturnServiceController extends ReturnServiceController {
@@ -42,8 +43,9 @@ trait ErsConstants{
   val screenSchemeInfo = "screenSchemeInfo"
   val schemeId = "schemeId"
   val schemeRef  = "schemeRef"
-
+  implicit val context: ErsContext = ErsContextImpl
 }
+
 trait ReturnServiceController extends ERSReturnBaseController with Authenticator with ErsConstants {
 
   val accessDeniedUrl: String
@@ -127,7 +129,7 @@ trait ReturnServiceController extends ERSReturnBaseController with Authenticator
 
 
   def showUnauthPage(request: Request[AnyRef]): Future[Result] = {
-    Future.successful(Ok(views.html.unauthorised()(request)))
+    Future.successful(Ok(views.html.unauthorised()(request, context)))
   }
 
     def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
