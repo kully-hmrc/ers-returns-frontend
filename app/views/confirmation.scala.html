@@ -1,6 +1,6 @@
 @* Confirmation Template File *@
 @import utils.CacheUtil
-@(dateSubmitted: String, bundle: String, taxYear: String, url: String)(implicit request: Request[AnyRef])
+@(dateSubmitted: String, bundle: String, taxYear: String, url: String)(implicit request: Request[AnyRef], context: config.ErsContext)
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @schemeRef = @{CacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get("screenSchemeInfo").get)}
 @taxYearFull = @{request.session.get("screenSchemeInfo").get.split(" - ")(4)}

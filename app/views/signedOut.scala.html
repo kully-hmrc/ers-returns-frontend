@@ -1,4 +1,4 @@
-@(loginScreenUrl: String)(implicit request: Request[AnyContent])
+@(loginScreenUrl: String)(implicit request: Request[AnyContent], context: config.ErsContext)
 
 @import views.html.templates._
 @import utils.ContentUtil._

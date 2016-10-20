@@ -1,4 +1,4 @@
-@(invalidChars: String)(implicit request: Request[AnyRef], flash: Flash)
+@(invalidChars: String)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 @* check return file Template *@
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import views.html.templates._

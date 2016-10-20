@@ -1,4 +1,4 @@
-@(checkFileType: String, schemeOrganiser: Form[models.SchemeOrganiserDetails], reportableEvents: String = "2")(implicit request: Request[AnyRef], flash: Flash)
+@(checkFileType: String, schemeOrganiser: Form[models.SchemeOrganiserDetails], reportableEvents: String = "2")(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import views.html.templates._
 @import uk.gov.hmrc.play.views.html.helpers

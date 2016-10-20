@@ -1,4 +1,4 @@
-@(groupSchemeType: String)(implicit request: Request[AnyRef], flash: Flash)
+@(groupSchemeType: String)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 @* type of activity template *@
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import views.html.templates._

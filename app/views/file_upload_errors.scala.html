@@ -1,4 +1,4 @@
-@(scheme: String, schemeRef: String, sr: String, fileType: String)(implicit request: Request[AnyRef])
+@(scheme: String, schemeRef: String, sr: String, fileType: String)(implicit request: Request[AnyRef], context: config.ErsContext)
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import views.html.templates._
 @import utils.PageBuilder._

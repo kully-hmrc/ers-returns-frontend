@@ -1,5 +1,5 @@
 @* start Template File *@
-@(screenSchemeInfo:String)(implicit request: Request[AnyRef])
+@(screenSchemeInfo:String)(implicit request: Request[AnyRef], context: config.ErsContext)
 @schemeId = @{screenSchemeInfo.split(" - ").head}
 @import views.html.templates._
 @import utils.PageBuilder._

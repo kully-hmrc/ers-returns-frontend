@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package controllers
+package config
 
-import play.api.mvc.Action
-import uk.gov.hmrc.play.frontend.controller.FrontendController
+import connectors.ContactFrontendConnector
+import uk.gov.hmrc.play.http.HeaderCarrier
+import scala.concurrent.Future
 
-object ApplicationController extends FrontendController with ErsConstants{
-
-  def unauthorised = Action {
-    implicit request =>
-      Ok(views.html.unauthorised()(request, context))
-  }
-
+trait ErsContext {
+  def getPageHelpPartial()(implicit hc: HeaderCarrier): Future[String]
 }
+
+case object ErsContextImpl extends ErsContext {
+  override def getPageHelpPartial()(implicit hc: HeaderCarrier): Future[String] = ContactFrontendConnector.getHelpPartial
+}
+

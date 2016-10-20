@@ -1,4 +1,4 @@
-@(groupSchemeType: String, companies: CompanyDetailsList)(implicit request: Request[AnyRef], flash: Flash)
+@(groupSchemeType: String, companies: CompanyDetailsList)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 @* Is a group scheme template *@
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import views.html.templates._
