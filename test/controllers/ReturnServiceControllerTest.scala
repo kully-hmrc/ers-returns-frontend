@@ -19,6 +19,7 @@ package controllers
 import java.util.NoSuchElementException
 import java.util.concurrent.TimeUnit
 
+import config.ApplicationConfig
 import connectors.{CustomAuditConnector, ErsConnector}
 import metrics.Metrics
 import models.{ErsMetaData, _}
@@ -35,9 +36,9 @@ import services.SessionService
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.http.cache.client.ShortLivedCache
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HttpResponse, HttpGet, HttpPost, HeaderCarrier}
+import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{ExternalUrls, CacheUtil}
+import utils.{CacheUtil, ExternalUrls}
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import org.jsoup.Jsoup
@@ -165,7 +166,7 @@ class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplication with 
       implicit val fakeRequest = Fixtures.buildFakeRequestWithSessionId("?")
       val controllerUnderTest = buildFakeReturnServiceController(accessThresholdValue = 0)
       val result = await(controllerUnderTest.hmacCheck()(fakeRequest))
-      Helpers.redirectLocation(result).get.startsWith(ExternalUrls.signIn) shouldBe true
+      Helpers.redirectLocation(result).get.startsWith(ApplicationConfig.ggSignInUrl) shouldBe true
     }
   }
 
@@ -174,7 +175,7 @@ class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplication with 
       implicit val fakeRequest = Fixtures.buildFakeRequestWithSessionId("?")
       val controllerUnderTest = buildFakeReturnServiceController(accessThresholdValue = 0)
       val result = await(controllerUnderTest.startPage()(fakeRequest))
-      Helpers.redirectLocation(result).get.startsWith(ExternalUrls.signIn) shouldBe true
+      Helpers.redirectLocation(result).get.startsWith(ApplicationConfig.ggSignInUrl) shouldBe true
     }
   }
 

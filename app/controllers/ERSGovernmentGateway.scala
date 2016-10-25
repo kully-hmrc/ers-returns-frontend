@@ -22,10 +22,12 @@ import utils.ExternalUrls
 import play.api.mvc.{AnyContent, Request, Result}
 import scala.concurrent.Future
 import play.api.mvc.Results.Redirect
+import config.ApplicationConfig
 
 object ERSGovernmentGateway extends GovernmentGateway {
   override def continueURL = ExternalUrls.loginCallback
-  override def loginURL = ExternalUrls.signIn
+  //override def loginURL = ExternalUrls.signIn
+  override def loginURL = ApplicationConfig.ggSignInUrl
 
   override def handleSessionTimeout(implicit request: Request[_]): Future[Result] = {
     Future.successful(Redirect(routes.AuthorizationController.timedOut().url))
