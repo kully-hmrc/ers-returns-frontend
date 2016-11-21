@@ -1,6 +1,6 @@
 @(applicationConfig: config.ApplicationConfig = config.ApplicationConfig,
     title: String,
-    headerNav: Option[views.helpers.HeaderNav] = None,    
+    headerNav: Option[views.helpers.HeaderNav] = None,
     contentHeader: Option[Html] = None,
     sidebar: Html = HtmlFormat.empty,
     userLoggedIn: Boolean = false,
@@ -15,7 +15,6 @@
 
 @head = {
     @uiLayouts.head(
-        assetsPrefix = applicationConfig.assetsPrefix,
         linkElem = linkElement,
         headScripts = None)
     <meta name="format-detection" content="telephone=no"/>
@@ -42,7 +41,6 @@
     @uiLayouts.footer(
         analyticsToken = applicationConfig.analyticsToken,
         analyticsHost = applicationConfig.analyticsHost,
-        assetsPrefix = applicationConfig.assetsPrefix,
         ssoUrl = None,
         scriptElem = scriptElement,
         gaCalls = None
