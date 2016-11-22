@@ -19,12 +19,12 @@ package controllers
 import models.{RSformMappings, TrusteeDetails, TrusteeDetailsList, _}
 import play.api.Logger
 import play.api.data.Form
-import play.api.i18n.Messages
 import play.api.mvc.{AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
-
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import scala.concurrent.Future
 
 
@@ -34,6 +34,8 @@ object TrusteeController extends TrusteeController {
 
 trait TrusteeController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
+
+  val messages = applicationMessages
 
   def trusteeDetailsPage(index: Int) = AuthorisedForAsync() {
     implicit user =>
@@ -230,6 +232,6 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
     Future(Redirect(routes.AltAmendsController.altActivityPage()))
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }

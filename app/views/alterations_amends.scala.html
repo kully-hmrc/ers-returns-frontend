@@ -7,13 +7,13 @@
 @ers_main(title = getPageElement(schemeId, "ers", "what_alterations.page_title")) {
 
     @reference()
-    <p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_ALT_AMENDS)" class="link-back">@Html(Messages("ers.back"))</a></p>
+    <p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_ALT_AMENDS)" class="link-back">@Html(messages("ers.back"))</a></p>
 
     @header(getPageElement(schemeId, PAGE_ALT_AMENDS, "question"))
     @if(flash.get("alt-amends-not-selected-error").isDefined) {
     <div id="errors" class="validation-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
         <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
-            @Html(Messages("validation.summary.heading"))
+            @Html(messages("validation.summary.heading"))
         </h1>
         <ul class="validation-summary-message">
             <li class=validation-summary-message"><a href="#error-summary" data-focuses="error-summary">@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "err.message"))</a></li>
@@ -60,7 +60,7 @@
         <div class="panel-indent">
             <p id="declaration">@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "alert"))</p>
         </div>
-        <input role="button" id="continue" class="button" type="submit" value="@Html(Messages("ers_alt_amends.continue"))">
+        <input role="button" id="continue" class="button" type="submit" value="@Html(messages("ers_alt_amends.continue"))">
     }
 
 }

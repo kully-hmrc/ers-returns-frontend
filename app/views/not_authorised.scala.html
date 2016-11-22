@@ -1,13 +1,15 @@
 @* not_authorised Template File *@
 @(implicit request: Request[AnyRef], context: config.ErsContext)
 
-@ers_main(title = Messages("ers.app_title")) {
+@import utils.PageBuilder.messages
+
+@ers_main(title = messages("ers.app_title")) {
 	<header id="page-header">
 	
-	<h1>@Html(Messages("ers_not_authorised.page_title"))</h1>
+	<h1>@Html(messages("ers_not_authorised.page_title"))</h1>
 			
 	<div class="application-notice help-notice">
-		<p>@Html(Messages("ers_not_authorised.para1"))</p>	
+		<p>@Html(messages("ers_not_authorised.para1"))</p>
 	</div>
 		
 	

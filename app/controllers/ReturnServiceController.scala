@@ -22,7 +22,8 @@ import metrics.Metrics
 import org.joda.time.DateTime
 import play.Logger
 import play.api.Play
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.auth.{AllowAll, AuthContext}
@@ -51,6 +52,7 @@ trait ReturnServiceController extends ERSReturnBaseController with Authenticator
   val accessDeniedUrl: String
 
   val cacheUtil: CacheUtil
+  val messages = applicationMessages
 
   val accessThreshold: Int
   val metrics: Metrics
@@ -132,7 +134,7 @@ trait ReturnServiceController extends ERSReturnBaseController with Authenticator
     Future.successful(Ok(views.html.unauthorised()(request, context)))
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 
 }

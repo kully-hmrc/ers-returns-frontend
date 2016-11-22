@@ -26,12 +26,14 @@ import services.pdf.{ApachePdfContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
-
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import scala.collection.mutable.ListBuffer
 
 trait PdfGenerationController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
   val pdfBuilderService : ErsReceiptPdfBuilderService
+  val messages = applicationMessages
 
 
   def buildPdfForBundle(bundle: String, dateSubmitted: String) = AuthorisedForAsync() {
@@ -58,7 +60,7 @@ trait PdfGenerationController extends ERSReturnBaseController with Authenticator
             if (fileType == PageBuilder.OPTION_CSV) {
               val csvFilesCallback: List[CsvFilesCallback] = all.getEntry[CsvFilesCallbackList](CacheUtil.CHECK_CSV_FILES).get.files
               for (file <- csvFilesCallback if (file.callbackData.isDefined)) {
-                filesUploaded += Messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, file.fileId + ".file_name"))
+                filesUploaded += messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, file.fileId + ".file_name"))
               }
             } else {
               filesUploaded += all.getEntry[String](CacheUtil.FILE_NAME_CACHE).get
@@ -82,8 +84,8 @@ trait PdfGenerationController extends ERSReturnBaseController with Authenticator
     }
   }
 
-  def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"),
-    Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"),
+    messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 }
 
 object PdfGenerationController extends PdfGenerationController {

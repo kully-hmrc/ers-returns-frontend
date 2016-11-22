@@ -19,12 +19,12 @@ package controllers
 import models._
 import play.api.Logger
 import play.api.data.Form
-import play.api.i18n.Messages
 import play.api.mvc.{AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
-
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import scala.concurrent.Future
 
 object SchemeOrganiserController extends SchemeOrganiserController {
@@ -34,6 +34,7 @@ object SchemeOrganiserController extends SchemeOrganiserController {
 
 trait SchemeOrganiserController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
+  val messages = applicationMessages
 
   def schemeOrganiserPage() = AuthorisedForAsync() {
     implicit user =>
@@ -99,6 +100,6 @@ trait SchemeOrganiserController extends ERSReturnBaseController with Authenticat
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }

@@ -7,7 +7,7 @@
 @ers_main(title = getPageElement(schemeId, "ers", "is_alterations.page_title")) {
 
     @reference()
-    <p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_ALT_ACTIVITY, groupSchemeActivity)" class="link-back">@Html(Messages("ers.back"))</a></p>
+    <p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_ALT_ACTIVITY, groupSchemeActivity)" class="link-back">@Html(messages("ers.back"))</a></p>
     @uk.gov.hmrc.play.views.html.helpers.form(action = routes.AltAmendsController.altActivitySelected()) {
         @header(getPageElement(schemeId, PAGE_ALT_ACTIVITY, "question"))
         @error_overview(altActivityForm, Some(getPageElement(schemeId, PAGE_ALT_ACTIVITY, "err.message")))
@@ -21,15 +21,15 @@
                 <div class="form-field">
                     <label for="yes" class="block-label @(if(altActivity == OPTION_YES) "selected")">
                         <input id="yes" type="radio" name="altActivity" value=@OPTION_YES @(if(altActivity == OPTION_YES) "checked" else "")>
-                        @Html(Messages("ers.yes"))<br>
+                        @Html(messages("ers.yes"))<br>
                     </label>
                     <label for="no" class="block-label @(if(altActivity == OPTION_NO) "selected")">
                         <input id="no" type="radio" name="altActivity" value=@OPTION_NO @(if(altActivity == OPTION_NO) "checked" else "")>
-                        @Html(Messages("ers.no"))<br>
+                        @Html(messages("ers.no"))<br>
                     </label>
                 </div>
             </fieldset>
         </div>
-        <input role="button" id="continue" class="button" type="submit" value="@Html(Messages("ers.continue"))">
+        <input role="button" id="continue" class="button" type="submit" value="@Html(messages("ers.continue"))">
     }
 }

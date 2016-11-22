@@ -2,6 +2,7 @@
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import views.html.templates._
 @import utils.PageBuilder._
+@import utils.PageBuilder.messages
 @import utils.ContentUtil._
 
 @scripts = {
@@ -11,49 +12,49 @@
 @pageTitle = {
     @if(csvFilesCallback.count(_.callbackData.isDefined) == 0) {
         @if(csvFilesCallback.map(_.fileId).size == 1) {
-            @Messages("ers.upload_csv_file.page_title")
+            @messages("ers.upload_csv_file.page_title")
         } else {
-            @Messages("ers.upload_first_csv_file.page_title")
+            @messages("ers.upload_first_csv_file.page_title")
         }
     } else {
-        @Messages("ers.upload_next_csv_file.page_title")
+        @messages("ers.upload_next_csv_file.page_title")
     }
 }
 
 @ers_main(title = pageTitle.toString, scripts) {
 
     @reference()
-    <p class="font-xsmall"><a href="@routes.CheckCsvFilesController.checkCsvFilesPage" class="link-back">@Html(Messages("ers.back"))</a></p>
+    <p class="font-xsmall"><a href="@routes.CheckCsvFilesController.checkCsvFilesPage" class="link-back">@Html(messages("ers.back"))</a></p>
     @if(csvFilesCallback.count(_.callbackData.isDefined) == 0) {
         @if(csvFilesCallback.map(_.fileId).size == 1) {
-            @header(Messages("csv_file_upload.file_title"))
+            @header(messages("csv_file_upload.file_title"))
         } else {
-            @header(Messages("csv_file_upload.first_file_title"))
+            @header(messages("csv_file_upload.first_file_title"))
         }
     } else {
-        @header(Messages("csv_file_upload.next_file_title"))
+        @header(messages("csv_file_upload.next_file_title"))
     }
     <div id="errors" class="validation-summary visibility" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
         <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
-            @Html(Messages("validation.summary.heading"))
+            @Html(messages("validation.summary.heading"))
         </h1>
         <ul class="error-summary-list">
-            <li class="validation-summary-message"><a href="#file-uploader" data-focuses="file-uploader">@Html(Messages("csv_file_upload.summary_error"))</a></li>
+            <li class="validation-summary-message"><a href="#file-uploader" data-focuses="file-uploader">@Html(messages("csv_file_upload.summary_error"))</a></li>
         </ul>
     </div>
     <h2 id="files-list" class="heading-small">
         @if(csvFilesCallback.map(_.fileId).size == 1) {
-            @Html(Messages("csv_file_upload.file_to_upload_title"))
+            @Html(messages("csv_file_upload.file_to_upload_title"))
         } else {
-            @Html(Messages("csv_file_upload.files_to_upload_title"))
+            @Html(messages("csv_file_upload.files_to_upload_title"))
         }
     </h2>
     <p>
     @for(file <- csvFilesCallback if (file.callbackData.isDefined)) {
-        <span class="uploaded files" data-file-name="@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span> - UPLOADED<br>
+        <span class="uploaded files" data-file-name="@messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span> - UPLOADED<br>
     }
     @for(file <- csvFilesCallback if (file.callbackData.isEmpty)) {
-        <span id="@file.fileId" class="notUploaded files" data-file-name="@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span><br>
+        <span id="@file.fileId" class="notUploaded files" data-file-name="@messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span><br>
     }
     </p>
     <label for="fileToUpload" class="visuallyhidden">

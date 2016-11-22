@@ -18,7 +18,8 @@ package controllers
 
 import models._
 import play.api.Logger
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import play.api.mvc.{Result, Request}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
@@ -33,6 +34,7 @@ object CheckCsvFilesController extends CheckCsvFilesController {
 trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
   val pageBuilder: PageBuilder
+  val messages = applicationMessages
 
   def checkCsvFilesPage() = AuthorisedForAsync() {
     implicit user =>
@@ -109,10 +111,10 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
 
   def reloadWithError(): Future[Result] = {
     Future.successful(
-      Redirect(routes.CheckCsvFilesController.checkCsvFilesPage()).flashing("csv-file-not-selected-error" -> Messages(PageBuilder.PAGE_CHECK_CSV_FILE + ".err.message"))
+      Redirect(routes.CheckCsvFilesController.checkCsvFilesPage()).flashing("csv-file-not-selected-error" -> messages(PageBuilder.PAGE_CHECK_CSV_FILE + ".err.message"))
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }

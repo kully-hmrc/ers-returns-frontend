@@ -16,4 +16,9 @@
 
 package controllers
 
-object AssetsController extends AssetsBuilder
+import javax.inject.Inject
+import play.api.http.HttpErrorHandler
+
+object AssertsController
+
+class AssetsController @Inject()(errorHandler: HttpErrorHandler) extends AssetsBuilder(errorHandler)

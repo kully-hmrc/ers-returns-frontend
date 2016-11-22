@@ -17,12 +17,14 @@
 package services.pdf
 
 import controllers.ErsConstants
-import play.api.i18n.Messages
 import utils.PageBuilder
-
+import play.api.i18n.Messages.Implicits._
 import scala.collection.mutable.ListBuffer
+import play.api.Play.current
 
 class FileNamesDecorator(reportableEvents: String, filesUploaded: Option[ListBuffer[String]], headingFontSize: Float, answerFontSize: Float, lineSpacer: Float, blockSpacer: Float) extends Decorator {
+
+  val messages = applicationMessages
 
   def decorate(streamer: ErsContentsStreamer): Unit = {
     if (reportableEvents == PageBuilder.OPTION_NIL_RETURN)
@@ -30,9 +32,9 @@ class FileNamesDecorator(reportableEvents: String, filesUploaded: Option[ListBuf
 
 
     if (filesUploaded.get.length == 1) {
-      streamer.drawText(Messages("ers_summary_declaration.file_name"), headingFontSize)
+      streamer.drawText(messages("ers_summary_declaration.file_name"), headingFontSize)
     } else {
-      streamer.drawText(Messages("ers_summary_declaration.file_names"), headingFontSize)
+      streamer.drawText(messages("ers_summary_declaration.file_names"), headingFontSize)
     }
 
     streamer.drawText("", lineSpacer)

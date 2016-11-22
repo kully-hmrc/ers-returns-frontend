@@ -7,21 +7,21 @@ object FrontendBuild extends Build with MicroService {
 }
 
 private object AppDependencies {
-  import play.PlayImport._
+  import play.sbt.PlayImport._
   import play.core.PlayVersion
 
-  private val playHealthVersion = "1.1.0"
-  private val frontendBootstrapVersion = "6.7.0"
-  private val govukTemplateVersion = "4.0.0"
-  private val playUiVersion = "4.17.2"
-  private val playAuthFrontendVersion = "5.5.0"
-  private val playConfigVersion = "2.1.0"
+  private val playHealthVersion = "2.0.0"
+  private val frontendBootstrapVersion = "7.10.0"
+  private val govukTemplateVersion = "5.0.0"
+  private val playUiVersion = "5.2.0"
+  private val playAuthFrontendVersion = "6.2.0"
+  private val playConfigVersion = "3.0.0"
   private val metricsPlayVersion = "0.2.1"
   private val metricsGraphiteVersion = "3.0.2"
-  private val domainVersion = "3.7.0"
-  private val httpCachingVersion = "5.6.0"
-  private val playPartialVersion = "4.6.0"
-  private val jsonLoggerVersion = "2.1.1"
+  private val domainVersion = "4.0.0"
+  private val httpCachingVersion = "6.1.0"
+  private val playPartialVersion = "5.2.0"
+  private val jsonLoggerVersion = "3.1.0"
 
   val compile = Seq(
     ws,
@@ -34,10 +34,11 @@ private object AppDependencies {
     "uk.gov.hmrc" %% "play-authorised-frontend" % playAuthFrontendVersion,
     "uk.gov.hmrc" %% "domain" % domainVersion,
     "uk.gov.hmrc" %% "http-caching-client" % httpCachingVersion,
-    "com.kenshoo" %% "metrics-play" % metricsPlayVersion,
+    //"com.kenshoo" %% "metrics-play" % metricsPlayVersion,
+    "uk.gov.hmrc" %% "play-graphite" % "3.1.0",
     "com.codahale.metrics" % "metrics-graphite" % metricsGraphiteVersion,
     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3",
-    "uk.gov.hmrc" %% "play-json-logger" % jsonLoggerVersion,
+   // "uk.gov.hmrc" %% "play-json-logger" % jsonLoggerVersion,
     "org.apache.pdfbox" % "pdfbox" % "1.8.11",
     "org.apache.pdfbox" % "xmpbox" % "1.8.11"
 

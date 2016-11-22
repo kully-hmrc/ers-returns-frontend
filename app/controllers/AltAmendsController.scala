@@ -19,7 +19,8 @@ package controllers
 import _root_.models._
 import connectors.ErsConnector
 import play.api.Logger
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import play.api.mvc.{Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
@@ -34,6 +35,7 @@ object AltAmendsController extends AltAmendsController {
 
 trait AltAmendsController extends ERSReturnBaseController with Authenticator with ErsConstants {
 
+  val messages = applicationMessages
   val cacheUtil: CacheUtil
   val ersConnector: ErsConnector
 
@@ -155,6 +157,6 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }

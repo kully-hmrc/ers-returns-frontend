@@ -19,7 +19,8 @@ package controllers
 import _root_.models._
 import config.ERSFileValidatorAuthConnector
 import connectors.{AttachmentsConnector, ErsConnector}
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import play.api.mvc.{Result, Request}
 import play.api.Logger
 import play.twirl.api.Html
@@ -33,6 +34,7 @@ import scala.concurrent.Future
 
 trait FileUploadController extends FrontendController with Authenticator {
 
+  val messages = applicationMessages
   val attachmentsConnector: AttachmentsConnector
   val sessionService: SessionService
   val cacheUtil: CacheUtil
@@ -129,7 +131,7 @@ trait FileUploadController extends FrontendController with Authenticator {
         Future(getGlobalErrorPage)
   }
 
-  def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }
 

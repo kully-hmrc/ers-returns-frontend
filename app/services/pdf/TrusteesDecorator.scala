@@ -17,9 +17,12 @@
 package services.pdf
 
 import models.TrusteeDetailsList
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 
 class TrusteesDecorator(trusteesList: Option[TrusteeDetailsList], headingFontSize: Float, answerFontSize: Float, lineSpacer: Float, blockSpacer: Float) extends Decorator{
+
+  val messages = applicationMessages
 
   def decorate(streamer: ErsContentsStreamer) : Unit = {
 
@@ -27,7 +30,7 @@ class TrusteesDecorator(trusteesList: Option[TrusteeDetailsList], headingFontSiz
       return
 
     streamer.drawText("", lineSpacer)
-    streamer.drawText(Messages("ers_trustee_summary.title"), headingFontSize)
+    streamer.drawText(messages("ers_trustee_summary.title"), headingFontSize)
     streamer.drawText("", lineSpacer)
 
     for (trustee <- trusteesList.get.trustees) {

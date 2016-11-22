@@ -33,6 +33,8 @@ import uk.gov.hmrc.play.partials.HeaderCarrierForPartialsConverter
 import play.Logger
 import play.api.Play.current
 
+import scala.concurrent.duration.Duration
+
 object ERSFileValidatorAuditConnector extends AuditConnector with AppName with RunMode {
   override lazy val auditingConfig = LoadAuditingConfig(s"$env.auditing")
 }
@@ -49,7 +51,7 @@ object WSHttpWithCustomTimeOut extends WSHttp with AppName with RunMode  with Ht
   val ersTimeOut =  (Play.configuration.getInt("ers-timeout-seconds").getOrElse(20)) * 1000
 
   override def buildRequest[A](url: String)(implicit hc: HeaderCarrier) = {
-    super.buildRequest[A](url).withRequestTimeout(ersTimeOut)
+    super.buildRequest[A](url).withRequestTimeout(Duration(ersTimeOut.toString))
   }
 }
 

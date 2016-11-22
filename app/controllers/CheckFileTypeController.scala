@@ -18,7 +18,8 @@ package controllers
 
 import models.{RSformMappings, _}
 import play.api.Logger
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
@@ -32,6 +33,7 @@ object CheckFileTypeController extends CheckFileTypeController {
 
 trait CheckFileTypeController extends ERSReturnBaseController with Authenticator {
 
+  val messages = applicationMessages
   val jsonParser = JsonParser
   val contentUtil = ContentUtil
   val cacheUtil: CacheUtil
@@ -83,6 +85,6 @@ trait CheckFileTypeController extends ERSReturnBaseController with Authenticator
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }

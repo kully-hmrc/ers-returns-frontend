@@ -28,10 +28,12 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 import _root_.models._
 import scala.concurrent.Future
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 
 trait CsvFileUploadController extends FrontendController with Authenticator {
 
+  val messages = applicationMessages
   val attachmentsConnector: AttachmentsConnector
   val sessionService: SessionService
   val cacheUtil: CacheUtil
@@ -112,7 +114,7 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
   def updateCallbackData(callbackData: Option[CallbackData], csvFilesCallbackList: List[CsvFilesCallback])(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): List[CsvFilesCallback] = {
     val schemeId = request.session.get("screenSchemeInfo").get.split(" - ").head
     for(csvFileCallback <- csvFilesCallbackList) yield {
-      val filename = Messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, csvFileCallback.fileId+".file_name"))
+      val filename = messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, csvFileCallback.fileId+".file_name"))
       if (filename == callbackData.get.name.get) {
         CsvFilesCallback(csvFileCallback.fileId, callbackData)
       } else {
@@ -226,7 +228,7 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
         Future(getGlobalErrorPage)
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }
 

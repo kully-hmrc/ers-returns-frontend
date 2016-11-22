@@ -25,8 +25,8 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
-import play.api.i18n.Messages
-
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import scala.concurrent.Future
 
 object SummaryDeclarationController extends SummaryDeclarationController {
@@ -36,6 +36,7 @@ object SummaryDeclarationController extends SummaryDeclarationController {
 
 trait SummaryDeclarationController extends ERSReturnBaseController with Authenticator  with ErsConstants{
 
+  val messages = applicationMessages
   val cacheUtil: CacheUtil
   val ersConnector: ErsConnector
 
@@ -62,7 +63,7 @@ trait SummaryDeclarationController extends ERSReturnBaseController with Authenti
         if (fileType == PageBuilder.OPTION_CSV) {
           val csvFilesCallback: List[CsvFilesCallback] = all.getEntry[CsvFilesCallbackList](CacheUtil.CHECK_CSV_FILES).get.files
           for (file <- csvFilesCallback if (file.callbackData.isDefined)) {
-            fileNames = fileNames + Messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, file.fileId + ".file_name")) + "<br/>"
+            fileNames = fileNames + messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, file.fileId + ".file_name")) + "<br/>"
             fileCount += 1
           }
         } else {
@@ -91,6 +92,6 @@ trait SummaryDeclarationController extends ERSReturnBaseController with Authenti
   def getCompDetails(cacheMap: CacheMap) =
       cacheMap.getEntry[CompanyDetailsList](CacheUtil.GROUP_SCHEME_COMPANIES).getOrElse(CompanyDetailsList(List[CompanyDetails]()))
 
-  def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
 
 }

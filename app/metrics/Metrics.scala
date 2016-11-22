@@ -16,7 +16,6 @@
 
 package metrics
 
-import com.kenshoo.play.metrics.MetricsRegistry
 
 import java.util.concurrent.TimeUnit
 
@@ -41,21 +40,21 @@ trait Metrics {
 }
 
 object Metrics extends Metrics {
-  override def csvValidationTimer(diff: Long, unit: TimeUnit) = MetricsRegistry.defaultRegistry.timer("csv-validation-timer").update(diff, unit)
+  override def csvValidationTimer(diff: Long, unit: TimeUnit) = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").timer("csv-validation-timer").update(diff, unit)
 
-  override def odsValidationTimer(diff: Long, unit: TimeUnit) = MetricsRegistry.defaultRegistry.timer("ods-validation-timer").update(diff, unit)
+  override def odsValidationTimer(diff: Long, unit: TimeUnit) = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").timer("ods-validation-timer").update(diff, unit)
 
-  override def fileUploadSize(n: Long) = MetricsRegistry.defaultRegistry.histogram("file-upload-size").update(n)
+  override def fileUploadSize(n: Long) = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").histogram("file-upload-size").update(n)
 
-  override def cacheTimeStore(diff: Long, unit: TimeUnit) = MetricsRegistry.defaultRegistry.timer("store-cache-timer").update(diff, unit)
+  override def cacheTimeStore(diff: Long, unit: TimeUnit) = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").timer("store-cache-timer").update(diff, unit)
 
-  override def cacheTimeFetch(diff: Long, unit: TimeUnit) = MetricsRegistry.defaultRegistry.timer("fetch-cache-timer").update(diff, unit)
+  override def cacheTimeFetch(diff: Long, unit: TimeUnit) = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").timer("fetch-cache-timer").update(diff, unit)
 
-  override def accessThresholdGranted() = MetricsRegistry.defaultRegistry.counter("access-threshold-granted").inc()
+  override def accessThresholdGranted() = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").counter("access-threshold-granted").inc()
 
-  override def accessThresholdDenied() = MetricsRegistry.defaultRegistry.counter("access-threshold-denied").inc()
+  override def accessThresholdDenied() = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").counter("access-threshold-denied").inc()
 
-  override def ErsConnector(diff: Long, unit: TimeUnit) = MetricsRegistry.defaultRegistry.timer("validator-connector").update(diff, unit)
+  override def ErsConnector(diff: Long, unit: TimeUnit) = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").timer("validator-connector").update(diff, unit)
 
-  override def submitReturnToBackend(diff: Long, unit: TimeUnit) = MetricsRegistry.defaultRegistry.timer("submit-to-returns-connector").update(diff, unit)
+  override def submitReturnToBackend(diff: Long, unit: TimeUnit) = com.codahale.metrics.SharedMetricRegistries.getOrCreate("default").timer("submit-to-returns-connector").update(diff, unit)
 }
