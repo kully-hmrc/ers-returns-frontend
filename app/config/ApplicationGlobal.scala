@@ -21,6 +21,7 @@ import java.io.File
 import com.typesafe.config.Config
 import net.ceedubs.ficus.Ficus._
 import play.api.Mode._
+import play.api.i18n.Messages
 import play.api.mvc.Request
 import play.api.{Application, Configuration, Play}
 import play.twirl.api.Html
@@ -45,7 +46,7 @@ object ApplicationGlobal extends DefaultFrontendGlobal with RunMode {
     super.onLoadConfig(config, path, classLoader, mode)
   }
 
-  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_]): Html =
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages): Html =
     views.html.global_error(pageTitle, heading, message)
 
   override def microserviceMetricsConfig(implicit app: Application): Option[Configuration] = app.configuration.getConfig(s"$env.microservice.metrics")

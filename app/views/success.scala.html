@@ -1,4 +1,4 @@
-@(fileNames : Option[CsvFilesCallbackList], ODSFileName: Option[String])(implicit request: Request[AnyRef], context: config.ErsContext)
+@(fileNames : Option[CsvFilesCallbackList], ODSFileName: Option[String])(implicit request: Request[AnyRef], context: config.ErsContext, messages: Messages)
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import views.html.templates._
 @import utils.PageBuilder._
@@ -9,14 +9,14 @@
 }
 
 
-@ers_main(title = Messages("ers.if_there_are_no_errors.page_title"), scripts) {
+@ers_main(title = message("ers.if_there_are_no_errors.page_title"), scripts) {
 
 	@reference()
 
 	@if(fileNames.isDefined){
-		<p class="font-xsmall"><a href="@routes.CsvFileUploadController.uploadFilePage" class="link-back">@Html(Messages("ers.back"))</a></p>
+		<p class="font-xsmall"><a href="@routes.CsvFileUploadController.uploadFilePage" class="link-back">@Html(message("ers.back"))</a></p>
 	} else {
-		<p class="font-xsmall"><a href="@routes.FileUploadController.uploadFilePage" class="link-back">@Html(Messages("ers.back"))</a></p>
+		<p class="font-xsmall"><a href="@routes.FileUploadController.uploadFilePage" class="link-back">@Html(message("ers.back"))</a></p>
 	}
 
 	@if(fileNames.isDefined && fileNames.get.files.size > 1){
@@ -28,13 +28,13 @@
 	<h2 id="files-list" class="heading-small">
 		@if(fileNames.isDefined) {
 			@if(fileNames.get.files.size == 1) {
-				@Html(Messages("csv_file_upload.file_to_upload_title"))
+				@Html(message("csv_file_upload.file_to_upload_title"))
 			} else {
-				@Html(Messages("csv_file_upload.files_to_upload_title"))
+				@Html(message("csv_file_upload.files_to_upload_title"))
 			}
 		}
 		@if(ODSFileName.isDefined) {
-			@Html(Messages("csv_file_upload.file_to_upload_title"))
+			@Html(message("csv_file_upload.file_to_upload_title"))
 		}
 	</h2>
 	<p>
@@ -50,12 +50,12 @@
 
 	@if(fileNames.isDefined){
 		@uk.gov.hmrc.play.views.html.helpers.form(action = routes.CsvFileUploadController.validationResults) {
-		<input role="button" id="continue" class="button" type="submit" value="@Html(Messages("ers.continue"))">
+		<input role="button" id="continue" class="button" type="submit" value="@Html(message("ers.continue"))">
 		@spinner()
 		}
 	}else {
 		@uk.gov.hmrc.play.views.html.helpers.form(action = routes.FileUploadController.validationResults) {
-		<input role="button" id="continue" class="button" type="submit" value="@Html(Messages("ers.continue"))">
+		<input role="button" id="continue" class="button" type="submit" value="@Html(message("ers.continue"))">
 		@spinner()
 		}
 	}

@@ -4,11 +4,11 @@
 @import views.html.templates._
 @import utils.PageBuilder._
 
-@ers_main(title = Messages("ers.app_title")) {
+@ers_main(title = message("ers.app_title")) {
 
 	<p>@Html(request.session.get("screenSchemeInfo").get.drop(3).take(100))</p>
 
-	<p class="font-xsmall"><a href="routes.GroupSchemeController.groupSchemePage(sr)" class="link-back">@Html(Messages("ers.back"))</a></p>
+	<p class="font-xsmall"><a href="routes.GroupSchemeController.groupSchemePage(sr)" class="link-back">@Html(message("ers.back"))</a></p>
 	
 	@header(getPageElement(schemeId, PAGE_GROUP_SCHEME_TYPE, "title"))
 	
@@ -19,7 +19,7 @@
 		    	<div class="form-field @if(flash.get("group-scheme-type-not-selected-error").isDefined) {error}">
 		    		<label for="file-upload-radio-button" class="block-label @(if(groupSchemeType == OPTION_CSV) "selected")">
 		    			<input id="file-upload-radio-button" type="radio" name="groupSchemeType" value=@OPTION_CSV @(if(groupSchemeType == OPTION_CSV) "checked" else "")>
-		    			@Html(Messages("ers_group_scheme_type.option_1"))<br>
+		    			@Html(message("ers_group_scheme_type.option_1"))<br>
 		    		</label>
 		    		<label for="manual-radio-button" class="block-label @(if(groupSchemeType == OPTION_MANUAL) "selected")">
 		    			<input id="manual-radio-button" type="radio" name="groupSchemeType" value=@OPTION_MANUAL @(if(groupSchemeType == OPTION_MANUAL) "checked" else "")>
@@ -32,7 +32,7 @@
 				@flash.get("group-scheme-type-not-selected-error")
 			</div> 
 			}
-		    <input role="button" id="continue" class="button" type="submit" value="@*Html(Messages("ers.continue"))">
+		    <input role="button" id="continue" class="button" type="submit" value="@*Html(message("ers.continue"))">
 		}*@	
 	</div-->		
 }

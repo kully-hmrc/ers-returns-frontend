@@ -1,8 +1,7 @@
-@(pageTitle: String, heading: String, message: String, applicationConfig: config.ApplicationConfig = config.ApplicationConfig)
+@(pageTitle: String, heading: String, message: String, applicationConfig: config.ApplicationConfig = config.ApplicationConfig)(implicit implicitMessages: Messages)
 
 @import play.api.Play.current
 @import uk.gov.hmrc.play.config.RunMode._
-@import utils.PageBuilder.messages
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
 
@@ -60,4 +59,4 @@ gaCalls = None)
 @afterHeader = {}
 
 
-@hmrcGovUkTemplate(Some(pageTitle), None)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(uiLayouts.footer_links()(messages = messages)), true)(content)
+@hmrcGovUkTemplate(Some(pageTitle), None)(head, bodyEnd, insideHeader, afterHeader, footerTop, Some(uiLayouts.footer_links()), true)(content)

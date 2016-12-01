@@ -9,24 +9,24 @@
 @import utils.PageBuilder._
 @import utils.ContentUtil
 
-@ers_main(title = messages("ers.confirmation.page_title")) {
+@ers_main(title = message("ers.confirmation.page_title")) {
 
 	@reference()
 	<div class="success-banner"  id="confirmation-text-box">
 		<p>
-			<span class="heading-xlarge"><img src="assets/images/tick.png" alt="tick.">&nbsp;@Html(messages("ers_confirmation.submitted",ContentUtil.getSchemeName(schemeId)))<br></span>
-			<span class="heading-large">@Html(messages("ers_confirmation.tax_year",taxYearFull))</span>
+			<span class="heading-xlarge"><img src="assets/images/tick.png" alt="tick.">&nbsp;@Html(message("ers_confirmation.submitted",ContentUtil.getSchemeName(schemeId)))<br></span>
+			<span class="heading-large">@Html(message("ers_confirmation.tax_year",taxYearFull))</span>
 		</p>
-		<p class="font-medium">@Html(messages("ers_confirmation.submission_ref"))<br>@bundle<br>@dateSubmitted</p>
+		<p class="font-medium">@Html(message("ers_confirmation.submission_ref"))<br>@bundle<br>@dateSubmitted</p>
 	</div>
-	<p>@Html(messages("ers_confirmation.pdf_info"))</p>
+	<p>@Html(message("ers_confirmation.pdf_info"))</p>
 	<div>
-		<a class="button" role="button" href="@routes.PdfGenerationController.buildPdfForBundle(bundle, dateSubmitted)" target="_blank" id="download-confirmation-button">@Html(messages("ers_confirmation.download_confirmation", 15))</a>
+		<a class="button" role="button" href="@routes.PdfGenerationController.buildPdfForBundle(bundle, dateSubmitted)" target="_blank" id="download-confirmation-button">@Html(message("ers_confirmation.download_confirmation", 15))</a>
 	</div>
 	<div>
-		<h2 class="heading-medium">@Html(messages("ers_confirmation.sub_heading"))</h2>
-		<p>@Html(messages("ers_confirmation.instructions"))</p>
-		<p><a href="@url">@Html(messages("ers_confirmation.return"))</a></p>
-		<a href='@Html(getPageElement(schemeId, PAGE_CONFIRMATION, "finished"))' id="finished">@Html(messages("ers_confirmation.feedback"))</a>&nbsp;@Html(messages("ers_confirmation.feedback_time"))
+		<h2 class="heading-medium">@Html(message("ers_confirmation.sub_heading"))</h2>
+		<p>@Html(message("ers_confirmation.instructions"))</p>
+		<p><a href="@url">@Html(message("ers_confirmation.return"))</a></p>
+		<a href='@Html(getPageElement(schemeId, PAGE_CONFIRMATION, "finished"))' id="finished">@Html(message("ers_confirmation.feedback"))</a>&nbsp;@Html(message("ers_confirmation.feedback_time"))
 	</div>
 }

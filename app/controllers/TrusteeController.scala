@@ -19,6 +19,7 @@ package controllers
 import models.{RSformMappings, TrusteeDetails, TrusteeDetailsList, _}
 import play.api.Logger
 import play.api.data.Form
+import play.api.i18n.Messages
 import play.api.mvc.{AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
@@ -35,7 +36,7 @@ object TrusteeController extends TrusteeController {
 trait TrusteeController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
 
-  val messages = applicationMessages
+  implicit val message = applicationMessages
 
   def trusteeDetailsPage(index: Int) = AuthorisedForAsync() {
     implicit user =>
@@ -213,6 +214,7 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
   def showTrusteeSummaryPage()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[TrusteeDetailsList](CacheUtil.TRUSTEES_CACHE, scRef).map { trusteeDetailsList =>
+     // implicit val messages: Messages  = Messages.UrlMessageSource
       Ok(views.html.trustee_summary(trusteeDetailsList))
     } recover {
       case e: Exception => {
@@ -232,6 +234,6 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
     Future(Redirect(routes.AltAmendsController.altActivityPage()))
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(messages("ers.global_errors.title"), messages("ers.global_errors.heading"), messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(message("ers.global_errors.title"), message("ers.global_errors.heading"), message("ers.global_errors.message")))
 
 }

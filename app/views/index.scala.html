@@ -1,18 +1,18 @@
 @()(implicit request: Request[AnyRef], context: config.ErsContext)
-@import utils.PageBuilder.messages
+@import utils.PageBuilder.message
 
-@ers_main(title = messages("ers.app_title")) {
+@ers_main(title = message("ers.app_title")) {
 
 <div class="grid">
     <div class="grid-2-3">
-        <h1>@messages("ers.app_title")</h1>
+        <h1>@message("ers.app_title")</h1>
     </div>
 </div>
 
 <div class="grid">
   <div class="grid-2-3">
 
-      <h2 class="bottom-blue-border">@messages("ers.emi")</h2>
+      <h2 class="bottom-blue-border">@message("ers.emi")</h2>
 
   </div>
 

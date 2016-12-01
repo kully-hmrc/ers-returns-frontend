@@ -19,7 +19,8 @@ package controllers
 import models._
 import play.api.Logger
 import play.api.data.Form
-import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.Play.current
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
@@ -36,7 +37,7 @@ object GroupSchemeController extends GroupSchemeController {
 
 trait GroupSchemeController extends ERSReturnBaseController with Authenticator with ErsConstants {
   val cacheUtil: CacheUtil
-
+  val message = applicationMessages
   
   def manualCompanyDetailsPage(index: Int) = AuthorisedForAsync() {
     implicit user =>
@@ -309,6 +310,6 @@ trait GroupSchemeController extends ERSReturnBaseController with Authenticator w
     }
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+    def getGlobalErrorPage = Ok(views.html.global_error(message("ers.global_errors.title"), message("ers.global_errors.heading"), message("ers.global_errors.message")))
 
 }

@@ -1,4 +1,4 @@
-@(altAmends: AltAmends)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
+@(altAmends: AltAmends)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext, implicitMessages: Messages)
 @import views.html.templates._
 @import utils.PageBuilder._
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
@@ -7,13 +7,13 @@
 @ers_main(title = getPageElement(schemeId, "ers", "what_alterations.page_title")) {
 
     @reference()
-    <p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_ALT_AMENDS)" class="link-back">@Html(messages("ers.back"))</a></p>
+    <p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_ALT_AMENDS)" class="link-back">@Html(message("ers.back"))</a></p>
 
     @header(getPageElement(schemeId, PAGE_ALT_AMENDS, "question"))
     @if(flash.get("alt-amends-not-selected-error").isDefined) {
     <div id="errors" class="validation-summary" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
         <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
-            @Html(messages("validation.summary.heading"))
+            @Html(message("validation.summary.heading"))
         </h1>
         <ul class="validation-summary-message">
             <li class=validation-summary-message"><a href="#error-summary" data-focuses="error-summary">@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "err.message"))</a></li>
@@ -60,7 +60,7 @@
         <div class="panel-indent">
             <p id="declaration">@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "alert"))</p>
         </div>
-        <input role="button" id="continue" class="button" type="submit" value="@Html(messages("ers_alt_amends.continue"))">
+        <input role="button" id="continue" class="button" type="submit" value="@Html(message("ers_alt_amends.continue"))">
     }
 
 }

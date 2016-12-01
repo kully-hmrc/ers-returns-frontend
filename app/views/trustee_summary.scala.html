@@ -1,25 +1,25 @@
-@(trustees: TrusteeDetailsList)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
+@(trustees: TrusteeDetailsList)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext, messages: Messages)
 
 @import views.html.templates._
 @import utils.PageBuilder._
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @import utils.CountryCodes._
 
-@ers_main(title = Messages("ers.trustees.page_title")) {
+@ers_main(title = message("ers.trustees.page_title")) {
 
     @reference()
-    <p class="font-xsmall"><a href="@routes.TrusteeController.trusteeDetailsPage()" class="link-back">@Html(Messages("ers.back"))</a></p>
-    @header(Messages("ers_trustee_summary.title"))
+    <p class="font-xsmall"><a href="@routes.TrusteeController.trusteeDetailsPage()" class="link-back">@Html(message("ers.back"))</a></p>
+    @header(message("ers_trustee_summary.title"))
     @uk.gov.hmrc.play.views.html.helpers.form(action = routes.TrusteeController.trusteeSummaryContinue()) {
     <div class="panel-indent">
-        <a href="@routes.TrusteeController.trusteeDetailsPage()">@Html(Messages("ers_trustee_summary.add_trustee"))</a>
+        <a href="@routes.TrusteeController.trusteeDetailsPage()">@Html(message("ers_trustee_summary.add_trustee"))</a>
     </div>
     @for((trustee, index) <- trustees.trustees.zipWithIndex) {
     <table>
         <thead>
         <tr>
             <th scope="col" id="trustee-summary-name">@trustee.name</th>
-            <th scope="col" class="trustee-summary-action-text-align"><a href="@routes.TrusteeController.editTrustee(index)">@Html(Messages("ers.change_this"))</a>&nbsp;&nbsp;&nbsp;<a href="@routes.TrusteeController.deleteTrustee(index)">@Html(Messages("ers.delete"))</a></th>
+            <th scope="col" class="trustee-summary-action-text-align"><a href="@routes.TrusteeController.editTrustee(index)">@Html(message("ers.change_this"))</a>&nbsp;&nbsp;&nbsp;<a href="@routes.TrusteeController.deleteTrustee(index)">@Html(message("ers.delete"))</a></th>
         </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
     </table>
     }
     <div class="trustee-summary-margin">
-        <button role="button" id="continue" class="button" type="submit" @if(trustees.trustees.length == 0) {disabled="disabled"}>@Html(Messages("ers.continue"))</button>
+        <button role="button" id="continue" class="button" type="submit" @if(trustees.trustees.length == 0) {disabled="disabled"}>@Html(message("ers.continue"))</button>
     </div>
     }
 

@@ -6,24 +6,24 @@
 
 @scripts = {<script src='@routes.AssetsController.at("javascripts/ers_scripts.js")'> </script>}
 
-@ers_main(title = Messages("ers.summary.page_title"), scripts) {
+@ers_main(title = message("ers.summary.page_title"), scripts) {
 
 	@reference()
 
 	@if(schemeId == SCHEME_EMI || schemeId == SCHEME_OTHER) {
-	<p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_SUMMARY_DECLARATION, groupScheme)" class="link-back">@Html(Messages("ers.back"))</a></p>
+	<p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_SUMMARY_DECLARATION, groupScheme)" class="link-back">@Html(message("ers.back"))</a></p>
 	} else {
-	<p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_SUMMARY_DECLARATION, altAmendsActivity)" class="link-back">@Html(Messages("ers.back"))</a></p>
+	<p class="font-xsmall"><a href="@getPageBackLink(schemeId, PAGE_SUMMARY_DECLARATION, altAmendsActivity)" class="link-back">@Html(message("ers.back"))</a></p>
 	}
 
-	@header(Messages("ers_summary_declaration.title"))
+	@header(message("ers_summary_declaration.title"))
 
-	<p>@Html(Messages("ers_summary_declaration.info"))</p>
+	<p>@Html(message("ers_summary_declaration.info"))</p>
 	<table>
 	  <thead>
 		<tr>
-		  <th scope="col" id="summary-declaration-col-section">@Html(Messages("ers_summary_declaration.section"))</th>
-		  <th scope="col" id="summary-declaration-col-answer">@Html(Messages("ers_summary_declaration.your_answers"))</th>
+		  <th scope="col" id="summary-declaration-col-section">@Html(message("ers_summary_declaration.section"))</th>
+		  <th scope="col" id="summary-declaration-col-answer">@Html(message("ers_summary_declaration.your_answers"))</th>
 		  <td scope="col" id="summary-declaration-col-action"></td>
 		</tr>
 	  </thead>
@@ -32,20 +32,20 @@
 		  <td class="summary-declaration-section-text-align">@Html(getPageElement(schemeId, PAGE_CHOOSE, "question"))</td>
 		  <td class="summary-declaration-text-align">
 			@Html(reportableEvents match {
-				case OPTION_YES => Messages("ers.yes")
-				case OPTION_NO => Messages("ers.no")
+				case OPTION_YES => message("ers.yes")
+				case OPTION_NO => message("ers.no")
 			})
 		  </td>
-		  <td class="summary-declaration-text-align"><a href="@routes.ReportableEventsController.reportableEventsPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
+		  <td class="summary-declaration-text-align"><a href="@routes.ReportableEventsController.reportableEventsPage()">@Html(message("ers_summary_declaration.change_this"))</a></td>
 		</tr>
 		@if(reportableEvents == OPTION_YES) {
 			<tr>
 			  <td class="summary-declaration-section-text-align">
-				@Html(if (fileCount == 1) {Messages("ers_summary_declaration.file_name")} else {Messages("ers_summary_declaration.file_names")})
+				@Html(if (fileCount == 1) {message("ers_summary_declaration.file_name")} else {message("ers_summary_declaration.file_names")})
 			  </td>
 			  <td class="summary-declaration-text-align">@Html(filename)</td>
-			  @if(fileType == OPTION_ODS) {<td class="summary-declaration-text-align"><a href="@routes.FileUploadController.uploadFilePage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>}
-			  @if(fileType == OPTION_CSV) {<td class="summary-declaration-text-align"><a href="@routes.CheckCsvFilesController.checkCsvFilesPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>}
+			  @if(fileType == OPTION_ODS) {<td class="summary-declaration-text-align"><a href="@routes.FileUploadController.uploadFilePage()">@Html(message("ers_summary_declaration.change_this"))</a></td>}
+			  @if(fileType == OPTION_CSV) {<td class="summary-declaration-text-align"><a href="@routes.CheckCsvFilesController.checkCsvFilesPage()">@Html(message("ers_summary_declaration.change_this"))</a></td>}
 			</tr>
 		}
 		<tr>
@@ -61,17 +61,17 @@
 		  @if(schemeOrganiser.companyReg != None){@Html(schemeOrganiser.companyReg.get)</br>}
 		  @if(schemeOrganiser.corporationRef != None){@Html(schemeOrganiser.corporationRef.get)}
 		  </td>
-		  <td class="summary-declaration-text-align"><a href="@routes.SchemeOrganiserController.schemeOrganiserPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
+		  <td class="summary-declaration-text-align"><a href="@routes.SchemeOrganiserController.schemeOrganiserPage()">@Html(message("ers_summary_declaration.change_this"))</a></td>
 		</tr>
 		<tr>
 		  <td class="summary-declaration-section-text-align">@Html(getPageElement(schemeId, PAGE_GROUP_ACTIVITY, "question"))</td>
 		  <td class="summary-declaration-text-align">
 			@Html(groupScheme match {
-				case OPTION_YES => Messages("ers.yes")
-				case OPTION_NO => Messages("ers.no")
+				case OPTION_YES => message("ers.yes")
+				case OPTION_NO => message("ers.no")
 			})
 		  </td>
-		  <td class="summary-declaration-text-align"><a href="@routes.GroupSchemeController.groupSchemePage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
+		  <td class="summary-declaration-text-align"><a href="@routes.GroupSchemeController.groupSchemePage()">@Html(message("ers_summary_declaration.change_this"))</a></td>
 		</tr>
 		@if(groupScheme == OPTION_YES) {
 		<tr>
@@ -81,18 +81,18 @@
 		  @company.companyName</br>
 		  }
 		  </td>
-		  <td class="summary-declaration-text-align"><a href="@routes.GroupSchemeController.groupPlanSummaryPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
+		  <td class="summary-declaration-text-align"><a href="@routes.GroupSchemeController.groupPlanSummaryPage()">@Html(message("ers_summary_declaration.change_this"))</a></td>
 		</tr>
 		}
 		@if(schemeId == SCHEME_SIP) {
 		<tr>
-		  <td class="summary-declaration-section-text-align">@Html(Messages("ers_trustee_summary.title"))</td>
+		  <td class="summary-declaration-section-text-align">@Html(message("ers_trustee_summary.title"))</td>
 		  <td class="summary-declaration-text-align">
 		  @for(trustee <- trustees.trustees) {
 		  @trustee.name</br>
 		  }
 		  </td>
-		  <td class="summary-declaration-text-align"><a href="@routes.TrusteeController.trusteeSummaryPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
+		  <td class="summary-declaration-text-align"><a href="@routes.TrusteeController.trusteeSummaryPage()">@Html(message("ers_summary_declaration.change_this"))</a></td>
 		</tr>
 		}
 		@if(altAmendsActivity != "") {
@@ -100,16 +100,16 @@
 		  <td class="summary-declaration-section-text-align">@Html(getPageElement(schemeId, PAGE_ALT_ACTIVITY, "question"))</td>
 		  <td class="summary-declaration-text-align">
 			@Html(altAmendsActivity match {
-				case OPTION_YES => Messages("ers.yes")
-				case OPTION_NO => Messages("ers.no")
+				case OPTION_YES => message("ers.yes")
+				case OPTION_NO => message("ers.no")
 			})
 		  </td>
-		  <td class="summary-declaration-text-align"><a href="@routes.AltAmendsController.altActivityPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
+		  <td class="summary-declaration-text-align"><a href="@routes.AltAmendsController.altActivityPage()">@Html(message("ers_summary_declaration.change_this"))</a></td>
 		</tr>
 		}
 		@if(altAmendsActivity == OPTION_YES) {
 		<tr>
-		  <td class="summary-declaration-section-text-align">@Html(Messages("ers_trustee_summary.altamends.section"))</td>
+		  <td class="summary-declaration-section-text-align">@Html(message("ers_trustee_summary.altamends.section"))</td>
 		  <td class="summary-declaration-text-align">
 		  @if(altAmends.altAmendsTerms == Some("1")) {@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "option_1")).</br>}
 		  @if(altAmends.altAmendsEligibility == Some("1")) {@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "option_2")).</br>}
@@ -117,14 +117,14 @@
 		  @if(altAmends.altAmendsVariations == Some("1")) {@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "option_4")).</br>}
 		  @if(altAmends.altAmendsOther == Some("1")) {@Html(getPageElement(schemeId, PAGE_ALT_AMENDS, "option_5")).}
 		  </td>
-		  <td class="summary-declaration-text-align"><a href="@routes.AltAmendsController.altAmendsPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
+		  <td class="summary-declaration-text-align"><a href="@routes.AltAmendsController.altAmendsPage()">@Html(message("ers_summary_declaration.change_this"))</a></td>
 		</tr>
 		}
 	  </tbody>
 	</table>
 	<div class="panel-indent application-notice help-notice clear">
-		<p id="declaration">@Html(Messages("ers_summary_declaration.alert"))</p>
+		<p id="declaration">@Html(message("ers_summary_declaration.alert"))</p>
 	</div>
-	<a role="button" id="continue" class="button summary-button" href="@routes.ConfirmationPageController.confirmationPage()">@Html(Messages("ers_summary_declaration.button"))</a>
+	<a role="button" id="continue" class="button summary-button" href="@routes.ConfirmationPageController.confirmationPage()">@Html(message("ers_summary_declaration.button"))</a>
 	@spinner()
 }

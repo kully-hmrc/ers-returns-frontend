@@ -17,7 +17,6 @@
 package utils
 
 import models.CsvFiles
-import play.api.i18n.Messages
 import controllers.routes
 import play.api.i18n.Messages.Implicits._
 import play.api.Play.current
@@ -26,7 +25,7 @@ object PageBuilder extends PageBuilder
 
 trait PageBuilder {
 
-  implicit val messages = applicationMessages
+  val message = applicationMessages
 
   val DEFAULT = ""
   val DEFAULT_COUNTRY = "UK"
@@ -168,11 +167,11 @@ trait PageBuilder {
 
   def getPageElement(scheme: String, pageId: String, element: String, para: String = ""): String = {
     val pageElement: String = scheme match {
-      case SCHEME_CSOP => messages(pageId + MSG_CSOP + element, para)
-      case SCHEME_EMI => messages(pageId + MSG_EMI + element, para)
-      case SCHEME_SAYE => messages(pageId + MSG_SAYE + element, para)
-      case SCHEME_SIP => messages(pageId + MSG_SIP + element, para)
-      case SCHEME_OTHER => messages(pageId + MSG_OTHER + element, para)
+      case SCHEME_CSOP => message(pageId + MSG_CSOP + element, para)
+      case SCHEME_EMI => message(pageId + MSG_EMI + element, para)
+      case SCHEME_SAYE => message(pageId + MSG_SAYE + element, para)
+      case SCHEME_SIP => message(pageId + MSG_SIP + element, para)
+      case SCHEME_OTHER => message(pageId + MSG_OTHER + element, para)
       case _ => DEFAULT
     }
     pageElement

@@ -3,25 +3,25 @@
 @schemeId = @{screenSchemeInfo.split(" - ").head}
 @import views.html.templates._
 @import utils.PageBuilder._
-@import utils.PageBuilder.messages
+@import utils.PageBuilder.message
 @import utils.ContentUtil._
 
 
-@ers_main(title = messages("ers.start.page_title")) {
+@ers_main(title = message("ers.start.page_title")) {
 
 	@reference(Some(screenSchemeInfo))
 
-	@header(messages("ers_start.page_title", getSchemeName(schemeId)))
+	@header(message("ers_start.page_title", getSchemeName(schemeId)))
 
 	<p class="font-medium">@Html(getPageElement(schemeId, PAGE_START, "intro_para"))</p>
 
-	<h2 class="heading-medium">@Html(messages("ers_start.sub_title"))</h2>
+	<h2 class="heading-medium">@Html(message("ers_start.sub_title"))</h2>
 
 	<div class="panel-indent">
-		<p>@Html(messages("ers_start.help"))</p>
+		<p>@Html(message("ers_start.help"))</p>
 	</div>
 
-	<p>@Html(messages("ers_start.you_need"))</p>
+	<p>@Html(message("ers_start.you_need"))</p>
 
 	<ul class='list-bullet space'>
 		<li>@Html(getPageElement(schemeId, PAGE_START, "bullet_1"))</li>
@@ -34,12 +34,12 @@
 		}
 	</ul>
 
-	<h2 class="heading-small">@Html(messages("ers_start.large_files"))</h2>
+	<h2 class="heading-small">@Html(message("ers_start.large_files"))</h2>
 
-	<p>@Html(messages("ers_start.filesize"))</p>
+	<p>@Html(message("ers_start.filesize"))</p>
 
 	<div class="form-group">
-		<a role="button" href="@routes.ReportableEventsController.reportableEventsPage" class="button button-get-started" id="start-button">@Html(messages("ers_start.start_now_button"))</a>
+		<a role="button" href="@routes.ReportableEventsController.reportableEventsPage" class="button button-get-started" id="start-button">@Html(message("ers_start.start_now_button"))</a>
 	</div>
 
 }
