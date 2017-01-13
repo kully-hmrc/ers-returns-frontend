@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2017 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -93,7 +93,9 @@ trait ReturnServiceController extends ERSReturnBaseController with Authenticator
     val empRef: Option[String] = request.getQueryString("empRef")
     val ts: Option[String] = request.getQueryString("ts")
     val hmac: Option[String] = request.getQueryString("hmac")
-    RequestObject(aoRef, taxYear, ersSchemeRef, schemeName, schemeType, agentRef, empRef, ts, hmac)
+    val reqObj = RequestObject(aoRef, taxYear, ersSchemeRef, schemeName, schemeType, agentRef, empRef, ts, hmac)
+    Logger.warn(s"Request Parameters:  ${reqObj.toString}")
+    reqObj
   }
 
   def hmacCheck() = AuthenticatedBy(ERSGovernmentGateway, pageVisibility = AllowAll).async {
@@ -127,12 +129,10 @@ trait ReturnServiceController extends ERSReturnBaseController with Authenticator
         Future(Ok(views.html.start(request.session.get(screenSchemeInfo).get)).withSession(request.session - "bundelRef" - "dateTimeSubmitted"))
   }
 
-
   def showUnauthPage(request: Request[AnyRef]): Future[Result] = {
     Future.successful(Ok(views.html.unauthorised()(request, context)))
   }
 
     def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
-
 
 }
