@@ -25,10 +25,11 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{PageBuilder, CacheUtil}
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+
 import scala.concurrent.Future
 
-class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 
   "Check File Type Page GET" should {
 

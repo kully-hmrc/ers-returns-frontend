@@ -83,7 +83,6 @@ class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
 
   "UploadConfig" must {
     implicit val hc = HeaderCarrier(requestId = Some(RequestId(UUID.randomUUID().toString)))
-    Play.start(new FakeApplication)
     val request = FakeRequest().withHeaders(HeaderNames.HOST -> "localhost:9290")
     val config = UploadConfig()(request, hcfp)
 
@@ -123,12 +122,10 @@ class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
           "&decompressedTargetFile=content.xml"
       )
     }
-    Play.stop()
   }
 
   "UploadCsvConfig" must {
     implicit val hc = HeaderCarrier(requestId = Some(RequestId(UUID.randomUUID().toString)))
-    Play.start(new FakeApplication)
     val request = FakeRequest().withHeaders(HeaderNames.HOST -> "localhost:9290")
     val config = UploadCsvConfig()(request, hcfp)
 

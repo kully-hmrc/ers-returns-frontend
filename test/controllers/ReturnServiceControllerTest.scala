@@ -38,13 +38,13 @@ import services.SessionService
 import uk.gov.hmrc.http.cache.client.ShortLivedCache
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.CacheUtil
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 import utils.ContentUtil._
 
 import scala.concurrent.Future
 
 
-class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 
   val mockHttp = mock[HttpPost]
   val mockHttpGet = mock[HttpGet]

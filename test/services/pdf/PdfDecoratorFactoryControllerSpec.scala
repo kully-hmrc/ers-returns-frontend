@@ -16,7 +16,6 @@
 
 package services.pdf
 
-import controllers.Fixtures
 import models.{AltAmendsActivity, AlterationAmends, ErsSummary}
 import org.joda.time.DateTime
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
@@ -25,6 +24,7 @@ import play.api.Play.current
 import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.Fixtures
 
 class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
 

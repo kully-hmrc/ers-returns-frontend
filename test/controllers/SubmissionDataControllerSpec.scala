@@ -16,21 +16,28 @@
 
 package controllers
 
+import akka.stream.Materializer
 import connectors.ErsConnector
-import models.SchemeInfo
-import org.joda.time.DateTime
-import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import play.api.mvc.Request
-import play.api.test.Helpers._
+import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
+import play.api.mvc.Request
 import play.api.test.FakeRequest
+import play.api.test.Helpers._
 import uk.gov.hmrc.play.http.HttpResponse
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.{ERSFakeApplicationConfig, Fixtures}
+
 import scala.concurrent.Future
 
-class SubmissionDataControllerSpec extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class SubmissionDataControllerSpec extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   "calling createSchemeInfoFromURL" should {
 
@@ -80,6 +87,7 @@ class SubmissionDataControllerSpec extends UnitSpec with ERSFakeApplication with
       reset(mockErsConnector)
       val submissionDataController: SubmissionDataController = new SubmissionDataController {
         override val ersConnector: ErsConnector = mockErsConnector
+
         override def createSchemeInfoFromURL(request: Request[Any]): Option[JsObject] = None
       }
       val result = submissionDataController.getRetrieveSubmissionData()(Fixtures.buildFakeUser, FakeRequest(), hc)
@@ -90,6 +98,7 @@ class SubmissionDataControllerSpec extends UnitSpec with ERSFakeApplication with
       reset(mockErsConnector)
       val submissionDataController: SubmissionDataController = new SubmissionDataController {
         override val ersConnector: ErsConnector = mockErsConnector
+
         override def createSchemeInfoFromURL(request: Request[Any]): Option[JsObject] = Some(mock[JsObject])
       }
       when(
@@ -106,6 +115,7 @@ class SubmissionDataControllerSpec extends UnitSpec with ERSFakeApplication with
       reset(mockErsConnector)
       val submissionDataController: SubmissionDataController = new SubmissionDataController {
         override val ersConnector: ErsConnector = mockErsConnector
+
         override def createSchemeInfoFromURL(request: Request[Any]): Option[JsObject] = Some(mock[JsObject])
       }
       when(
@@ -122,6 +132,7 @@ class SubmissionDataControllerSpec extends UnitSpec with ERSFakeApplication with
       reset(mockErsConnector)
       val submissionDataController: SubmissionDataController = new SubmissionDataController {
         override val ersConnector: ErsConnector = mockErsConnector
+
         override def createSchemeInfoFromURL(request: Request[Any]): Option[JsObject] = Some(mock[JsObject])
       }
       when(

@@ -16,8 +16,8 @@
 
 package services.pdf
 
-import controllers.Fixtures
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.Fixtures
 
 class ApachePdfContentsStreamerSpec extends UnitSpec {
 

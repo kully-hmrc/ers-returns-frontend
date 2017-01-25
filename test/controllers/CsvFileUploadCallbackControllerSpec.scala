@@ -16,20 +16,29 @@
 
 package controllers
 
+import akka.stream.Materializer
 import models.CallbackData
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
 import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.{ERSFakeApplicationConfig, Fixtures}
+
 
 import scala.concurrent.Future
 
-class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val materializer: Materializer = app.materializer
 
   val metaData: JsObject = Json.obj("surname" -> Fixtures.surname, "firstForename" -> Fixtures.firstName)
 

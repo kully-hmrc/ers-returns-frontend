@@ -16,9 +16,9 @@
 
 package services.pdf
 
-import controllers.Fixtures
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.Fixtures
 
 class PdfDecoratorContorllerFactorySpec extends UnitSpec {
 

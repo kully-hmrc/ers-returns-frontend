@@ -17,7 +17,7 @@
 package services
 
 import java.io.ByteArrayOutputStream
-import controllers.Fixtures
+
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
@@ -25,7 +25,7 @@ import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
 import services.pdf.{DecoratorController, ErsContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.ContentUtil
+import utils.{ContentUtil, Fixtures}
 
 class ErsReceiptPdfBuilderServiceSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach {
 

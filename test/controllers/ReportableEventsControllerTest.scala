@@ -29,11 +29,12 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{CacheUtil, PageBuilder}
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+
 import scala.concurrent.Future
 
 
-class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar{
+class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar{
 
   "calling Reportable Events Page" should {
 

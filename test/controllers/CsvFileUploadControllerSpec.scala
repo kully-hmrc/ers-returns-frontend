@@ -16,27 +16,28 @@
 
 package controllers
 
-import connectors.{ErsConnector, AttachmentsConnector}
+import connectors.{AttachmentsConnector, ErsConnector}
 import models._
 import org.joda.time.DateTime
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import play.api.libs.json.Json
-import play.api.mvc.{Result, Request}
+import play.api.mvc.{Request, Result}
 import play.api.test.FakeRequest
 import services.SessionService
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
-import uk.gov.hmrc.play.http.{HttpResponse, HeaderCarrier}
+import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.CacheUtil
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import play.api.test.Helpers._
 
-class CsvFileUploadControllerSpec extends UnitSpec with ERSFakeApplication with ERSUsers with MockitoSugar {
+class CsvFileUploadControllerSpec extends UnitSpec with ERSFakeApplicationConfig with ERSUsers with MockitoSugar {
 
   val mockAuthConnector = mock[AuthConnector]
 

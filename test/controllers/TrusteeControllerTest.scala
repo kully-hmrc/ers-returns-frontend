@@ -19,7 +19,7 @@ package controllers
 import connectors.ErsConnector
 import models._
 import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.PageBuilder
+import utils._
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.mockito.Matchers._
@@ -27,16 +27,16 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import play.api.http.Status
 import play.api.libs.json.JsValue
-import play.api.mvc.{Result, Request}
+import play.api.mvc.{Request, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{CacheUtil, JsonParser}
+
 import scala.concurrent.{Await, Future}
 
-class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class TrusteeControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 
   "calling Trustee Details Page" should {
 

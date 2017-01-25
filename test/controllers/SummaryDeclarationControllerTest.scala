@@ -33,12 +33,13 @@ import services.SessionService
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.http.cache.client.{CacheMap, ShortLivedCache}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HttpResponse, HttpGet, HttpPost, HeaderCarrier}
+import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{CacheUtil, PageBuilder}
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+
 import scala.concurrent.{ExecutionContext, Future}
 
-class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 
 	val mockHttp = mock[HttpPost]
 	val mockHttpGet = mock[HttpGet]

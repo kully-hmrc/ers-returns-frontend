@@ -16,8 +16,7 @@
 
 package connectors
 
-import controllers.Fixtures
-import models.{ValidatorData, SchemeInfo, CallbackData}
+import models.{CallbackData, SchemeInfo, ValidatorData}
 import metrics.Metrics
 import org.joda.time.DateTime
 import org.mockito.Matchers
@@ -28,8 +27,10 @@ import play.api.test.Helpers._
 import play.api.test.FakeRequest
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HttpGet, HeaderCarrier, HttpResponse, HttpPost}
-import uk.gov.hmrc.play.test.{WithFakeApplication, UnitSpec}
+import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
+import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import utils.Fixtures
+
 import scala.concurrent.Future
 
 class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplication {

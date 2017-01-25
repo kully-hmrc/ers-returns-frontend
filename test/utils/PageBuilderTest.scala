@@ -24,7 +24,7 @@ import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.play.test.UnitSpec
 import utils.PageBuilder._
 
-class PageBuilderTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class PageBuilderTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 
 
   "calling getPageElement for CSOP scheme pages" should {

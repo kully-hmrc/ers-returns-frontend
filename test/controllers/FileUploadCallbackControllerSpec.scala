@@ -31,9 +31,12 @@ import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.http.HeaderCarrier
+import play.api.Play.current
+import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 
 import scala.concurrent.Future
-import utils.CacheUtil
+import utils.{CacheUtil, Fixtures}
 
 class FileUploadCallbackControllerSpec extends PlaySpec with MockitoSugar {
 

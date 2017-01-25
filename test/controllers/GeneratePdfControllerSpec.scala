@@ -17,6 +17,7 @@
 package controllers
 
 import java.io.ByteArrayOutputStream
+
 import models._
 import org.joda.time.DateTime
 import org.mockito.Matchers._
@@ -29,10 +30,11 @@ import services.pdf.{ErsContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{CacheUtil, PageBuilder}
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+
 import scala.concurrent.Future
 
-class GeneratePdfControllerSpec extends UnitSpec with ERSFakeApplication with MockitoSugar{
+class GeneratePdfControllerSpec extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar{
   val pdfBuilderMock = mock[ErsReceiptPdfBuilderService]
   val cache = mock[CacheUtil]
   val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")

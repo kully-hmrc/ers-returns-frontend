@@ -20,17 +20,18 @@ import models._
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
-import play.api.mvc.{Result, Request}
+import play.api.mvc.{Request, Result}
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{PageBuilder, CacheUtil}
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+
 import scala.concurrent.Future
 import play.api.test.Helpers._
 
-class CheckCsvFilesControllerSpec extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class CheckCsvFilesControllerSpec extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 
   "calling checkCsvFilesPage" should {
 

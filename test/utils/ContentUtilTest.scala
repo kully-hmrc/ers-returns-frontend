@@ -23,7 +23,7 @@ import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.play.test.UnitSpec
 
-class ContentUtilTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class ContentUtilTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 
   "getSchemeName" should {
     "return CSOP scheme name for CSOP scheme type \"1\"" in {

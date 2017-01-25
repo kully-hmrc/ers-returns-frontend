@@ -35,7 +35,7 @@ import uk.gov.hmrc.play.test.UnitSpec
 import utils._
 import scala.concurrent.Future
 
-class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar with BeforeAndAfterEach {
+class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach {
 
   val mockMetrics: Metrics = mock[Metrics]
 
