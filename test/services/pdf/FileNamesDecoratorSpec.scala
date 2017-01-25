@@ -20,8 +20,11 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.mock.MockitoSugar
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.play.test.UnitSpec
+
 import scala.collection.mutable.ListBuffer
 
 class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar {
@@ -34,7 +37,7 @@ class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar {
       decorator.decorate(streamer)
 
       verify(streamer, VerificationModeFactory.times(0)).drawText(any(), any())
-     }
+    }
 
     "show ods files names when nil return is true" in {
       val streamer = mock[ErsContentsStreamer]
@@ -66,5 +69,5 @@ class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar {
       verify(streamer, VerificationModeFactory.times(2)).drawText(org.mockito.Matchers.eq("": String), org.mockito.Matchers.eq(4.0F: Float))
       verify(streamer, VerificationModeFactory.times(1)).drawLine()
     }
-   }
+  }
 }

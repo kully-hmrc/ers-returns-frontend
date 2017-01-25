@@ -20,7 +20,9 @@ import models._
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.mock.MockitoSugar
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.play.test.UnitSpec
 
 class AlterationsAmendsDecoratorSpec extends UnitSpec with MockitoSugar {
@@ -50,7 +52,7 @@ class AlterationsAmendsDecoratorSpec extends UnitSpec with MockitoSugar {
 
       verify(streamer, VerificationModeFactory.times(2)).drawText(org.mockito.Matchers.eq(Messages(""): String), org.mockito.Matchers.eq(4.0F: Float))
       verify(streamer, VerificationModeFactory.times(1)).drawLine()
-     }
+    }
 
     "stream nothing if map is empty" in {
       val decorator = new AlterationsAmendsDecorator(Map[String, String](), 1.0f, 2.0F, 3.0F, 4.0F)
@@ -59,7 +61,7 @@ class AlterationsAmendsDecoratorSpec extends UnitSpec with MockitoSugar {
       decorator.decorate(streamer)
 
       verify(streamer, VerificationModeFactory.times(0)).drawText(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyFloat())
-     }
+    }
 
     "stream csop alterations amends title and given fields" in {
 

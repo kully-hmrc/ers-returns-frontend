@@ -21,7 +21,9 @@ import models.{AltAmendsActivity, AlterationAmends, ErsSummary}
 import org.joda.time.DateTime
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.scalatest.mock.MockitoSugar
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.play.test.UnitSpec
 
 class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
@@ -71,7 +73,7 @@ class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
     "add 5 decorators" in {
 
       val ersSummary = ErsSummary("testbundle", "1", None, new DateTime(2016, 6, 8, 11, 45), metaData = Fixtures.EMIMetaData, None, None,
-        Some(Fixtures.groupScheme), Some(Fixtures.schemeOrganiserDetails), Some(Fixtures.companiesList), None, None,None)
+        Some(Fixtures.groupScheme), Some(Fixtures.schemeOrganiserDetails), Some(Fixtures.companiesList), None, None, None)
       val decoratorController = PdfDecoratorControllerFactory.createPdfDecoratorControllerForScheme("emi", ersSummary, None)
 
       val decorators = decoratorController.getDecorators
@@ -152,10 +154,10 @@ class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
       decorators(2) should be(anInstanceOf[SchemeOrganiserDetailseDecorator])
       decorators(3) should be(anInstanceOf[YesNoDecorator])
       decorators(4) should be(anInstanceOf[GroupSummaryDecorator])
-     }
+    }
   }
 
-    "pdf decorator controller factory" should {
+  "pdf decorator controller factory" should {
     "map given alt amends for given schemes" in {
 
       Array("csop", "sip", "saye").map { scheme =>

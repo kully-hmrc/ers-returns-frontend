@@ -16,11 +16,12 @@
 
 package utils
 
-import org.mockito.Mockito._
-import org.scalatest.mock.MockitoSugar
-import uk.gov.hmrc.play.test.UnitSpec
 import controllers._
+import org.scalatest.mock.MockitoSugar
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import uk.gov.hmrc.play.test.UnitSpec
 import utils.PageBuilder._
 
 class PageBuilderTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
@@ -287,8 +288,6 @@ class PageBuilderTest extends UnitSpec with ERSFakeApplication with MockitoSugar
     }
 
   }
-
-
 
 
   "calling getPageBackLink for OTHER" should {

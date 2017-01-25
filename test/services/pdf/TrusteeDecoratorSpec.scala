@@ -20,7 +20,9 @@ import models.{TrusteeDetails, TrusteeDetailsList}
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.mock.MockitoSugar
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 import uk.gov.hmrc.play.test.UnitSpec
 
 class TrusteeDecoratorSpec extends UnitSpec with MockitoSugar {
@@ -39,7 +41,7 @@ class TrusteeDecoratorSpec extends UnitSpec with MockitoSugar {
 
     }
 
-   "add title to section" in {
+    "add title to section" in {
       val streamer = mock[ErsContentsStreamer]
       decorator.decorate(streamer)
       verify(streamer, VerificationModeFactory.times(1)).drawText(org.mockito.Matchers.eq(Messages("ers_trustee_summary.title"): String), org.mockito.Matchers.eq(1.0F: Float))

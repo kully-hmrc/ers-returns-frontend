@@ -25,8 +25,8 @@ import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
 import play.api.i18n.Messages
-import play.api.libs.json.{JsValue, JsObject, Json}
-import play.api.mvc.{Request, AnyContentAsEmpty, Result}
+import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.mvc.{AnyContentAsEmpty, Request, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.SessionService
@@ -35,6 +35,7 @@ import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import utils.CacheUtil
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -46,30 +47,30 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
     "firstForename" -> Fixtures.firstName
   )
 
-  val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
-  val validErsMetaData: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
+  val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+  val validErsMetaData: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
   val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
 
-  val schemeInfoInvalidTimeStamp =  SchemeInfo("XA1100000000000", DateTime.now, "1" ,"2016","EMI", "EMI")
-  val invalidErsMetaData: ErsMetaData = new ErsMetaData(schemeInfoInvalidTimeStamp, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-  
+  val schemeInfoInvalidTimeStamp = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+  val invalidErsMetaData: ErsMetaData = new ErsMetaData(schemeInfoInvalidTimeStamp, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+
   val mockAttachmentsConnector = mock[AttachmentsConnector]
   val mockAuthConnector = mock[AuthConnector]
   val mockSessionService = mock[SessionService]
   val mockCacheUtil = mock[CacheUtil]
   val mockErsConnector = mock[ErsConnector]
 
-  /**Csv Callback List creation*/
-  val jv :JsValue = Json.parse("""{}""")
-  val s :  Seq[(String, JsValue)] = List(("",jv))
+  /** Csv Callback List creation */
+  val jv: JsValue = Json.parse("""{}""")
+  val s: Seq[(String, JsValue)] = List(("", jv))
   val js = new JsObject(s)
-  val cb = new CallbackData("File","File",100.toLong,Some("File"),Some("File"),Some("File"),Some(js), noOfRows = None)
+  val cb = new CallbackData("File", "File", 100.toLong, Some("File"), Some("File"), Some("File"), Some(js), noOfRows = None)
   val csvFileData = new CsvFilesCallback("file0", Some(cb))
-  val csvCallBackList = new CsvFilesCallbackList(List(csvFileData,csvFileData,csvFileData))
+  val csvCallBackList = new CsvFilesCallbackList(List(csvFileData, csvFileData, csvFileData))
 
   when(mockCacheUtil.fetch[ErsMetaData](Matchers.refEq(CacheUtil.ersMetaData), Matchers.any[String]())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(validErsMetaData))
   when(mockCacheUtil.fetch[CheckFileType](Matchers.refEq(CacheUtil.FILE_TYPE_CACHE), Matchers.any[String]())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(CheckFileType(Some("csv"))))
-  when(mockCacheUtil.fetchOption[CsvFilesCallbackList](Matchers.any[String](),Matchers.any[String]())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(Some(csvCallBackList)))
+  when(mockCacheUtil.fetchOption[CsvFilesCallbackList](Matchers.any[String](), Matchers.any[String]())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(Some(csvCallBackList)))
   when(
     mockCacheUtil.getSchemeRefFromScreenSchemeInfo(anyString())
   ).thenReturn(
@@ -81,8 +82,9 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
     val authConnector = mockAuthConnector
     val sessionService = mockSessionService
     val cacheUtil = mockCacheUtil
-    val ersConnector=  mockErsConnector
+    val ersConnector = mockErsConnector
   }
+
   val sr = "AA0000000000000"
 
   "FileUploadController" must {
@@ -200,7 +202,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
       }
     }
 
-    "respond to /submit-your-ers-annual-return/file-upload/callback/"  in {
+    "respond to /submit-your-ers-annual-return/file-upload/callback/" in {
       val result = route(FakeRequest(POST, s"/submit-your-ers-annual-return/file-upload/callback/"))
       status(result.get) must not equal (NOT_FOUND)
     }
@@ -304,7 +306,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
       when(
         mockSessionService.retrieveCallbackData()(any(), any())
       ).thenReturn(
-        Future.successful(Some(CallbackData("", "", 0, Some(""), None, None, None,None)))
+        Future.successful(Some(CallbackData("", "", 0, Some(""), None, None, None, None)))
       )
 
       reset(mockCacheUtil)
@@ -324,7 +326,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
       when(
         mockSessionService.retrieveCallbackData()(any(), any())
       ).thenReturn(
-        Future.successful(Some(CallbackData("","",5,Some("file_name"),None,None,None,None)))
+        Future.successful(Some(CallbackData("", "", 5, Some("file_name"), None, None, None, None)))
       )
 
       reset(mockCacheUtil)
@@ -371,7 +373,7 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
     handler(TestFileUploadController.validationResults().apply(request))
   }
 
-   def success(request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest())(handler: Future[Result] => Any): Unit = {
+  def success(request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest())(handler: Future[Result] => Any): Unit = {
     handler(TestFileUploadController.success().apply(request))
   }
 
@@ -384,7 +386,8 @@ class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite with Mock
   }
 
   def getFileUploadPartial(request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest())(handler: Future[Result] => Any) {
-    val html = """
+    val html =
+      """
     <form id="file-uploader" method="post" action="/attachments/attach/ers" enctype="multipart/form-data">
       <input name="fileToUpload" id="fileToUpload" type="file" accept=".csv"  />
       <input name="metadata" id="metadata" value="zTCFC5oK2j+ooVABIkaEoRzjcTt3FyyoCExq6tsYdYbGNjjq8zxM2n0si07PdWXiUGhG+4SZBK7CyNE4aLw8D+1pHDE4xzwDWxc70rELSKsgjPi9" type="hidden"/>
