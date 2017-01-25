@@ -4,6 +4,8 @@
 @import views.html.templates._
 @import utils.PageBuilder._
 @import utils.CountryCodes._
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 
 @ers_main(title = getPageElement(schemeId, "ers", "group_summary.page_title") + " " + Messages("ers.title.postfix")) {
 

@@ -213,7 +213,7 @@ class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplication wi
     "if nothing selected give a status of OK and show the reportable events page displaying form errors" in {
       val controllerUnderTest = buildFakeReportableEventsController()
       val reportableEventsData = Map("" -> "")
-      val form = _root_.models.RSformMappings.chooseForm.bind(reportableEventsData)
+      val form = _root_.models.RsFormMappings.chooseForm.bind(reportableEventsData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showReportableEventsSelected()(Fixtures.buildFakeUser, request)
       status(result) shouldBe Status.OK

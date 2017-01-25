@@ -16,16 +16,14 @@
 
 package models
 
-import javax.xml.soap.Text
-
+import play.api.Play.current
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation.Constraints._
-import models.schemeOrganiserFields._
-import models.fieldValidationPatterns._
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 
-object RSformMappings {
+object RsFormMappings {
 
   /*
   * scheme type Form definition.
@@ -39,7 +37,7 @@ object RSformMappings {
   val chooseForm = Form(mapping(
     reportableEventsFields.isNilReturn ->
       optional(text).verifying(Messages("ers_choose.err.message"), _.nonEmpty)
-      .verifying(Messages("ers.invalidCharacters"), so => validInputCharacters(so.getOrElse("1"), fieldValidationPatterns.yesNoRegPattern))
+        .verifying(Messages("ers.invalidCharacters"), so => validInputCharacters(so.getOrElse("1"), fieldValidationPatterns.yesNoRegPattern))
   )(ReportableEvents.apply)(ReportableEvents.unapply))
 
 
@@ -49,7 +47,7 @@ object RSformMappings {
   val checkFileTypeForm = Form(mapping(
     checkFileTypeFileds.checkFileType ->
       optional(text).verifying(Messages("ers_check_file_type.err.message"), _.nonEmpty)
-      .verifying(Messages("ers.invalidCharacters"), so => validInputCharacters(so.getOrElse("csv"), fieldValidationPatterns.csvOdsRegPattern))
+        .verifying(Messages("ers.invalidCharacters"), so => validInputCharacters(so.getOrElse("csv"), fieldValidationPatterns.csvOdsRegPattern))
   )(CheckFileType.apply)(CheckFileType.unapply))
 
   /*
@@ -57,7 +55,7 @@ object RSformMappings {
    */
   val groupForm = Form(mapping("groupScheme" ->
     optional(text).verifying("required field", _.nonEmpty)
-    .verifying(Messages("ers.invalidCharacters"), so => validInputCharacters(so.getOrElse("1"), fieldValidationPatterns.yesNoRegPattern))
+      .verifying(Messages("ers.invalidCharacters"), so => validInputCharacters(so.getOrElse("1"), fieldValidationPatterns.yesNoRegPattern))
   )(RS_groupScheme.apply)(RS_groupScheme.unapply))
 
   /*
@@ -247,10 +245,16 @@ object schemeOrganiserFields {
 
 object fieldValidationPatterns {
   def companyRegPattern = "(^[a-zA-Z0-9]{1,10})$"
+
   def corporationRefPattern = "^([0-9]{10})$"
+
   def addresssRegx = """^[A-Za-zÀ-ÿ0-9 &'(),-./]{0,}$"""
+
   def postCodeRegx = """(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX‌​]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))\s?[0-9][A-Z-[C‌​IKMOV]]{2})"""
+
   def yesNoRegPattern = "^([1-2]{1})$"
+
   def csvOdsRegPattern = "^((ods|csv))$"
+
   def csvFileNameRegx = """^file[0-9]{1}$"""
 }

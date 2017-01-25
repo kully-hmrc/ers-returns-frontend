@@ -17,7 +17,7 @@
 package models
 
 import controllers.Fixtures
-import models.RSformMappings._
+import models.RsFormMappings._
 import play.api.libs.json.Json
 import org.scalatestplus.play.PlaySpec
 import play.api.data.FormError

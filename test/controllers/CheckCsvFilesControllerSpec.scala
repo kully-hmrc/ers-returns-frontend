@@ -163,7 +163,7 @@ class CheckCsvFilesControllerSpec extends UnitSpec with ERSFakeApplication with 
         ("files[2].fileId", "file2"),
         ("files[2].isSelected", "")
       )
-      val form = RSformMappings.csvFileCheckForm.bind(csvFilesListData)
+      val form = RsFormMappings.csvFileCheckForm.bind(csvFilesListData)
 
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = await(checkCsvFilesController.validateCsvFilesPageSelected()(Fixtures.buildFakeUser, request, hc))
@@ -176,7 +176,7 @@ class CheckCsvFilesControllerSpec extends UnitSpec with ERSFakeApplication with 
         ("files[0].fileId", ""),
         ("files[0].isSelected", "5")
       )
-      val form = RSformMappings.csvFileCheckForm.bind(csvFilesListData)
+      val form = RsFormMappings.csvFileCheckForm.bind(csvFilesListData)
 
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = await(checkCsvFilesController.validateCsvFilesPageSelected()(Fixtures.buildFakeUser, request, hc))

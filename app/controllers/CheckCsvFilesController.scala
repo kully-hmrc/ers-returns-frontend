@@ -18,11 +18,14 @@ package controllers
 
 import models._
 import play.api.Logger
+import play.api.Play.current
 import play.api.i18n.Messages
-import play.api.mvc.{Result, Request}
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
+
 import scala.concurrent.Future
 
 object CheckCsvFilesController extends CheckCsvFilesController {
@@ -34,13 +37,13 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
   val cacheUtil: CacheUtil
   val pageBuilder: PageBuilder
 
-  def checkCsvFilesPage() = AuthorisedForAsync() {
+  def checkCsvFilesPage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showCheckCsvFilesPage()(user, request, hc)
   }
 
-  def showCheckCsvFilesPage()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showCheckCsvFilesPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeType = request.session.get(screenSchemeInfo).get.split(" - ")(1).toUpperCase()
     val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
 
@@ -50,13 +53,13 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
       Ok(views.html.check_csv_file(CsvFilesList(mergeWithSelected)))
     }.recover {
       case ex: NoSuchElementException => Ok(views.html.check_csv_file(CsvFilesList(csvFilesList)))
-      case _:Throwable => getGlobalErrorPage
+      case _: Throwable => getGlobalErrorPage
     }
   }
 
   def mergeCsvFilesListWithCsvFilesCallback(csvFilesList: List[CsvFiles], cacheData: CsvFilesCallbackList): List[CsvFiles] = {
-    for(file <- csvFilesList) yield {
-      if(cacheData.files.exists(_.fileId == file.fileId)) {
+    for (file <- csvFilesList) yield {
+      if (cacheData.files.exists(_.fileId == file.fileId)) {
         CsvFiles(file.fileId, Some(PageBuilder.OPTION_YES))
       }
       else {
@@ -65,14 +68,14 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
     }
   }
 
-  def checkCsvFilesPageSelected() = AuthorisedForAsync() {
+  def checkCsvFilesPageSelected(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         validateCsvFilesPageSelected()
   }
 
-  def validateCsvFilesPageSelected()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    RSformMappings.csvFileCheckForm.bindFromRequest.fold(
+  def validateCsvFilesPageSelected()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+    RsFormMappings.csvFileCheckForm.bindFromRequest.fold(
       formWithErrors => {
         reloadWithError()
       },
@@ -82,7 +85,7 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
     )
   }
 
-  def performCsvFilesPageSelected(formData: CsvFilesList)(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def performCsvFilesPageSelected(formData: CsvFilesList)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
 
     val csvFilesCallbackList: List[CsvFilesCallback] = createCacheData(formData.files)
     if (csvFilesCallbackList.length == 0) {
@@ -102,7 +105,7 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
   }
 
   def createCacheData(csvFilesList: List[CsvFiles]): List[CsvFilesCallback] = {
-    for(fileData <- csvFilesList if(fileData.isSelected.getOrElse("") == PageBuilder.OPTION_YES)) yield {
+    for (fileData <- csvFilesList if fileData.isSelected.getOrElse("") == PageBuilder.OPTION_YES) yield {
       CsvFilesCallback(fileData.fileId, None)
     }
   }
@@ -113,6 +116,6 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
 
 }

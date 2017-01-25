@@ -1,5 +1,6 @@
 @()(implicit request: Request[AnyRef], context: config.ErsContext)
-
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 @ers_main(title = Messages("ers.app_title")) {
 
 <div class="grid">

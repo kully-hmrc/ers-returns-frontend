@@ -130,7 +130,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "give a Ok status and stay on the same page if form errors and display the error" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
       val altActivityData = Map("" -> "")
-      val form = RSformMappings.altActivityForm.bind(altActivityData)
+      val form = RsFormMappings.altActivityForm.bind(altActivityData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltActivitySelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.OK
@@ -139,7 +139,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "give a redirect to summary declaration page if no form errors and NO selected" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
       val altActivityData = Map("altActivity" -> PageBuilder.OPTION_NO)
-      val form = RSformMappings.altActivityForm.bind(altActivityData)
+      val form = RsFormMappings.altActivityForm.bind(altActivityData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltActivitySelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -149,7 +149,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "give a redirect to alterations amends page if no form errors and YES selected" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
       val altActivityData = Map("altActivity" -> PageBuilder.OPTION_YES)
-      val form = RSformMappings.altActivityForm.bind(altActivityData)
+      val form = RsFormMappings.altActivityForm.bind(altActivityData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltActivitySelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -159,7 +159,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "direct to ers errors page if no form errors but unable to save to cache" in {
       val controllerUnderTest = buildFakeAltAmendsPageController(cacheRes = false)
       val altActivityData = Map("altActivity" -> PageBuilder.OPTION_YES)
-      val form = RSformMappings.altActivityForm.bind(altActivityData)
+      val form = RsFormMappings.altActivityForm.bind(altActivityData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltActivitySelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.OK
@@ -170,7 +170,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "direct to ers errors page if no form errors and no sessionId" in {
       val controllerUnderTest = buildFakeAltAmendsPageController(cacheRes = false)
       val altActivityData = Map("altActivity" -> PageBuilder.OPTION_YES)
-      val form = RSformMappings.altActivityForm.bind(altActivityData)
+      val form = RsFormMappings.altActivityForm.bind(altActivityData)
       val request = Fixtures.buildFakeRequest("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = await(controllerUnderTest.showAltActivitySelected()(Fixtures.buildFakeUser, request, hc))
       contentAsString(result) shouldBe contentAsString(buildFakeAltAmendsPageController().getGlobalErrorPage)
@@ -266,7 +266,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "give a redirect status and stay on the same page if nothing selected" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
       val altAmendsData = Map("altAmendsTerms" -> "", "altAmendsEligibility" -> "", "altAmendsExchange" -> "", "altAmendsVariations" -> "", "altAmendsOther" -> "")
-      val form = RSformMappings.altAmendsForm.bind(altAmendsData)
+      val form = RsFormMappings.altAmendsForm.bind(altAmendsData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltAmendsSelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -276,7 +276,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "give a redirect status and stay on the same page if form errors" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
       val altAmendsData = Map("altAmendsTerms" -> "X", "altAmendsEligibility" -> "", "altAmendsExchange" -> "", "altAmendsVariations" -> "", "altAmendsOther" -> "")
-      val form = RSformMappings.altAmendsForm.bind(altAmendsData)
+      val form = RsFormMappings.altAmendsForm.bind(altAmendsData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltAmendsSelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -286,7 +286,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "direct to ers errors page if no form errors but unable to save to cache" in {
       val controllerUnderTest = buildFakeAltAmendsPageController(cacheRes = false)
       val altAmendsData = Map("altAmendsTerms" -> "1", "altAmendsEligibility" -> "1", "altAmendsExchange" -> "1", "altAmendsVariations" -> "1", "altAmendsOther" -> "1")
-      val form = RSformMappings.altActivityForm.bind(altAmendsData)
+      val form = RsFormMappings.altActivityForm.bind(altAmendsData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltAmendsSelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.OK
@@ -297,7 +297,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplication with Mock
     "give a redirect to summary declaration page if no form errors and selection applied" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
       val altAmendsData = Map("altAmendsTerms" -> "1", "altAmendsEligibility" -> "1", "altAmendsExchange" -> "1", "altAmendsVariations" -> "1", "altAmendsOther" -> "1")
-      val form = RSformMappings.altActivityForm.bind(altAmendsData)
+      val form = RsFormMappings.altActivityForm.bind(altAmendsData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltAmendsSelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER

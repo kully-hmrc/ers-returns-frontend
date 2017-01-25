@@ -18,7 +18,7 @@ package config
 
 import play.api.Play
 import uk.gov.hmrc.crypto.ApplicationCrypto
-import uk.gov.hmrc.http.cache.client.{SessionCache, ShortLivedHttpCaching, ShortLivedCache}
+import uk.gov.hmrc.http.cache.client.{SessionCache, ShortLivedCache, ShortLivedHttpCaching}
 import uk.gov.hmrc.play.audit.http.HttpAuditing
 import uk.gov.hmrc.play.audit.http.config.LoadAuditingConfig
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
@@ -32,6 +32,10 @@ import uk.gov.hmrc.play.partials.FormPartialRetriever
 import uk.gov.hmrc.play.partials.HeaderCarrierForPartialsConverter
 import play.Logger
 import play.api.Play.current
+import play.api.libs.ws.WSRequest
+
+import scala.concurrent.duration._
+
 
 object ERSFileValidatorAuditConnector extends AuditConnector with AppName with RunMode {
   override lazy val auditingConfig = LoadAuditingConfig(s"$env.auditing")
@@ -46,15 +50,15 @@ object WSHttpWithCustomTimeOut extends WSHttp with AppName with RunMode  with Ht
   override val hooks = Seq(AuditingHook)
   override val auditConnector = ERSFileValidatorAuditConnector
 
-  val ersTimeOut =  (Play.configuration.getInt("ers-timeout-seconds").getOrElse(20)) * 1000
+  val ersTimeOut: FiniteDuration =  Play.configuration.getInt("ers-timeout-seconds").getOrElse(20).seconds
 
-  override def buildRequest[A](url: String)(implicit hc: HeaderCarrier) = {
+  override def buildRequest[A](url: String)(implicit hc: HeaderCarrier): WSRequest = {
     super.buildRequest[A](url).withRequestTimeout(ersTimeOut)
   }
 }
 
 object ERSAuthConnector extends AuthConnector with ServicesConfig {
-  val serviceUrl = baseUrl("auth")
+  val serviceUrl: String = baseUrl("auth")
   Logger.info("got the ServiceURL " + serviceUrl)
   lazy val http = WSHttp
 }
@@ -64,7 +68,7 @@ object ERSAuditConnector extends AuditConnector with AppName with RunMode {
 }
 
 object ERSFileValidatorAuthConnector extends AuthConnector with ServicesConfig {
-  val serviceUrl = baseUrl("auth")
+  val serviceUrl: String = baseUrl("auth")
   lazy val http = WSHttp
 }
 

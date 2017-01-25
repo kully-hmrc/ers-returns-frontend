@@ -99,7 +99,7 @@ class GroupSchemeControllerTest extends UnitSpec with MockitoSugar with ERSUsers
       else {
         Map("" -> "")
       }
-      val form = _root_.models.RSformMappings.companyDetailsForm.bind(data)
+      val form = _root_.models.RsFormMappings.companyDetailsForm.bind(data)
       Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
     }
 
@@ -326,7 +326,7 @@ class GroupSchemeControllerTest extends UnitSpec with MockitoSugar with ERSUsers
         case Some(true) => Map("groupScheme" -> PageBuilder.OPTION_YES)
         case Some(false) => Map("groupScheme" -> PageBuilder.OPTION_NO)
       }
-      val form = _root_.models.RSformMappings.groupForm.bind(data)
+      val form = _root_.models.RsFormMappings.groupForm.bind(data)
       val request = scheme match {
         case "CSOP" => Fixtures.buildFakeRequestWithSessionIdCSOP("POST")
         case "SAYE" => Fixtures.buildFakeRequestWithSessionIdSAYE("POST")

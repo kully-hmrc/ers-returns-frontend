@@ -192,7 +192,7 @@ class SchemeOrganiserControllerTest extends UnitSpec with ERSFakeApplication wit
     "give a Ok status and stay on the same page if form errors and display the error" in {
       val controllerUnderTest = buildFakeSchemeOrganiserController()
       val schemeOrganiserData = Map("" -> "")
-      val form = RSformMappings.schemeOrganiserForm.bind(schemeOrganiserData)
+      val form = RsFormMappings.schemeOrganiserForm.bind(schemeOrganiserData)
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showSchemeOrganiserSubmit()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.OK
@@ -201,7 +201,7 @@ class SchemeOrganiserControllerTest extends UnitSpec with ERSFakeApplication wit
     "give a redirect status on POST if no form errors" in {
         val controllerUnderTest = buildFakeSchemeOrganiserController()
         val schemeOrganiserData = Map("companyName" -> Fixtures.companyName, "addressLine1" -> "Add1", "addressLine" -> "Add2", "addressLine3" -> "Add3", "addressLine1" -> "Add4", "postcode" -> "AA11 1AA", "country" -> "United Kingdom", "companyReg" -> "AB123456", "corporationRef" -> "1234567890")
-        val form = _root_.models.RSformMappings.schemeOrganiserForm.bind(schemeOrganiserData)
+        val form = _root_.models.RsFormMappings.schemeOrganiserForm.bind(schemeOrganiserData)
         val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
         val result = controllerUnderTest.showSchemeOrganiserSubmit()(Fixtures.buildFakeUser, request, hc)
         status(result) shouldBe Status.SEE_OTHER
@@ -211,7 +211,7 @@ class SchemeOrganiserControllerTest extends UnitSpec with ERSFakeApplication wit
     "direct to ers errors page if saving scheme organiser data throws exception" in {
       val controllerUnderTest = buildFakeSchemeOrganiserController(schemeOrganiserDataCachedOk = false)
       val schemeOrganiserData = Map("companyName" -> Fixtures.companyName, "addressLine1" -> "Add1", "addressLine" -> "Add2", "addressLine3" -> "Add3", "addressLine1" -> "Add4", "postcode" -> "AA11 1AA", "country" -> "United Kingdom", "companyReg" -> "AB123456", "corporationRef" -> "1234567890")
-      val form = _root_.models.RSformMappings.schemeOrganiserForm.bind(schemeOrganiserData)
+      val form = _root_.models.RsFormMappings.schemeOrganiserForm.bind(schemeOrganiserData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showSchemeOrganiserSubmit()(Fixtures.buildFakeUser, request, hc)
       contentAsString(result) should include("Service unavailable")

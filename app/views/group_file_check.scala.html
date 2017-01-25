@@ -1,13 +1,11 @@
 @(invalidChars: String)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 @* check return file Template *@
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
-@import views.html.templates._
-@*import uk.gov.hmrc.validation.Validator*@
-@import uk.gov.hmrc.play.views.html.helpers
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 @import utils.PageBuilder._
-
+@import views.html.templates._
 @scripts = {
-	<!--script>var INVALID_CHARACTERS=/@*Html(invalidChars)*@/</script-->
 	<script src='@routes.AssetsController.at("javascripts/ers_scripts.js")'> </script>
 	<script src='@routes.AssetsController.at("javascripts/ers_csv_scripts.js")'> </script>
 }
@@ -20,21 +18,5 @@
 	
 	<p class="text">@Html(getPageElement(schemeId, PAGE_GROUP_FILE_CHECK, "intro_para"))</p>
 		
-	<div id="file-wrapper">
-		<!--@*helpers.form(action = routes.UploadController.uploadGroupScheme("cg1csv", sr), 'id -> "upload-file-form", 'enctype -> "multipart/form-data") {
-		    <div class="form-field @if(flash.get("filetype-error").isDefined) {error}">
-		    	<input class="input-csv-file-name" type="file" name="fileUpload" accept=".csv" size="40"/>
-		    </div>
-		    @if(flash.get("filetype-error").isDefined) {
-			<div aria-labelledby="error-heading" class="validation-message" id="error-summary" role="alert" tabindex="-1">
-				@flash.get("filetype-error")
-			</div> 
-			}
-		    <div>
-		    	<button role="button" id="check-file-button" class="button" type="submit" value="@Html(Messages("ers_group_file_check.check_file_button"))">@Html(Messages("ers_group_file_check.check_file_button"))</button>
-		    	@spinner()
-		    </div>		   
-		}*@-->			 
-	</div>	
-	<!--a href="@*routes.GroupSchemeController.groupSchemeTypePage(sr)" id="back">@Html(Messages("ers_check_file.back"))*@</a-->
+	<div id="file-wrapper"></div>
 }

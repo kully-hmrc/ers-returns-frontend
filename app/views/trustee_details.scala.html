@@ -1,11 +1,12 @@
 @(groupSchemeActivity: String, index: Int, trusteeDetails: Form[models.TrusteeDetails])(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 
-@import views.html.templates._
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 @import uk.gov.hmrc.play.views.html.helpers
 @import utils.PageBuilder._
-@import utils.ContentUtil._
 @import views.html.helpers.error_overview
-@import models.trusteeDetailsFields._
+@import views.html.templates._
+
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 
 @scripts = {

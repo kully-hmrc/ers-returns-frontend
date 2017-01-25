@@ -68,7 +68,7 @@ trait ErsConnector {
     }.recover {
       case e: Exception =>
         Logger.error(s"connectToEtmpSapRequest failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
-        metrics.ErsConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
+        metrics.ersConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
         throw new Exception
     }
   }
@@ -109,12 +109,12 @@ trait ErsConnector {
     val startTime = System.currentTimeMillis()
     Logger.info("validateFileData: Call to Validator: " + (System.currentTimeMillis() / 1000))
     httpPost.POST(url, ValidatorData(callbackData, schemeInfo)).map { res =>
-      metrics.ErsConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
+      metrics.ersConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
       res
     }.recover {
       case e: Exception => {
         Logger.error(s"validateFileData: Validate file data failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
-        metrics.ErsConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
+        metrics.ersConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
         HttpResponse(400)
       }
     }
@@ -126,12 +126,12 @@ trait ErsConnector {
     val startTime = System.currentTimeMillis()
     Logger.info("validateFileData: Call to Validator: " + (System.currentTimeMillis() / 1000))
     httpPost.POST(url, CsvValidatorData(callbackData, schemeInfo)).map { res =>
-      metrics.ErsConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
+      metrics.ersConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
       res
     }.recover {
       case e: Exception => {
         Logger.error(s"validateCsvFileData: Validate file data failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
-        metrics.ErsConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
+        metrics.ersConnector(System.currentTimeMillis() - startTime, TimeUnit.MILLISECONDS)
         HttpResponse(400)
       }
     }

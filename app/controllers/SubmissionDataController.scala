@@ -18,14 +18,15 @@ package controllers
 
 import config.ApplicationConfig
 import connectors.ErsConnector
-import models.SchemeInfo
-import org.joda.time.DateTime
 import play.api.Logger
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.{Result, Request}
+import play.api.mvc.{Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
+
 import scala.concurrent.Future
 
 object SubmissionDataController extends SubmissionDataController {
@@ -41,7 +42,7 @@ trait SubmissionDataController extends ERSReturnBaseController with Authenticato
     val schemeRef: Option[String] = request.getQueryString("schemeRef")
     val timestamp: Option[String] = request.getQueryString("confTime")
 
-    if(schemeRef.isDefined && timestamp.isDefined) {
+    if (schemeRef.isDefined && timestamp.isDefined) {
       Some(
         Json.obj(
           "schemeRef" -> schemeRef.get,
@@ -65,7 +66,7 @@ trait SubmissionDataController extends ERSReturnBaseController with Authenticato
 
     Logger.debug("Retrieve Submission Data Request")
 
-    if(ApplicationConfig.enableRetrieveSubmissionData) {
+    if (ApplicationConfig.enableRetrieveSubmissionData) {
 
       Logger.debug("Retrieve SubmissionData Enabled")
 

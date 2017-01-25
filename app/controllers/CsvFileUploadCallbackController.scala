@@ -18,8 +18,9 @@ package controllers
 
 import config.ERSFileValidatorAuthConnector
 import models.CallbackData
-import play.api.mvc.Action
 import play.api.Logger
+import play.api.libs.json.JsValue
+import play.api.mvc.Action
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.Actions
 import uk.gov.hmrc.play.frontend.controller.FrontendController
@@ -28,7 +29,7 @@ import uk.gov.hmrc.play.http.logging.SessionId
 trait CsvFileUploadCallbackController extends FrontendController with Actions with ErsConstants {
   val sessionService: SessionService
 
-  def callback() = Action.async(parse.json) {
+  def callback(): Action[JsValue] = Action.async(parse.json) {
     implicit request => {
 
       Logger.info("Attachments Callback: " + (System.currentTimeMillis() / 1000))
@@ -36,16 +37,16 @@ trait CsvFileUploadCallbackController extends FrontendController with Actions wi
       val callbackData: CallbackData = request.body.as[CallbackData]
 
       val headerCarrier = callbackData.sessionId match {
-        case Some(sid) => hc.copy(sessionId = Some(SessionId((sid))))
+        case Some(sid) => hc.copy(sessionId = Some(SessionId(sid)))
         case _ => hc
       }
 
       sessionService.storeCallbackData(callbackData)(request, headerCarrier).map {
         case callback: Option[CallbackData] if callback.isDefined => Ok("")
-        case _ =>  Logger.error(s"storeCallbackData failed with Exception , timestamp: ${System.currentTimeMillis()}.")
+        case _ => Logger.error(s"storeCallbackData failed with Exception , timestamp: ${System.currentTimeMillis()}.")
           InternalServerError("Exception")
-      } .recover {
-        case e:Throwable => Logger.error(s"storeCallbackData failed with Exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
+      }.recover {
+        case e: Throwable => Logger.error(s"storeCallbackData failed with Exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
           InternalServerError("Exception occurred when attempting to store data")
       }
     }

@@ -115,7 +115,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "give a OK status and stay on the same page if form errors" in {
       val controllerUnderTest = buildFakeTrusteePageController(groupSchemeActivityRes = true)
       val trusteeData = Map("" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.OK
@@ -124,7 +124,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if form errors and if fetching groupSchemeActivity fails direct to ers errors page" in {
       val controllerUnderTest = buildFakeTrusteePageController(groupSchemeActivityRes = false)
       val trusteeData = Map("" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       contentAsString(await(controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc))) shouldBe contentAsString(controllerUnderTest.getGlobalErrorPage)
     }
@@ -132,7 +132,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors with new trustee (index 10000) and fetch trustee details success" in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = true, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -142,7 +142,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors with new trustee (index 10000) and fetch trustee details fails" in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = false, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -152,7 +152,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors and fetch trustee details success for not updating an existing trustee (index 1) " in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = true, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(1)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -162,7 +162,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors and fetch trustee details success for updating a trustee (index 0) " in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = true, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(0)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER

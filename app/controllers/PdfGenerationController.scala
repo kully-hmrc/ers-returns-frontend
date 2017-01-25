@@ -18,9 +18,11 @@ package controllers
 
 import connectors.{AttachmentsConnector, ErsConnector}
 import models._
+import play.api.Play.current
 import play.api.i18n.Messages
-import play.api.mvc.Request
-import play.api.{Logger, Play}
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{Action, AnyContent, Request, Result}
+import play.api.{Configuration, Logger, Play}
 import services.SessionService
 import services.pdf.{ApachePdfContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
@@ -28,19 +30,20 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
 
 import scala.collection.mutable.ListBuffer
+import scala.concurrent.Future
 
 trait PdfGenerationController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
-  val pdfBuilderService : ErsReceiptPdfBuilderService
+  val pdfBuilderService: ErsReceiptPdfBuilderService
 
 
-  def buildPdfForBundle(bundle: String, dateSubmitted: String) = AuthorisedForAsync() {
+  def buildPdfForBundle(bundle: String, dateSubmitted: String): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         generatePdf(bundle, dateSubmitted)
- }
+  }
 
-  def generatePdf(bundle: String, dateSubmitted: String)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier) = {
+  def generatePdf(bundle: String, dateSubmitted: String)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
 
     Logger.debug("ers returns frontend getting into the controller to generate the pdf")
     cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, cacheUtil.getSchemeRefFromScreenSchemeInfo(
@@ -88,7 +91,7 @@ trait PdfGenerationController extends ERSReturnBaseController with Authenticator
 
 object PdfGenerationController extends PdfGenerationController {
   val attachmentsConnector = AttachmentsConnector
-  val currentConfig = Play.current.configuration
+  val currentConfig: Configuration = Play.current.configuration
   val sessionService = SessionService
   val ersConnector: ErsConnector = ErsConnector
   override val cacheUtil: CacheUtil = CacheUtil

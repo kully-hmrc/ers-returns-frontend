@@ -1,9 +1,8 @@
 @(pageTitle: String, heading: String, message: String, applicationConfig: config.ApplicationConfig = config.ApplicationConfig)
 
-@import play.api.Play.current
-@import uk.gov.hmrc.play.config.RunMode._
-
 @import layouts.{govuk_template => hmrcGovUkTemplate}
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 @import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
 
 @contentHeader = {

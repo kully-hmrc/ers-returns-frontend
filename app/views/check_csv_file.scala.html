@@ -1,6 +1,8 @@
 @(csvFilesList: CsvFilesList)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 @import views.html.templates._
 @import utils.PageBuilder._
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 
 @ers_main(title = Messages("ers.choose_csv_files.page_title")) {

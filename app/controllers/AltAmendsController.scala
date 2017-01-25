@@ -19,8 +19,10 @@ package controllers
 import _root_.models._
 import connectors.ErsConnector
 import play.api.Logger
+import play.api.Play.current
 import play.api.i18n.Messages
-import play.api.mvc.{Request, Result}
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
@@ -33,25 +35,26 @@ object AltAmendsController extends AltAmendsController {
 }
 
 trait AltAmendsController extends ERSReturnBaseController with Authenticator with ErsConstants {
-
   val cacheUtil: CacheUtil
   val ersConnector: ErsConnector
 
-  def altActivityPage() = AuthorisedForAsync() {
+  def altActivityPage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showAltActivityPage()(user, request, hc)
   }
 
-  def showAltActivityPage()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val schemeRef:String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+  def showAltActivityPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[GroupSchemeInfo](CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER, schemeRef).flatMap { groupSchemeActivity =>
       cacheUtil.fetch[AltAmendsActivity](CacheUtil.altAmendsActivity, schemeRef).map { altAmendsActivity =>
-        Ok(views.html.alterations_activity(altAmendsActivity.altActivity, groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT), RSformMappings.altActivityForm.fill(altAmendsActivity)))
+        Ok(views.html.alterations_activity(altAmendsActivity.altActivity,
+          groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT),
+          RsFormMappings.altActivityForm.fill(altAmendsActivity)))
       } recover {
         case e: NoSuchElementException => {
           val form = AltAmendsActivity("")
-          Ok(views.html.alterations_activity("", groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT), RSformMappings.altActivityForm.fill(form)))
+          Ok(views.html.alterations_activity("", groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT), RsFormMappings.altActivityForm.fill(form)))
         }
       }
     } recover {
@@ -62,31 +65,31 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
     }
   }
 
-  def altActivitySelected() = AuthorisedForAsync() {
+  def altActivitySelected(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showAltActivitySelected()(user, request, hc)
   }
 
-  def showAltActivitySelected()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showAltActivitySelected()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeId = try {
       request.session.get(screenSchemeInfo).get.split(" - ").head
     } catch {
-      case _:Throwable => {
-        return Future(getGlobalErrorPage)
+      case _: Throwable => {
+        Future(getGlobalErrorPage)
       }
     }
-    RSformMappings.altActivityForm.bindFromRequest.fold(
+    RsFormMappings.altActivityForm.bindFromRequest.fold(
       errors => {
         Future.successful(Ok(views.html.alterations_activity("", "", errors)))
       },
       formData => {
         val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
         cacheUtil.cache(CacheUtil.altAmendsActivity, formData, schemeRef).map { all =>
-            formData.altActivity match {
-              case PageBuilder.OPTION_NO => Redirect(routes.SummaryDeclarationController.summaryDeclarationPage())
-              case PageBuilder.OPTION_YES => Redirect(routes.AltAmendsController.altAmendsPage())
-            }
+          formData.altActivity match {
+            case PageBuilder.OPTION_NO => Redirect(routes.SummaryDeclarationController.summaryDeclarationPage())
+            case PageBuilder.OPTION_YES => Redirect(routes.AltAmendsController.altAmendsPage())
+          }
         } recover {
           case e: Throwable => {
             Logger.error(s"showAltActivitySelected: Save data to cache failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
@@ -97,14 +100,14 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
     )
   }
 
-  def altAmendsPage() = AuthorisedForAsync() {
+  def altAmendsPage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showAltAmendsPage()(user, request, hc)
   }
 
-  def showAltAmendsPage()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val schemeRef:String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+  def showAltAmendsPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[AltAmends](CacheUtil.ALT_AMENDS_CACHE_CONTROLLER, schemeRef).map { altAmends =>
       Ok(views.html.alterations_amends(altAmends))
     } recover {
@@ -112,16 +115,15 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
     }
   }
 
-
-  def altAmendsSelected() = AuthorisedForAsync() {
+  def altAmendsSelected(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showAltAmendsSelected()(user, request, hc)
   }
 
-  def showAltAmendsSelected()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showAltAmendsSelected()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeId = request.session.get(screenSchemeInfo).get.split(" - ").head
-    RSformMappings.altAmendsForm.bindFromRequest.fold(
+    RsFormMappings.altAmendsForm.bindFromRequest.fold(
       formWithErrors => {
         Future.successful(Redirect(routes.AltAmendsController.altAmendsPage()).flashing("alt-amends-not-selected-error" -> PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_ALT_AMENDS, "err.message")))
       },
@@ -155,6 +157,9 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(
+    Messages("ers.global_errors.title"),
+    Messages("ers.global_errors.heading"),
+    Messages("ers.global_errors.message")))
 
 }

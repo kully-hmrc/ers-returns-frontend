@@ -17,81 +17,87 @@
 package services.pdf
 
 import models.ErsSummary
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.LegacyI18nSupport
 import utils.PageBuilder
 
 import scala.collection.mutable.ListBuffer
 
-trait PdfDecoratorControllerFactory {
-  def createPdfDecoratorControllerForScheme(scheme: String, ersSummary: ErsSummary, filesUploaded: Option[ListBuffer[String]]) : DecoratorController
+trait PdfDecoratorControllerFactory extends LegacyI18nSupport {
+  def createPdfDecoratorControllerForScheme(scheme: String, ersSummary: ErsSummary, filesUploaded: Option[ListBuffer[String]]): DecoratorController
 }
 
 object PdfDecoratorControllerFactory extends PdfDecoratorControllerFactory {
 
-   def createPdfDecoratorControllerForScheme(scheme : String, ersSummary: ErsSummary, filesUploaded: Option[ListBuffer[String]]) : DecoratorController = {
+  def createPdfDecoratorControllerForScheme(scheme: String, ersSummary: ErsSummary, filesUploaded: Option[ListBuffer[String]]): DecoratorController = {
 
-     class DecoratorControllerImpl(val decorators : Array[Decorator]) extends DecoratorController {
+    class DecoratorControllerImpl(val decorators: Array[Decorator]) extends DecoratorController {
 
-       def addDecorator(decorator : Decorator) : DecoratorController = new DecoratorControllerImpl(decorators :+ decorator)
-       def decorate(streamer: ErsContentsStreamer): Unit = decorators.foreach(decorator => decorator.decorate(streamer))
-       def getNumberOfDecorator : Int = decorators.length
-       def getDecorators : Array[Decorator] = decorators
-     }
+      def addDecorator(decorator: Decorator): DecoratorController = new DecoratorControllerImpl(decorators :+ decorator)
 
-     val lineSpacer = 10
-     val blockSpacer = 20
-     val headingFontSize = 16
-     val answerFontSize = 12
+      def decorate(streamer: ErsContentsStreamer): Unit = decorators.foreach(decorator => decorator.decorate(streamer))
 
-     scheme.trim.toLowerCase match {
-       case "emi" => new DecoratorControllerImpl(Array[Decorator]()).
-         addDecorator(new YesNoDecorator(Messages("ers_choose.emi.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.emi.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_group_activity.emi.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.emi.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+      def getNumberOfDecorator: Int = decorators.length
 
-       case "csop" => new DecoratorControllerImpl(Array[Decorator]()).
-         addDecorator(new YesNoDecorator(Messages("ers_choose.csop.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.csop.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_group_activity.csop.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.csop.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_alt_activity.csop.question"), ersSummary.altAmendsActivity.get.altActivity, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new AlterationsAmendsDecorator(createAltAmendOptionsFor(ersSummary, "csop"), headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+      def getDecorators: Array[Decorator] = decorators
+    }
 
-       case "sip" => new DecoratorControllerImpl(Array[Decorator]()).
-         addDecorator(new YesNoDecorator(Messages("ers_choose.sip.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.sip.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_group_activity.sip.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.sip.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new TrusteesDecorator(ersSummary.trustees, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_alt_activity.sip.question"), ersSummary.altAmendsActivity.get.altActivity, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new AlterationsAmendsDecorator(createAltAmendOptionsFor(ersSummary, "sip"), headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+    val lineSpacer = 10
+    val blockSpacer = 20
+    val headingFontSize = 16
+    val answerFontSize = 12
 
-       case "saye" => new DecoratorControllerImpl(Array[Decorator]()).
-         addDecorator(new YesNoDecorator(Messages("ers_choose.saye.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.saye.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_group_activity.saye.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_alt_activity.saye.question"), ersSummary.altAmendsActivity.get.altActivity, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new AlterationsAmendsDecorator(createAltAmendOptionsFor(ersSummary, "saye"), headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+    scheme.trim.toLowerCase match {
+      case "emi" => new DecoratorControllerImpl(Array[Decorator]()).
+        addDecorator(new YesNoDecorator(Messages("ers_choose.emi.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.emi.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_group_activity.emi.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.emi.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer))
 
-       case "other" => new DecoratorControllerImpl(Array[Decorator]()).
-         addDecorator(new YesNoDecorator(Messages("ers_choose.other.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.other.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new YesNoDecorator(Messages("ers_group_activity.other.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
-         addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.other.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+      case "csop" => new DecoratorControllerImpl(Array[Decorator]()).
+        addDecorator(new YesNoDecorator(Messages("ers_choose.csop.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.csop.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_group_activity.csop.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.csop.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_alt_activity.csop.question"), ersSummary.altAmendsActivity.get.altActivity, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new AlterationsAmendsDecorator(createAltAmendOptionsFor(ersSummary, "csop"), headingFontSize, answerFontSize, lineSpacer, blockSpacer))
 
-        case _ => throw new IllegalArgumentException
-     }
-   }
+      case "sip" => new DecoratorControllerImpl(Array[Decorator]()).
+        addDecorator(new YesNoDecorator(Messages("ers_choose.sip.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.sip.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_group_activity.sip.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.sip.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new TrusteesDecorator(ersSummary.trustees, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_alt_activity.sip.question"), ersSummary.altAmendsActivity.get.altActivity, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new AlterationsAmendsDecorator(createAltAmendOptionsFor(ersSummary, "sip"), headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+
+      case "saye" => new DecoratorControllerImpl(Array[Decorator]()).
+        addDecorator(new YesNoDecorator(Messages("ers_choose.saye.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.saye.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_group_activity.saye.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_alt_activity.saye.question"), ersSummary.altAmendsActivity.get.altActivity, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new AlterationsAmendsDecorator(createAltAmendOptionsFor(ersSummary, "saye"), headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+
+      case "other" => new DecoratorControllerImpl(Array[Decorator]()).
+        addDecorator(new YesNoDecorator(Messages("ers_choose.other.question"), ersSummary.isNilReturn, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new FileNamesDecorator(ersSummary.isNilReturn, filesUploaded, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new SchemeOrganiserDetailseDecorator(Messages("ers_summary_declaration.other.organiser"), ersSummary.schemeOrganiser.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new YesNoDecorator(Messages("ers_group_activity.other.question"), ersSummary.groupService.get.groupScheme.get, headingFontSize, answerFontSize, lineSpacer, blockSpacer)).
+        addDecorator(new GroupSummaryDecorator(Messages("ers_group_summary.other.title"), ersSummary.companies, headingFontSize, answerFontSize, lineSpacer, blockSpacer))
+
+      case _ => throw new IllegalArgumentException
+    }
+  }
 
   def createAltAmendOptionsFor(ersSummary: ErsSummary, variant: String): Map[String, String] = {
 
-    val map = scala.collection.mutable.HashMap.empty[String,String]
+    val map = scala.collection.mutable.HashMap.empty[String, String]
 
     if (ersSummary.altAmendsActivity.isDefined) {
 
