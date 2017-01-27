@@ -16,11 +16,17 @@
 
 package services.pdf
 
+import akka.stream.Materializer
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.Fixtures
+import utils.{ERSFakeApplicationConfig, Fixtures}
 
-class PdfDecoratorContorllerFactorySpec extends UnitSpec {
+class PdfDecoratorContorllerFactorySpec extends UnitSpec with OneAppPerSuite with ERSFakeApplicationConfig {
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   // a function to get matching an instance to be of certain type
   def anInstanceOf[T](implicit manifest: Manifest[T]) = {
@@ -33,7 +39,7 @@ class PdfDecoratorContorllerFactorySpec extends UnitSpec {
 
   "extended pdf scheme decortator factory" should {
     "create new emi scheme decorator when scheme is EMI" in {
-     val decorator = PdfDecoratorControllerFactory.createPdfDecoratorControllerForScheme("emi", Fixtures.ersSummary, None)
+      val decorator = PdfDecoratorControllerFactory.createPdfDecoratorControllerForScheme("emi", Fixtures.ersSummary, None)
       decorator should be(anInstanceOf[DecoratorController])
     }
 
@@ -42,5 +48,5 @@ class PdfDecoratorContorllerFactorySpec extends UnitSpec {
         PdfDecoratorControllerFactory.createPdfDecoratorControllerForScheme("blah", Fixtures.ersSummary, None)
       }
     }
- }
+  }
 }

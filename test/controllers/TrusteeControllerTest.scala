@@ -16,27 +16,28 @@
 
 package controllers
 
+import akka.stream.Materializer
 import connectors.ErsConnector
 import models._
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils._
 import org.joda.time.DateTime
-import org.jsoup.Jsoup
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneServerPerSuite
+import play.api.Application
 import play.api.http.Status
-import play.api.libs.json.JsValue
-import play.api.mvc.{Request, Result}
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
+import utils._
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 
-class TrusteeControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
+class TrusteeControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneServerPerSuite {
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   "calling Trustee Details Page" should {
 
@@ -44,8 +45,8 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplicationConfig with 
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None,None)
-      val trustee = TrusteeDetails("Name","1 The Street",None,None,None,Some("UK"),None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
+      val trustee = TrusteeDetails("Name", "1 The Street", None, None, None, Some("UK"), None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
@@ -177,7 +178,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplicationConfig with 
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None,None,None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
       val trustee = TrusteeDetails("Name", "1 The Street", None, None, None, Some("UK"), None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
@@ -401,7 +402,6 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplicationConfig with 
 
 
   }
-
 
 
 }

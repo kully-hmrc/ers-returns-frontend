@@ -16,25 +16,33 @@
 
 package services.pdf
 
+import akka.stream.Materializer
 import models.{AltAmendsActivity, AlterationAmends, ErsSummary}
 import org.joda.time.DateTime
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.Play.current
 import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.Fixtures
+import utils.{ERSFakeApplicationConfig, Fixtures}
 
-class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
+class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
 
-  val altAmends = AlterationAmends(altAmendsTerms = Some("1"),
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val materializer: Materializer = app.materializer
+
+  lazy val altAmends = AlterationAmends(altAmendsTerms = Some("1"),
     altAmendsEligibility = Some("1"),
     altAmendsExchange = Some("1"),
     altAmendsVariations = Some("1"),
     altAmendsOther = Some("1")
   )
-  val ersSummary = ErsSummary(
+
+  lazy val ersSummary = ErsSummary(
     bundleRef = "",
     isNilReturn = "",
     fileType = None,

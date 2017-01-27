@@ -16,6 +16,7 @@
 
 package controllers
 
+import akka.stream.Materializer
 import connectors.ErsConnector
 import metrics.Metrics
 import models.{ErsMetaData, ErsSummary, SchemeInfo}
@@ -24,20 +25,27 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.http.Status
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.JsValue
-import play.api.mvc.{Session, Request, Result}
+import play.api.mvc.{Request, Result, Session}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
 import utils._
+
 import scala.concurrent.Future
 
-class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach {
+class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach with OneAppPerSuite {
 
-  val mockMetrics: Metrics = mock[Metrics]
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
+
+  lazy val mockMetrics: Metrics = mock[Metrics]
 
   override def beforeEach() = {
     super.beforeEach()
@@ -46,12 +54,12 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationCon
 
   "calling ConformationPage" should {
 
-    def buildFakeConfirmationPageController(isNilReturn: String = "1", bundleRes: Boolean = true, allDataRes: Boolean = true, ersMetaRes: Boolean  = true, presubmission: Int = 200, presubmissionSuccess: Boolean = true) = new ConfirmationPageController {
+    def buildFakeConfirmationPageController(isNilReturn: String = "1", bundleRes: Boolean = true, allDataRes: Boolean = true, ersMetaRes: Boolean = true, presubmission: Int = 200, presubmissionSuccess: Boolean = true) = new ConfirmationPageController {
 
-      val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
-      val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle",isNilReturn, None, DateTime.now,rsc, None, None, None, None, None, None, None, None)
-      override val jsonParser:JsonParser = mock[JsonParser]
+      val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+      val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+      val ersSummary = ErsSummary("testbundle", isNilReturn, None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
+      override val jsonParser: JsonParser = mock[JsonParser]
       override val metrics = mockMetrics
       val mockErsConnector: ErsConnector = mock[ErsConnector]
 
@@ -66,9 +74,9 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationCon
       )
       when(
         mockErsConnector.checkForPresubmission(any[SchemeInfo](), anyString())(any(), any())
-      ).thenReturn (
+      ).thenReturn(
         presubmissionSuccess match {
-          case true => Future.successful (HttpResponse (presubmission) )
+          case true => Future.successful(HttpResponse(presubmission))
           case _ => Future.failed(new RuntimeException)
         }
       )
@@ -80,7 +88,7 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationCon
         mockCacheUtil.fetch[ErsMetaData](refEq(CacheUtil.ersMetaData), anyString())(any(), any(), any())
       ).thenReturn(
         ersMetaRes match {
-          case true => Future.successful (rsc)
+          case true => Future.successful(rsc)
           case _ => Future.failed(new RuntimeException)
         }
       )
@@ -99,6 +107,7 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationCon
       )
 
       override val cacheUtil: CacheUtil = mockCacheUtil
+
       override def saveAndSubmit(alldata: ErsSummary, all: ErsMetaData, bundle: String)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
         Future(Ok)
       }
@@ -197,17 +206,17 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationCon
   }
 
   "calling saveAndSubmit" should {
-    val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
-    val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-    val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None,None,None)
+    val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+    val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+    val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
 
     def buildFakeConfirmationPageController(saveMetadataRes: Boolean = true, saveMetadataResponse: Int = 200, submitReturnToBackendResponse: Int = 200) = new ConfirmationPageController {
-      override val jsonParser:JsonParser = mock[JsonParser]
+      override val jsonParser: JsonParser = mock[JsonParser]
       override val metrics = mockMetrics
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       when(
         mockErsConnector.saveMetadata(any[ErsSummary]())(any(), any())
-      ).thenReturn (
+      ).thenReturn(
         saveMetadataRes match {
           case true => Future.successful(HttpResponse(saveMetadataResponse))
           case _ => Future.failed(new RuntimeException)
@@ -216,7 +225,7 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationCon
       when(
         mockErsConnector.submitReturnToBackend(any[ErsSummary]())(any(), any())
       ).thenReturn(
-       HttpResponse(submitReturnToBackendResponse)
+        HttpResponse(submitReturnToBackendResponse)
       )
       override val ersConnector: ErsConnector = mockErsConnector
       val mockCacheUtil: CacheUtil = mock[CacheUtil]

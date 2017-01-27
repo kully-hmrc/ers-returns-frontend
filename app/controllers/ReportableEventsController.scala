@@ -29,18 +29,14 @@ import utils._
 
 import scala.concurrent.Future
 
-
 object ReportableEventsController extends ReportableEventsController {
   override val cacheUtil: CacheUtil = CacheUtil
   override val ersConnector: ErsConnector = ErsConnector
-
 }
 
 trait ReportableEventsController extends ERSReturnBaseController with Authenticator {
-
   val ersConnector: ErsConnector
   val cacheUtil: CacheUtil
-
 
   def reportableEventsPage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
@@ -75,10 +71,9 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
     cacheUtil.fetch[ReportableEvents](CacheUtil.reportableEvents, schemeRef).map { activity =>
       Ok(views.html.reportable_events(activity.isNilReturn, RsFormMappings.chooseForm.fill(activity)))
     } recover {
-      case e: NoSuchElementException => {
+      case e: NoSuchElementException =>
         val form = ReportableEvents(Some(""))
         Ok(views.html.reportable_events(Some(""), RsFormMappings.chooseForm.fill(form)))
-      }
     }
   }
 
@@ -86,10 +81,9 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
     implicit user =>
       implicit request =>
         showReportableEventsSelected()(user, request) recover {
-          case e: Exception => {
+          case e: Exception =>
             Logger.error(s"reportableEventsSelected failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
             getGlobalErrorPage
-          }
         }
   }
 
@@ -100,7 +94,7 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
       },
       formData => {
         val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
-        cacheUtil.cache(CacheUtil.reportableEvents, formData, schemeRef).map { all =>
+        cacheUtil.cache(CacheUtil.reportableEvents, formData, schemeRef).map { _ =>
           if (formData.isNilReturn.get == PageBuilder.OPTION_NIL_RETURN) {
             Redirect(routes.SchemeOrganiserController.schemeOrganiserPage())
           } else {
@@ -108,10 +102,9 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
             Redirect(routes.CheckFileTypeController.checkFileTypePage())
           }
         } recover {
-          case e: Exception => {
+          case e: Exception =>
             Logger.error(s"Save reportable event failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
             getGlobalErrorPage
-          }
         }
 
       }

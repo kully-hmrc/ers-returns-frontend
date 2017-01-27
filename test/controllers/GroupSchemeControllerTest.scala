@@ -45,23 +45,23 @@ class GroupSchemeControllerTest extends UnitSpec with MockitoSugar with ERSUsers
   override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
   implicit lazy val materializer: Materializer = app.materializer
 
-  val mockAuthConnector = mock[AuthConnector]
+  lazy val mockAuthConnector = mock[AuthConnector]
 
-  val companyDetailsList: CompanyDetailsList = CompanyDetailsList(
+  lazy val companyDetailsList: CompanyDetailsList = CompanyDetailsList(
     List(
       CompanyDetails(Fixtures.companyName, "Adress Line 1", None, None, None, None, None, None, None),
       CompanyDetails(Fixtures.companyName, "Adress Line 1", None, None, None, None, None, None, None)
     )
   )
 
-  val mockCacheUtil = mock[CacheUtil]
+  lazy val mockCacheUtil = mock[CacheUtil]
 
   override def beforeEach() = {
     super.beforeEach()
     reset(mockCacheUtil)
   }
 
-  val testGroupSchemeController = new GroupSchemeController {
+  lazy val testGroupSchemeController = new GroupSchemeController {
     override val cacheUtil: CacheUtil = mockCacheUtil
   }
 

@@ -16,14 +16,22 @@
 
 package utils
 
+import java.io.InputStream
+
+import akka.stream.Materializer
 import org.scalatestplus.play.OneServerPerSuite
-import play.api.Play
+import play.api.Play.current
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.{Application, Play}
 import uk.gov.hmrc.play.test.UnitSpec
 
-class CountryCodeTest extends UnitSpec with OneServerPerSuite {
+class CountryCodeTest extends UnitSpec with OneServerPerSuite with ERSFakeApplicationConfig {
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   object TestCountryCodes extends CountryCodes {
-    override val jsonInputStream = Play.application.resourceAsStream("country-code-test.json")
+    override val jsonInputStream: Option[InputStream] = Play.application.resourceAsStream("country-code-test.json")
   }
 
   "CountryCode countries" should {

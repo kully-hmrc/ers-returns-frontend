@@ -16,19 +16,27 @@
 
 package services.pdf
 
+import akka.stream.Materializer
 import models.{TrusteeDetails, TrusteeDetailsList}
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.Play.current
 import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.ERSFakeApplicationConfig
 
-class TrusteeDecoratorSpec extends UnitSpec with MockitoSugar {
+class TrusteeDecoratorSpec extends UnitSpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
 
-  val trusteeList = new TrusteeDetailsList(List(new TrusteeDetails("name", "address", None, None, None, None, None)))
-  val decorator = new TrusteesDecorator(Some(trusteeList), 1.0F, 2.0F, 3.0F, 4.0F)
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
+
+  lazy val trusteeList = new TrusteeDetailsList(List(new TrusteeDetails("name", "address", None, None, None, None, None)))
+  lazy val decorator = new TrusteesDecorator(Some(trusteeList), 1.0F, 2.0F, 3.0F, 4.0F)
 
   "Trusstees Decorator" should {
 

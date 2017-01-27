@@ -18,6 +18,7 @@ package controllers
 
 import java.util.NoSuchElementException
 
+import akka.stream.Materializer
 import connectors.ErsConnector
 import models._
 import org.joda.time.DateTime
@@ -25,7 +26,10 @@ import org.jsoup.Jsoup
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.http.Status
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.UnitSpec
@@ -33,8 +37,10 @@ import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
 
 import scala.concurrent.Future
 
+class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationConfig with OneAppPerSuite with MockitoSugar{
 
-class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar{
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   "calling Reportable Events Page" should {
 

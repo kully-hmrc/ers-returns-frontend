@@ -18,6 +18,7 @@ package controllers
 
 import java.util.NoSuchElementException
 
+import akka.stream.Materializer
 import config.ApplicationConfig
 import metrics.Metrics
 import models.{ErsMetaData, _}
@@ -26,10 +27,13 @@ import org.jsoup.Jsoup
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.Play.current
 import play.api.http.Status
 import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json
 import play.api.mvc.Request
 import play.api.test.Helpers._
@@ -38,20 +42,23 @@ import services.SessionService
 import uk.gov.hmrc.http.cache.client.ShortLivedCache
 import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 import utils.ContentUtil._
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.Future
 
 
-class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
+class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
 
-  val mockHttp = mock[HttpPost]
-  val mockHttpGet = mock[HttpGet]
-  val mockSessionCache = mock[SessionService]
-  val ExpectedRedirectionUrlIfNotSignedIn = "/gg/sign-in?continue=/submit-your-ers-return"
-  val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
-  val rsc: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
+
+  lazy val mockHttp = mock[HttpPost]
+  lazy val mockHttpGet = mock[HttpGet]
+  lazy val mockSessionCache = mock[SessionService]
+  lazy val ExpectedRedirectionUrlIfNotSignedIn = "/gg/sign-in?continue=/submit-your-ers-return"
+  lazy val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+  lazy val rsc: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
 
   def buildFakeReturnServiceController(accessThresholdValue: Int = 100) = new ReturnServiceController {
 

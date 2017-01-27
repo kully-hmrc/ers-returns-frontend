@@ -18,23 +18,30 @@ package services
 
 import java.io.ByteArrayOutputStream
 
+import akka.stream.Materializer
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import services.pdf.{DecoratorController, ErsContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{ContentUtil, Fixtures}
+import utils.{ContentUtil, ERSFakeApplicationConfig, Fixtures}
 
-class ErsReceiptPdfBuilderServiceSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach {
+class ErsReceiptPdfBuilderServiceSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach with ERSFakeApplicationConfig with OneAppPerSuite {
 
-  def verifyBlankBlock(streamer : ErsContentsStreamer){
-   verify(streamer, VerificationModeFactory.times(4)).drawText(org.mockito.Matchers.eq("": String), org.mockito.Matchers.eq(36.0F: Float))
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
+
+  def verifyBlankBlock(streamer: ErsContentsStreamer) {
+    verify(streamer, VerificationModeFactory.times(4)).drawText(org.mockito.Matchers.eq("": String), org.mockito.Matchers.eq(36.0F: Float))
   }
 
-  def verifyBlankLine(streamer : ErsContentsStreamer){
-   verify(streamer, VerificationModeFactory.times(4)).drawText(org.mockito.Matchers.eq("": String), org.mockito.Matchers.eq(12.0F: Float))
+  def verifyBlankLine(streamer: ErsContentsStreamer) {
+    verify(streamer, VerificationModeFactory.times(4)).drawText(org.mockito.Matchers.eq("": String), org.mockito.Matchers.eq(12.0F: Float))
   }
 
   "ErsReceiptPdfBuilderService" should {

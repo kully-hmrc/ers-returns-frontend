@@ -16,57 +16,57 @@
 
 package controllers
 
+import akka.stream.Materializer
 import models.{CallbackData, ErsMetaData, SchemeInfo}
 import org.joda.time.DateTime
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play.PlaySpec
-import play.api.Configuration
+import org.scalatestplus.play.{OneAppPerSuite, PlaySpec}
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc.Request
+import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
+import play.api.{Application, Configuration}
 import services.SessionService
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
-import play.api.test.Helpers._
 import uk.gov.hmrc.play.http.HeaderCarrier
-import play.api.Play.current
-import play.api.i18n.Messages
-import play.api.i18n.Messages.Implicits._
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.Future
-import utils.{CacheUtil, Fixtures}
 
-class FileUploadCallbackControllerSpec extends PlaySpec with MockitoSugar {
+class FileUploadCallbackControllerSpec extends PlaySpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
 
-  val mockAuthConnector = mock[AuthConnector]
-  val mockCurrentConfig = mock[Configuration]
-  val mockSessionService = mock[SessionService]
-  val mockCacheUtil = mock[CacheUtil]
+  override implicit lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
+
+  lazy val mockAuthConnector = mock[AuthConnector]
+  lazy val mockCurrentConfig = mock[Configuration]
+  lazy val mockSessionService = mock[SessionService]
+  lazy val mockCacheUtil = mock[CacheUtil]
 
   object TestFileUploadCallbackController extends FileUploadCallbackController {
-    val authConnector = mockAuthConnector
-    val currentConfig = mockCurrentConfig
-    val sessionService = mockSessionService
-    val cacheUtil = mockCacheUtil
+    lazy val authConnector = mockAuthConnector
+    lazy val currentConfig = mockCurrentConfig
+    lazy val sessionService = mockSessionService
+    lazy val cacheUtil = mockCacheUtil
   }
 
-  val metaData: JsObject = Json.obj(
+  lazy val metaData: JsObject = Json.obj(
     "surname" -> Fixtures.surname,
     "firstForename" -> Fixtures.firstName
   )
 
-  val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
+  lazy val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
 
-  val fakeHeaders: FakeHeaders = FakeHeaders(Seq("Content-type" -> "application/json"))
-  val fakeRequest: FakeRequest[JsValue] = FakeRequest(method = "POST", uri = "", headers = fakeHeaders, body = Json.toJson(callbackData))
+  lazy val fakeHeaders: FakeHeaders = FakeHeaders(Seq("Content-type" -> "application/json"))
+  lazy val fakeRequest: FakeRequest[JsValue] = FakeRequest(method = "POST", uri = "", headers = fakeHeaders, body = Json.toJson(callbackData))
 
-  val sr = "XA1100000000000"
-  val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
-  val rsc: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-
-  implicit val hc: HeaderCarrier = HeaderCarrier()
+  lazy val sr = "XA1100000000000"
+  lazy val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+  lazy val rsc: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
 
   "callback" must {
     "successfully store and validates callback data" in {

@@ -16,18 +16,25 @@
 
 package services.pdf
 
+import akka.stream.Materializer
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.mock.MockitoSugar
-import play.api.Play.current
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.ERSFakeApplicationConfig
 
 import scala.collection.mutable.ListBuffer
 
-class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar {
+class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
+
+  override implicit lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   "file name decortor" should {
     "not show file names when nil reuturn is false" in {

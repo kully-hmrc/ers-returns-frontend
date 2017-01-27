@@ -16,12 +16,16 @@
 
 package controllers
 
+import akka.stream.Materializer
 import connectors.{AttachmentsConnector, ErsConnector}
 import models._
 import org.joda.time.DateTime
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
 import play.api.mvc.{Request, Result}
 import play.api.test.FakeRequest
@@ -37,7 +41,11 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import play.api.test.Helpers._
 
-class CsvFileUploadControllerSpec extends UnitSpec with ERSFakeApplicationConfig with ERSUsers with MockitoSugar {
+class CsvFileUploadControllerSpec extends UnitSpec with OneAppPerSuite with ERSFakeApplicationConfig with ERSUsers with MockitoSugar {
+
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   val mockAuthConnector = mock[AuthConnector]
 

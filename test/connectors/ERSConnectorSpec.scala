@@ -16,36 +16,42 @@
 
 package connectors
 
-import models.{CallbackData, SchemeInfo, ValidatorData}
+import akka.stream.Materializer
 import metrics.Metrics
+import models.{CallbackData, SchemeInfo, ValidatorData}
 import org.joda.time.DateTime
 import org.mockito.Matchers
-import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
+import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json}
-import play.api.test.Helpers._
 import play.api.test.FakeRequest
+import play.api.test.Helpers._
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
+import uk.gov.hmrc.play.http.{HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
-import utils.Fixtures
+import utils.{ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.Future
 
-class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplication {
+class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplication with OneAppPerSuite with ERSFakeApplicationConfig {
 
-  implicit val hc = new HeaderCarrier
-  implicit val authContext = mock[AuthContext]
-  implicit val request = FakeRequest()
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
-  val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","EMI", "EMI")
+  implicit lazy val authContext = mock[AuthContext]
+  implicit lazy val request = FakeRequest()
+
+  lazy val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
 
   "calling sendData" should {
 
     val mockHttp = mock[HttpPost]
 
-    val schemeInfo1 =  SchemeInfo("XA1100000000000", DateTime.now,"1" ,"2016","QQQ", "QQQ")
+    val schemeInfo1 = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "QQQ", "QQQ")
     val schemeType = "EMI"
 
     val callbackData = CallbackData(
@@ -57,14 +63,20 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplicati
       sessionId = Some("testId"),
       customMetadata = Some(Json.obj("sessionId" -> "testId")), noOfRows = None)
 
-    val ersConnector:  ErsConnector = new ErsConnector {
-      override val metrics:Metrics = mock[Metrics]
+    val ersConnector: ErsConnector = new ErsConnector {
+      override val metrics: Metrics = mock[Metrics]
+
       override def httpPost: HttpPost = mockHttp
+
       override def httpGet: HttpGet = mock[HttpGet]
+
       override def ersUrl = "ers-returns"
+
       override def ersRegime = "epaye"
+
       override def validatorUrl = "ers-file-validator"
-      override def getAuthID(implicit authContext : AuthContext) = EmpRef("","")
+
+      override def getAuthID(implicit authContext: AuthContext) = EmpRef("", "")
     }
 
     "successful validation" in {
@@ -97,8 +109,8 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplicati
         new RuntimeException
       ).when(mockHttp).POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
 
-      intercept[Exception]{
-        ersConnector.validateFileData(callbackData,  schemeInfo1)
+      intercept[Exception] {
+        ersConnector.validateFileData(callbackData, schemeInfo1)
       }
     }
   }
@@ -107,14 +119,20 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplicati
 
     val mockHttp = mock[HttpPost]
 
-    val ersConnector:  ErsConnector = new ErsConnector {
-      override val metrics:Metrics = mock[Metrics]
+    val ersConnector: ErsConnector = new ErsConnector {
+      override val metrics: Metrics = mock[Metrics]
+
       override def httpPost: HttpPost = mockHttp
+
       override def httpGet: HttpGet = mock[HttpGet]
+
       override def ersUrl = "ers-returns"
+
       override def ersRegime = "epaye"
+
       override def validatorUrl = "ers-file-validator"
-      override def getAuthID(implicit authContext : AuthContext) = EmpRef("","")
+
+      override def getAuthID(implicit authContext: AuthContext) = EmpRef("", "")
     }
 
     val data: JsObject = Json.obj(

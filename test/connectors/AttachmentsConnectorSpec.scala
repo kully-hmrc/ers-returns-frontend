@@ -17,39 +17,48 @@
 package connectors
 
 import java.util.UUID
+
+import akka.stream.Materializer
 import config.ERSFileValidatorAuditConnector
 import org.mockito.Matchers
+import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
-import org.mockito.Mockito._
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
-import play.api.Play
+import play.api.{Application, Play}
 import play.api.http.HeaderNames
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.{FakeApplication, FakeRequest}
 import uk.gov.hmrc.play.audit.http.HttpAuditing
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.http._
-import uk.gov.hmrc.play.http.logging.{SessionId, RequestId}
-import uk.gov.hmrc.play.http.ws.{WSHttp, WSGet, WSPost}
+import uk.gov.hmrc.play.http.logging.{RequestId, SessionId}
+import uk.gov.hmrc.play.http.ws.{WSGet, WSHttp, WSPost}
 import uk.gov.hmrc.play.partials.HeaderCarrierForPartials
-import scala.concurrent.Future
+import utils.ERSFakeApplicationConfig
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with MockitoSugar with BeforeAndAfterEach {
+class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach {
 
-  class MockHttp extends WSHttp with WSGet with WSPost with HttpAuditing  {
+  override implicit lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
+
+  class MockHttp extends WSHttp with WSGet with WSPost with HttpAuditing {
     override val auditConnector: AuditConnector = ERSFileValidatorAuditConnector
-   override val hooks = Seq(AuditingHook)
-   override def appName = Play.configuration.getString("appName").getOrElse("submit-your-ers-annual-return")
+    override val hooks = Seq(AuditingHook)
+
+    override def appName = Play.configuration.getString("appName").getOrElse("submit-your-ers-annual-return")
   }
-  implicit val hc = HeaderCarrier()
-  implicit val hcfp = HeaderCarrierForPartials(HeaderCarrier(), "encodedCookies")
 
-  val mockHttpPut = mock[HttpPut]
+  lazy implicit val hcfp = HeaderCarrierForPartials(HeaderCarrier(), "encodedCookies")
 
-  val mockHttp = mock[MockHttp]
-  
-  val sr = "AA0000000000000"
+  lazy val mockHttpPut = mock[HttpPut]
+
+  lazy val mockHttp = mock[MockHttp]
+
+  lazy val sr = "AA0000000000000"
 
   object TestAttachmentsConnector extends AttachmentsConnector {
     override val http = mockHttp
@@ -64,7 +73,7 @@ class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with Mock
 
         val html = "<h1>helloworld</h1>"
         when(mockHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200, responseString = Some
-          (html))))
+        (html))))
         TestAttachmentsConnector.getFileUploadPartial().map {
           response => response.body must equal(html)
         }

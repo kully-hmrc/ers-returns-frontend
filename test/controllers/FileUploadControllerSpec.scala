@@ -24,7 +24,7 @@ import org.mockito.Matchers
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
-import org.scalatestplus.play.{OneAppPerSuite, OneServerPerSuite, PlaySpec}
+import org.scalatestplus.play.{OneAppPerSuite, PlaySpec}
 import play.api.Application
 import play.api.Play.current
 import play.api.i18n.Messages
@@ -44,40 +44,40 @@ import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class FileUploadControllerSpec extends PlaySpec with OneServerPerSuite
+class FileUploadControllerSpec extends PlaySpec with OneAppPerSuite
   with MockitoSugar with ERSUsers with ErsConstants with LegacyI18nSupport
   with ERSFakeApplicationConfig {
 
   override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
   implicit lazy val materializer: Materializer = app.materializer
 
-  val metaData: JsObject = Json.obj(
+  lazy val metaData: JsObject = Json.obj(
     "surname" -> Fixtures.surname,
     "firstForename" -> Fixtures.firstName
   )
 
-  val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
-  val validErsMetaData: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-  val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name =
+  lazy val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+  lazy val validErsMetaData: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+  lazy val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name =
     Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
 
-  val schemeInfoInvalidTimeStamp = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
-  val invalidErsMetaData: ErsMetaData = new ErsMetaData(schemeInfoInvalidTimeStamp, "ipRef", Some("aoRef"),
+  lazy val schemeInfoInvalidTimeStamp = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
+  lazy val invalidErsMetaData: ErsMetaData = new ErsMetaData(schemeInfoInvalidTimeStamp, "ipRef", Some("aoRef"),
     "empRef", Some("agentRef"), Some("sapNumber"))
 
-  val mockAttachmentsConnector = mock[AttachmentsConnector]
-  val mockAuthConnector = mock[AuthConnector]
-  val mockSessionService = mock[SessionService]
-  val mockCacheUtil = mock[CacheUtil]
-  val mockErsConnector = mock[ErsConnector]
+  lazy val mockAttachmentsConnector = mock[AttachmentsConnector]
+  lazy val mockAuthConnector = mock[AuthConnector]
+  lazy val mockSessionService = mock[SessionService]
+  lazy val mockCacheUtil = mock[CacheUtil]
+  lazy val mockErsConnector = mock[ErsConnector]
 
   /** Csv Callback List creation */
-  val jv: JsValue = Json.parse("""{}""")
-  val s: Map[String, JsValue] = Map("" -> jv)
-  val js = new JsObject(s)
-  val cb = new CallbackData("File", "File", 100.toLong, Some("File"), Some("File"), Some("File"), Some(js), noOfRows = None)
-  val csvFileData = new CsvFilesCallback("file0", Some(cb))
-  val csvCallBackList = new CsvFilesCallbackList(List(csvFileData, csvFileData, csvFileData))
+  lazy val jv: JsValue = Json.parse("""{}""")
+  lazy val s: Map[String, JsValue] = Map("" -> jv)
+  lazy val js = new JsObject(s)
+  lazy val cb = new CallbackData("File", "File", 100.toLong, Some("File"), Some("File"), Some("File"), Some(js), noOfRows = None)
+  lazy val csvFileData = new CsvFilesCallback("file0", Some(cb))
+  lazy val csvCallBackList = new CsvFilesCallbackList(List(csvFileData, csvFileData, csvFileData))
 
   when(mockCacheUtil.fetch[ErsMetaData](Matchers.refEq(CacheUtil.ersMetaData), Matchers.any[String]())(Matchers.any(),
     Matchers.any(), Matchers.any())).thenReturn(Future.successful(validErsMetaData))

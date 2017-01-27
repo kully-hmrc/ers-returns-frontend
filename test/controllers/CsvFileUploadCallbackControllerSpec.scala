@@ -32,7 +32,6 @@ import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.test.UnitSpec
 import utils.{ERSFakeApplicationConfig, Fixtures}
 
-
 import scala.concurrent.Future
 
 class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
@@ -40,20 +39,20 @@ class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplicati
   override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
   implicit lazy val materializer: Materializer = app.materializer
 
-  val metaData: JsObject = Json.obj("surname" -> Fixtures.surname, "firstForename" -> Fixtures.firstName)
+  lazy val metaData: JsObject = Json.obj("surname" -> Fixtures.surname, "firstForename" -> Fixtures.firstName)
 
-  val mockAuthConnector: AuthConnector = mock[AuthConnector]
+  lazy val mockAuthConnector: AuthConnector = mock[AuthConnector]
 
-  val mockSessionService: SessionService = mock[SessionService]
+  lazy val mockSessionService: SessionService = mock[SessionService]
 
-  val fakeHeaders: FakeHeaders = FakeHeaders(Seq("Content-type" -> "application/json"))
+  lazy val fakeHeaders: FakeHeaders = FakeHeaders(Seq("Content-type" -> "application/json"))
 
-  val csvFileUploadCallbackController: CsvFileUploadCallbackController = new CsvFileUploadCallbackController {
-    val authConnector: AuthConnector = mockAuthConnector
-    override val sessionService: SessionService = mockSessionService
+  lazy val csvFileUploadCallbackController: CsvFileUploadCallbackController = new CsvFileUploadCallbackController {
+    lazy val authConnector: AuthConnector = mockAuthConnector
+    override lazy val sessionService: SessionService = mockSessionService
   }
 
-  val callbackData1 = CallbackData(collection = "collection",
+  lazy val callbackData1 = CallbackData(collection = "collection",
     id = "someid",
     length = 1000L,
     name = Some("John"),
