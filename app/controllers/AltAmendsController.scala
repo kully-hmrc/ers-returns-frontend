@@ -22,7 +22,7 @@ import play.api.Logger
 import play.api.Play.current
 import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
-import play.api.mvc.{Action, AnyContent, Request, Result}
+import play.api.mvc._
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
@@ -71,30 +71,34 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
         showAltActivitySelected()(user, request, hc)
   }
 
-  def showAltActivitySelected()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val schemeId = try {
-      request.session.get(screenSchemeInfo).get.split(" - ").head
-    } catch {
-      case _: Throwable => {
-        Future(getGlobalErrorPage)
-      }
+  def getSchemeRef(session: Session): String = {
+    session.get(screenSchemeInfo) match {
+      case Some(ref) => ref
+      case None => throw new Exception("Duff session")
     }
+  }
+
+  def showAltActivitySelected()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+    val schemeRef = try {
+      request.session.get(screenSchemeInfo).get
+    } catch {
+      case _: Throwable => return Future(getGlobalErrorPage)
+    }
+
     RsFormMappings.altActivityForm.bindFromRequest.fold(
       errors => {
         Future.successful(Ok(views.html.alterations_activity("", "", errors)))
       },
       formData => {
-        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
-        cacheUtil.cache(CacheUtil.altAmendsActivity, formData, schemeRef).map { all =>
+        cacheUtil.cache(CacheUtil.altAmendsActivity, formData, schemeRef).map { _ =>
           formData.altActivity match {
             case PageBuilder.OPTION_NO => Redirect(routes.SummaryDeclarationController.summaryDeclarationPage())
             case PageBuilder.OPTION_YES => Redirect(routes.AltAmendsController.altAmendsPage())
           }
         } recover {
-          case e: Throwable => {
+          case e: Throwable =>
             Logger.error(s"showAltActivitySelected: Save data to cache failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
             getGlobalErrorPage
-          }
         }
       }
     )

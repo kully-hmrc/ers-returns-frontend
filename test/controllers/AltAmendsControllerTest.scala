@@ -16,7 +16,6 @@
 
 package controllers
 
-import akka.stream.Materializer
 import connectors.ErsConnector
 import models._
 import org.joda.time.DateTime
@@ -25,9 +24,7 @@ import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.OneAppPerSuite
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.UnitSpec
@@ -35,14 +32,12 @@ import utils._
 
 import scala.concurrent.Future
 
-class AltAmendsControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
-
-  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
-  implicit lazy val materializer: Materializer = app.materializer
+class AltAmendsControllerTest extends UnitSpec with ERSFakeApplicationConfig with OneAppPerSuite with MockitoSugar {
 
   "calling Alterations Activity Page" should {
 
-    def buildFakeAltAmendsPageController(groupSchemeActivityRes: Boolean = true, altAmendsActivityRes: Boolean = true, cacheRes: Boolean = true) = new AltAmendsController {
+    def buildFakeAltAmendsPageController(groupSchemeActivityRes: Boolean = true, altAmendsActivityRes: Boolean = true,
+                                         cacheRes: Boolean = true) = new AltAmendsController {
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
@@ -52,14 +47,9 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplicationConfig wit
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
       override val cacheUtil: CacheUtil = mockCacheUtil
 
-      when(
-        mockCacheUtil.fetch[GroupSchemeInfo](refEq(CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER), anyString())(any(), any(), any())
-      ).thenReturn(
-        groupSchemeActivityRes match {
-          case true => Future.successful(GroupSchemeInfo(Some(PageBuilder.OPTION_NO), Some("")))
-          case _ => Future.failed(new Throwable)
-        }
-      )
+      when(mockCacheUtil.fetch[GroupSchemeInfo](refEq(CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER), anyString())(any(), any(), any()))
+        .thenReturn(if (groupSchemeActivityRes) Future.successful(GroupSchemeInfo(Some(PageBuilder.OPTION_NO), Some(""))) else Future.failed(new Throwable))
+
       when(
         mockCacheUtil.fetch[AltAmendsActivity](refEq(CacheUtil.altAmendsActivity), anyString())(any(), any(), any())
       ).thenReturn(
@@ -118,13 +108,13 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplicationConfig wit
 
     "give a redirect status (to company authentication frontend) on POST if user is not authenticated" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
-      val result = controllerUnderTest.altActivitySelected() apply (FakeRequest("GET", ""))
+      val result = controllerUnderTest.altActivitySelected() apply FakeRequest("GET", "")
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "give a status OK on POST if user is authenticated" in {
       val controllerUnderTest = buildFakeAltAmendsPageController()
-      val result = controllerUnderTest.altActivitySelected() apply (Fixtures.buildFakeRequestWithSessionIdCSOP("GET"))
+      val result = controllerUnderTest.altActivitySelected() apply Fixtures.buildFakeRequestWithSessionIdCSOP("GET")
       status(result) shouldBe Status.SEE_OTHER
     }
 
@@ -144,7 +134,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplicationConfig wit
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltActivitySelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
-      result.header.headers.get("Location").get shouldBe routes.SummaryDeclarationController.summaryDeclarationPage().toString()
+      result.header.headers.get("Location").get shouldBe routes.SummaryDeclarationController.summaryDeclarationPage().toString
     }
 
     "give a redirect to alterations amends page if no form errors and YES selected" in {
@@ -154,7 +144,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplicationConfig wit
       val request = Fixtures.buildFakeRequestWithSessionIdCSOP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showAltActivitySelected()(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
-      result.header.headers.get("Location").get shouldBe routes.AltAmendsController.altAmendsPage().toString()
+      result.header.headers.get("Location").get shouldBe routes.AltAmendsController.altAmendsPage().toString
     }
 
     "direct to ers errors page if no form errors but unable to save to cache" in {
@@ -177,9 +167,7 @@ class AltAmendsControllerTest extends UnitSpec with ERSFakeApplicationConfig wit
       contentAsString(result) shouldBe contentAsString(buildFakeAltAmendsPageController().getGlobalErrorPage)
       contentAsString(result) should include("Service unavailable")
     }
-
   }
-
 
   "calling Alterations Amends Page" should {
 
