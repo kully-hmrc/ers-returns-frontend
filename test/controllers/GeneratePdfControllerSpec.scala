@@ -32,9 +32,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.pdf.{ErsContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.http.cache.client.CacheMap
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+import utils.{CacheUtil, ERSFakeApplicationConfig, PageBuilder}
+import utils.Fixtures._
 
 import scala.concurrent.Future
 
@@ -50,41 +50,6 @@ class GeneratePdfControllerSpec extends UnitSpec with ERSFakeApplicationConfig w
   lazy val ersSummary = ErsSummary("testbundle", "2", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
   lazy val cacheMap = mock[CacheMap]
 
-  def createController(fetchAllRes: Boolean = true, getAllDataRes: Boolean = true, isNilReturn: Boolean = true, fileTypeCSV: Boolean = true): PdfGenerationController = new PdfGenerationController {
-
-    override val cacheUtil: CacheUtil = cache
-    override val pdfBuilderService: ErsReceiptPdfBuilderService = pdfBuilderMock
-
-    val callbackData: CallbackData = new CallbackData("", "", 0, None, None, None, None, None)
-    val csvFilesCallBack = new CsvFilesCallback("file0", Some(callbackData))
-    val csvFilesCallbackList: CsvFilesCallbackList = new CsvFilesCallbackList(List(csvFilesCallBack))
-
-    when(pdfBuilderMock.createPdf(any[ErsContentsStreamer], any[ErsSummary], any(), any())).thenReturn(mock[ByteArrayOutputStream])
-    when(cache.fetch[ErsMetaData](refEq(CacheUtil.ersMetaData), anyString())(any(), any(), any())).thenReturn(Future.successful(rsc))
-    when(cacheMap.getEntry[CsvFilesCallbackList](refEq(CacheUtil.CHECK_CSV_FILES))(any())).thenReturn(Future.successful(Some(csvFilesCallbackList)))
-    when(cacheMap.getEntry[String](refEq(CacheUtil.FILE_NAME_CACHE))(any())).thenReturn(Future.successful(Some("test.ods")))
-
-    if (fileTypeCSV)
-      when(cacheMap.getEntry[CheckFileType](refEq(CacheUtil.FILE_TYPE_CACHE))(any())).thenReturn(Future.successful(Some(new CheckFileType(Some(PageBuilder.OPTION_CSV)))))
-    else
-      when(cacheMap.getEntry[CheckFileType](refEq(CacheUtil.FILE_TYPE_CACHE))(any())).thenReturn(Future.successful(Some(new CheckFileType(Some(PageBuilder.OPTION_ODS)))))
-
-    if (isNilReturn)
-      when(cacheMap.getEntry[ReportableEvents](refEq(CacheUtil.reportableEvents))(any())).thenReturn(Future.successful(Some(new ReportableEvents(Some(PageBuilder.OPTION_NIL_RETURN)))))
-    else
-      when(cacheMap.getEntry[ReportableEvents](refEq(CacheUtil.reportableEvents))(any())).thenReturn(Future.successful(Some(new ReportableEvents(Some(PageBuilder.OPTION_UPLOAD_SPREEDSHEET)))))
-
-    if (fetchAllRes)
-      when(cache.fetchAll(anyString())(any(), any())).thenReturn(Future.successful(cacheMap))
-    else
-      when(cache.fetchAll(anyString())(any(), any())).thenReturn(Future.failed(new Exception))
-
-    if (getAllDataRes)
-      when(cache.getAllData(anyString(), any[ErsMetaData]())(any(), any(), any())).thenReturn(Future.successful(ersSummary))
-    else
-      when(cache.getAllData(anyString(), any[ErsMetaData]())(any(), any(), any())).thenReturn(Future.failed(new Exception))
-  }
-
   "pdf generation conroller" should {
 
     "give a redirect status (to company authentication frontend) on GET if user is not authenticated" in {
@@ -95,42 +60,96 @@ class GeneratePdfControllerSpec extends UnitSpec with ERSFakeApplicationConfig w
 
     "give a status OK on GET if user is authenticated" in {
       val controller = createController()
-      val result = controller.buildPdfForBundle("", "").apply(Fixtures.buildFakeRequestWithSessionIdCSOP("GET"))
+      val result = controller.buildPdfForBundle("", "").apply(buildFakeRequestWithSessionIdCSOP("GET"))
       status(result) shouldBe Status.SEE_OTHER
     }
 
     "direct to errors page if fetch all res pdf throws exception" in {
       val controller = createController(fetchAllRes = false)
-      val result = await(controller.generatePdf("", "")(Fixtures.buildFakeUser, Fixtures.buildFakeRequestWithSessionIdCSOP("GET"), hc))
+      val result = await(controller.generatePdf("", "")(buildFakeUser, buildFakeRequestWithSessionIdCSOP("GET"), hc))
       contentAsString(result) should include("Service unavailable")
       contentAsString(result) shouldBe contentAsString(createController().getGlobalErrorPage)
     }
 
     "direct to errors page if get all data res pdf throws exception" in {
       val controller = createController(getAllDataRes = false)
-      val result = await(controller.generatePdf("", "")(Fixtures.buildFakeUser, Fixtures.buildFakeRequestWithSessionIdCSOP("GET"), hc))
+      val result = await(controller.generatePdf("", "")(buildFakeUser, buildFakeRequestWithSessionIdCSOP("GET"), hc))
       contentAsString(result) should include("Service unavailable")
       contentAsString(result) shouldBe contentAsString(createController().getGlobalErrorPage)
     }
 
     "use bundle ref to generate the confirmation pdf filename (NilReturn)" in {
       val controller = createController()
-      val res = await(controller.generatePdf("123456", "8 August 2016, 4:28pm")(Fixtures.buildFakeUser, Fixtures.buildFakeRequestWithSessionId("GET"), new HeaderCarrier()))
+      val res = await(controller.generatePdf("123456", "8 August 2016, 4:28pm")(buildFakeUser, buildFakeRequestWithSessionId("GET"), hc))
       res.header.headers("Content-Disposition") should include("123456-confirmation.pdf")
     }
 
     "use bundle ref to generate the confirmation pdf filename (CSV File submission)" in {
       val controller = createController(isNilReturn = false)
-      val res = await(controller.generatePdf("123456", "8 August 2016, 4:28pm")(Fixtures.buildFakeUser, Fixtures.buildFakeRequestWithSessionId("GET"), new HeaderCarrier()))
+      val res = await(controller.generatePdf("123456", "8 August 2016, 4:28pm")(buildFakeUser, buildFakeRequestWithSessionId("GET"), hc))
       res.header.headers("Content-Disposition") should include("123456-confirmation.pdf")
     }
 
     "use bundle ref to generate the confirmation pdf filename (ODS File submission)" in {
       val controller = createController(isNilReturn = false, fileTypeCSV = false)
-      val res = await(controller.generatePdf("123456", "8 August 2016, 4:28pm")(Fixtures.buildFakeUser, Fixtures.buildFakeRequestWithSessionId("GET"), new HeaderCarrier()))
+      val res = await(controller.generatePdf("123456", "8 August 2016, 4:28pm")(buildFakeUser, buildFakeRequestWithSessionId("GET"), hc))
       res.header.headers("Content-Disposition") should include("123456-confirmation.pdf")
     }
 
+  }
+
+  def createController(fetchAllRes: Boolean = true, getAllDataRes: Boolean = true, isNilReturn: Boolean = true,
+                       fileTypeCSV: Boolean = true): PdfGenerationController = new PdfGenerationController {
+
+    override val cacheUtil: CacheUtil = cache
+    override val pdfBuilderService: ErsReceiptPdfBuilderService = pdfBuilderMock
+
+    val callbackData: CallbackData = new CallbackData("", "", 0, None, None, None, None, None)
+    val csvFilesCallBack = new CsvFilesCallback("file0", Some(callbackData))
+    val csvFilesCallbackList: CsvFilesCallbackList = new CsvFilesCallbackList(List(csvFilesCallBack))
+    val byteArrayOutputStream = mock[ByteArrayOutputStream]
+
+    when(pdfBuilderMock.createPdf(any[ErsContentsStreamer], any[ErsSummary], any(), any())).thenReturn(byteArrayOutputStream)
+    when(cache.fetch[ErsMetaData](refEq(CacheUtil.ersMetaData), anyString())(any(), any(), any())).thenReturn(Future.successful(rsc))
+    when(cacheMap.getEntry[CsvFilesCallbackList](refEq(CacheUtil.CHECK_CSV_FILES))(any())).thenReturn(Future.successful(Some(csvFilesCallbackList)))
+    when(cacheMap.getEntry[String](refEq(CacheUtil.FILE_NAME_CACHE))(any())).thenReturn(Future.successful(Some("test.ods")))
+    when(byteArrayOutputStream.toByteArray).thenReturn(Array[Byte]())
+
+    if (fileTypeCSV) {
+      when(cacheMap.getEntry[CheckFileType](refEq(CacheUtil.FILE_TYPE_CACHE))(any()))
+        .thenReturn(Future.successful(Some(new CheckFileType(Some(PageBuilder.OPTION_CSV)))))
+    }
+    else {
+      when(cacheMap.getEntry[CheckFileType](refEq(CacheUtil.FILE_TYPE_CACHE))(any()))
+        .thenReturn(Future.successful(Some(new CheckFileType(Some(PageBuilder.OPTION_ODS)))))
+    }
+
+    if (isNilReturn) {
+      when(cacheMap.getEntry[ReportableEvents](refEq(CacheUtil.reportableEvents))(any()))
+        .thenReturn(Future.successful(Some(new ReportableEvents(Some(PageBuilder.OPTION_NIL_RETURN)))))
+    }
+    else {
+      when(cacheMap.getEntry[ReportableEvents](refEq(CacheUtil.reportableEvents))(any()))
+        .thenReturn(Future.successful(Some(new ReportableEvents(Some(PageBuilder.OPTION_UPLOAD_SPREEDSHEET)))))
+    }
+
+    if (fetchAllRes) {
+      when(cache.fetchAll(anyString())(any(), any()))
+        .thenReturn(Future.successful(cacheMap))
+    }
+    else {
+      when(cache.fetchAll(anyString())(any(), any()))
+        .thenReturn(Future.failed(new Exception))
+    }
+
+    if (getAllDataRes) {
+      when(cache.getAllData(anyString(), any[ErsMetaData]())(any(), any(), any()))
+        .thenReturn(Future.successful(ersSummary))
+    }
+    else {
+      when(cache.getAllData(anyString(), any[ErsMetaData]())(any(), any(), any()))
+        .thenReturn(Future.failed(new Exception))
+    }
   }
 
 }

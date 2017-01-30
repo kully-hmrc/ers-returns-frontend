@@ -125,9 +125,4 @@ object Fixtures {
     Some(companiesList), None,None,None)
 
   val metadataJson: JsObject = Json.toJson(EMIMetaData).as[JsObject]
-
-
-
-
-
 }
