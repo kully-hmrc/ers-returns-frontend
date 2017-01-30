@@ -142,7 +142,7 @@ class FileUploadControllerSpec extends PlaySpec with OneAppPerSuite
     }
 
     "respond to /submit-your-ers-annual-return/file-upload/callback/" in {
-      val result = route(FakeRequest(POST, s"/submit-your-ers-annual-return/file-upload/callback"))
+      val result = route(app, FakeRequest(POST, s"/submit-your-ers-annual-return/file-upload/callback"))
       status(result.get) must not equal NOT_FOUND
     }
   }
