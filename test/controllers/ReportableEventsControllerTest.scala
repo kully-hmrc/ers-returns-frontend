@@ -37,7 +37,7 @@ import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
 
 import scala.concurrent.Future
 
-class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationConfig with OneAppPerSuite with MockitoSugar{
+class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationConfig with OneAppPerSuite with MockitoSugar {
 
   override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
   implicit lazy val mat: Materializer = app.materializer
@@ -46,10 +46,10 @@ class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationCon
 
     def buildFakeReportableEventsController(ersMetaDataRes: Boolean = true, ersMetaDataCachedOk: Boolean = true, sapRequestRes: Boolean = true, schemeOrganiserDetailsRes: Boolean = true, schemeOrganiserDataCached: Boolean = false, reportableEventsRes: Boolean = true, fileTypeRes: Boolean = true, altAmendsActivityRes: Boolean = true, cacheRes: Boolean = true) = new ReportableEventsController {
 
-      val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now, "1" ,"2016","CSOP 2015/16", "CSOP")
-      val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None, None, None)
-      val ersMetaData = ErsMetaData(schemeInfo,"121.20.12.10",None,"",None,None)
+      val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
+      val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
+      val ersMetaData = ErsMetaData(schemeInfo, "121.20.12.10", None, "", None, None)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
       override val cacheUtil: CacheUtil = mockCacheUtil
@@ -80,7 +80,7 @@ class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationCon
         }
       )
       when(
-        mockCacheUtil.cache(refEq(CacheUtil.ersMetaData), anyString(),anyString())(any(), any(), any())
+        mockCacheUtil.cache(refEq(CacheUtil.ersMetaData), anyString(), anyString())(any(), any(), any())
       ).thenReturn(
         ersMetaDataCachedOk match {
           case true => Future.successful(null)
@@ -149,10 +149,10 @@ class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationCon
 
     def buildFakeReportableEventsController(ersMetaDataRes: Boolean = true, ersMetaDataCachedOk: Boolean = true, sapRequestRes: Boolean = true, schemeOrganiserDetailsRes: Boolean = true, schemeOrganiserDataCached: Boolean = false, reportableEventsRes: Boolean = true, fileTypeRes: Boolean = true, altAmendsActivityRes: Boolean = true, cacheRes: Boolean = true) = new ReportableEventsController {
 
-      val schemeInfo =  SchemeInfo("XA1100000000000", DateTime.now, "1" ,"2016","CSOP 2015/16", "CSOP")
-      val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef",Some("agentRef"),Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle","1", None, DateTime.now,rsc, None, None, None, None, None, None, None, None)
-      val ersMetaData = ErsMetaData(schemeInfo,"121.20.12.10",None,"",None,None)
+      val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
+      val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
+      val ersMetaData = ErsMetaData(schemeInfo, "121.20.12.10", None, "", None, None)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
       override val cacheUtil: CacheUtil = mockCacheUtil
@@ -183,7 +183,7 @@ class ReportableEventsControllerTest extends UnitSpec with ERSFakeApplicationCon
         }
       )
       when(
-        mockCacheUtil.cache(refEq(CacheUtil.reportableEvents), anyString(),anyString())(any(), any(), any())
+        mockCacheUtil.cache(refEq(CacheUtil.reportableEvents), anyString(), anyString())(any(), any(), any())
       ).thenReturn(
         ersMetaDataCachedOk match {
           case true => Future.successful(null)

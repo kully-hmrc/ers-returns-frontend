@@ -32,12 +32,12 @@ import play.api.test.Helpers._
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.{HttpGet, HttpPost, HttpResponse}
-import uk.gov.hmrc.play.test.{UnitSpec, WithFakeApplication}
+import uk.gov.hmrc.play.test.UnitSpec
 import utils.{ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.Future
 
-class ErsConnectorSpec extends UnitSpec with MockitoSugar with WithFakeApplication with OneAppPerSuite with ERSFakeApplicationConfig {
+class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite with ERSFakeApplicationConfig {
 
   override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
   implicit lazy val mat: Materializer = app.materializer
