@@ -37,6 +37,7 @@ private object AppDependencies {
     ws,
     "uk.gov.hmrc" %% "play-partials" % playPartialVersion,
     "uk.gov.hmrc" %% "frontend-bootstrap" % frontendBootstrapVersion,
+    "uk.gov.hmrc" %% "play-graphite" % playGraphieVersion,
     "uk.gov.hmrc" %% "play-health" % playHealthVersion,
     "uk.gov.hmrc" %% "play-ui" % playUiVersion,
     "uk.gov.hmrc" %% "play-config" % playConfigVersion,
