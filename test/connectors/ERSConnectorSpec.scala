@@ -45,16 +45,18 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
   implicit lazy val authContext = mock[AuthContext]
   implicit lazy val request = FakeRequest()
 
+
   lazy val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "EMI", "EMI")
 
   "calling sendData" should {
 
-    val mockHttp = mock[HttpPost]
+    lazy val mockHttp = mock[HttpPost]
+    lazy val mockMetrics: Metrics = mock[Metrics]
 
-    val schemeInfo1 = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "QQQ", "QQQ")
-    val schemeType = "EMI"
+    lazy val schemeInfo1 = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "QQQ", "QQQ")
+    lazy val schemeType = "EMI"
 
-    val callbackData = CallbackData(
+    lazy val callbackData = CallbackData(
       collection = "collection",
       id = "someid",
       length = 1000L,
@@ -63,8 +65,9 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
       sessionId = Some("testId"),
       customMetadata = Some(Json.obj("sessionId" -> "testId")), noOfRows = None)
 
-    val ersConnector: ErsConnector = new ErsConnector {
-      override val metrics: Metrics = mock[Metrics]
+    lazy val ersConnectorUnderTest: ErsConnector = new ErsConnector {
+
+      override lazy val metrics: Metrics = mockMetrics
 
       override def httpPost: HttpPost = mockHttp
 
@@ -87,7 +90,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
         Future.successful(HttpResponse(OK))
       )
 
-      val result = await(ersConnector.validateFileData(callbackData, schemeInfo))
+      val result = await(ersConnectorUnderTest.validateFileData(callbackData, schemeInfo))
       result.status shouldBe OK
     }
 
@@ -99,7 +102,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
         Future.successful(HttpResponse(INTERNAL_SERVER_ERROR))
       )
 
-      val result = await(ersConnector.validateFileData(callbackData, schemeInfo))
+      val result = await(ersConnectorUnderTest.validateFileData(callbackData, schemeInfo))
       result.status shouldBe INTERNAL_SERVER_ERROR
     }
 
@@ -110,17 +113,18 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
       ).when(mockHttp).POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
 
       intercept[Exception] {
-        ersConnector.validateFileData(callbackData, schemeInfo1)
+        ersConnectorUnderTest.validateFileData(callbackData, schemeInfo1)
       }
     }
   }
 
   "calling retrieveSubmissionData" should {
 
-    val mockHttp = mock[HttpPost]
+    lazy val mockHttp = mock[HttpPost]
+    lazy val mockMetrics: Metrics = mock[Metrics]
 
-    val ersConnector: ErsConnector = new ErsConnector {
-      override val metrics: Metrics = mock[Metrics]
+    lazy val ersConnector: ErsConnector = new ErsConnector {
+      override lazy val metrics: Metrics = mockMetrics
 
       override def httpPost: HttpPost = mockHttp
 
@@ -135,7 +139,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
       override def getAuthID(implicit authContext: AuthContext) = EmpRef("", "")
     }
 
-    val data: JsObject = Json.obj(
+    lazy val data: JsObject = Json.obj(
       "schemeRef" -> "XA1100000000000",
       "confTime" -> "2016-08-05T11:14:43"
     )

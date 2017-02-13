@@ -42,17 +42,18 @@ import scala.concurrent.{Await, Future}
 class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach with OneAppPerSuite with ERSFakeApplicationConfig {
 
   override implicit val hc: HeaderCarrier = new HeaderCarrier(sessionId = Some(SessionId("sessionId")))
-  implicit val request = FakeRequest()
-  val mockShortLivedCache: ShortLivedCache = mock[ShortLivedCache]
-  val mockSessionCache: SessionService = mock[SessionService]
+  implicit lazy val request = FakeRequest()
+  lazy val mockShortLivedCache: ShortLivedCache = mock[ShortLivedCache]
+  lazy val mockSessionCache: SessionService = mock[SessionService]
 
   override def beforeEach() = {
     super.beforeEach()
     reset(mockShortLivedCache)
   }
 
-  val cacheUtil: CacheUtil = new CacheUtil {
+  lazy val cacheUtil: CacheUtil = new CacheUtil {
     override def shortLivedCache: ShortLivedCache = mockShortLivedCache
+
     override val sessionService: SessionService = mockSessionCache
   }
 
@@ -207,11 +208,11 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
   }
 
   "calling getAllData" should {
-    val schemeInfo = SchemeInfo("AA0000000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
-    val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
+    lazy val schemeInfo = SchemeInfo("AA0000000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
+    lazy val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
 
     "return valid ERSSummary data" in {
-      val cacheUtil: CacheUtil = new CacheUtil {
+      lazy val cacheUtil: CacheUtil = new CacheUtil {
         override def shortLivedCache: ShortLivedCache = mockShortLivedCache
 
         override val sessionService: SessionService = mockSessionCache

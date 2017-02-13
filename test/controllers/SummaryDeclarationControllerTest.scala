@@ -59,7 +59,7 @@ class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplicationC
     val rsc: ErsMetaData = new ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
     override val ersConnector: ErsConnector =
       new ErsConnector {
-        override val metrics: Metrics = mock[Metrics]
+        override lazy val metrics: Metrics = mock[Metrics]
 
         override def httpPost: HttpPost = mockHttp
 
