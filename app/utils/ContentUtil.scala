@@ -16,11 +16,14 @@
 
 package utils
 
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.LegacyI18nSupport
 
 object ContentUtil extends ContentUtil
 
-trait ContentUtil {
+trait ContentUtil extends LegacyI18nSupport {
 
   def getSchemeName(schemeType: String): String = {
     schemeType match {

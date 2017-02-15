@@ -16,40 +16,36 @@
 
 package controllers
 
-import _root_.models.{RSformMappings, _}
-import akka.actor.FSM.Failure
-import akka.actor.Status.Success
+import _root_.models.{RsFormMappings, _}
 import connectors.ErsConnector
 import play.api.Logger
+import play.api.Play.current
 import play.api.i18n.Messages
-import play.api.mvc.{Request, Result}
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 
 import scala.concurrent.Future
 
-
 object ReportableEventsController extends ReportableEventsController {
   override val cacheUtil: CacheUtil = CacheUtil
   override val ersConnector: ErsConnector = ErsConnector
-
 }
 
 trait ReportableEventsController extends ERSReturnBaseController with Authenticator {
-
   val ersConnector: ErsConnector
   val cacheUtil: CacheUtil
 
-
-  def reportableEventsPage() = AuthorisedForAsync() {
+  def reportableEventsPage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         updateErsMetaData()(user, request, hc)
         showReportableEventsPage()(user, request, hc)
   }
 
-  def updateErsMetaData()(implicit authContext:AuthContext, request: Request[AnyRef], hc: HeaderCarrier) = {
+  def updateErsMetaData()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Object] = {
     val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     ersConnector.connectToEtmpSapRequest(schemeRef).flatMap { sapNumber =>
       cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, schemeRef).map { metaData =>
@@ -61,7 +57,7 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
             getGlobalErrorPage
           }
         }
-      }recover {
+      } recover {
         case e: NoSuchElementException => {
           Logger.error(s"updateErsMetaData fetch failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
           getGlobalErrorPage
@@ -70,54 +66,53 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
     }
   }
 
-  def showReportableEventsPage()(implicit authContext:AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showReportableEventsPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[ReportableEvents](CacheUtil.reportableEvents, schemeRef).map { activity =>
-      Ok(views.html.reportable_events(activity.isNilReturn, RSformMappings.chooseForm.fill(activity)))
+      Ok(views.html.reportable_events(activity.isNilReturn, RsFormMappings.chooseForm.fill(activity)))
     } recover {
-      case e: NoSuchElementException => {
+      case e: NoSuchElementException =>
         val form = ReportableEvents(Some(""))
-        Ok(views.html.reportable_events(Some(""), RSformMappings.chooseForm.fill(form)))
-      }
+        Ok(views.html.reportable_events(Some(""), RsFormMappings.chooseForm.fill(form)))
     }
   }
 
-  def reportableEventsSelected() = AuthorisedForAsync() {
+  def reportableEventsSelected(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showReportableEventsSelected()(user, request) recover {
-          case e: Exception => {
+          case e: Exception =>
             Logger.error(s"reportableEventsSelected failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
             getGlobalErrorPage
-          }
         }
   }
 
-  def showReportableEventsSelected()(implicit authContext:AuthContext, request: Request[AnyRef]): Future[Result] = {
-    RSformMappings.chooseForm.bindFromRequest.fold(
+  def showReportableEventsSelected()(implicit authContext: AuthContext, request: Request[AnyRef]): Future[Result] = {
+    RsFormMappings.chooseForm.bindFromRequest.fold(
       errors => {
         Future.successful(Ok(views.html.reportable_events(Some(""), errors)))
       },
       formData => {
         val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
-          cacheUtil.cache(CacheUtil.reportableEvents, formData, schemeRef).map { all =>
-            if (formData.isNilReturn.get == PageBuilder.OPTION_NIL_RETURN) {
-              Redirect(routes.SchemeOrganiserController.schemeOrganiserPage())
-            } else {
-              Logger.info(s"Redirecting to FileUplaod controller to get Partial, timestamp: ${System.currentTimeMillis()}.")
-              Redirect(routes.CheckFileTypeController.checkFileTypePage())
-            }
-          } recover {
-            case e: Exception => {
-              Logger.error(s"Save reportable event failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
-              getGlobalErrorPage
-            }
+        cacheUtil.cache(CacheUtil.reportableEvents, formData, schemeRef).map { _ =>
+          if (formData.isNilReturn.get == PageBuilder.OPTION_NIL_RETURN) {
+            Redirect(routes.SchemeOrganiserController.schemeOrganiserPage())
+          } else {
+            Logger.info(s"Redirecting to FileUplaod controller to get Partial, timestamp: ${System.currentTimeMillis()}.")
+            Redirect(routes.CheckFileTypeController.checkFileTypePage())
           }
+        } recover {
+          case e: Exception =>
+            Logger.error(s"Save reportable event failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
+            getGlobalErrorPage
+        }
 
       }
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
-
+  def getGlobalErrorPage = Ok(views.html.global_error(
+    Messages("ers.global_errors.title"),
+    Messages("ers.global_errors.heading"),
+    Messages("ers.global_errors.message")))
 }

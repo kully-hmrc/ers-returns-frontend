@@ -16,21 +16,25 @@
 
 package connectors
 
+import akka.stream.Materializer
 import org.mockito.Matchers.{eq => meq, _}
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mock.MockitoSugar
 import org.scalatestplus.play.{OneAppPerSuite, PlaySpec}
-import play.api.test.FakeApplication
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.config.ServicesConfig
 import uk.gov.hmrc.play.http.{BadGatewayException, HeaderCarrier, HttpGet, HttpResponse}
+import utils.ERSFakeApplicationConfig
+
 import scala.concurrent.Future
 
-class ContactFrontendConnectorSpec extends PlaySpec with OneAppPerSuite with MockitoSugar with BeforeAndAfterEach with ServicesConfig {
+class ContactFrontendConnectorSpec extends PlaySpec with OneAppPerSuite with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach with ServicesConfig {
 
-  implicit override lazy val app: FakeApplication = FakeApplication()
-  implicit val headerCarrier = HeaderCarrier()
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   object TestConnector extends ContactFrontendConnector {
     override val http = mock[HttpGet]

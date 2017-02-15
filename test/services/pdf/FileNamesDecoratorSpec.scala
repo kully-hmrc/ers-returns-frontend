@@ -16,15 +16,25 @@
 
 package services.pdf
 
+import akka.stream.Materializer
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.ERSFakeApplicationConfig
+
 import scala.collection.mutable.ListBuffer
 
-class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar {
+class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
+
+  override implicit lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   "file name decortor" should {
     "not show file names when nil reuturn is false" in {
@@ -34,7 +44,7 @@ class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar {
       decorator.decorate(streamer)
 
       verify(streamer, VerificationModeFactory.times(0)).drawText(any(), any())
-     }
+    }
 
     "show ods files names when nil return is true" in {
       val streamer = mock[ErsContentsStreamer]
@@ -66,5 +76,5 @@ class FileNamesDecoratorSpec extends UnitSpec with MockitoSugar {
       verify(streamer, VerificationModeFactory.times(2)).drawText(org.mockito.Matchers.eq("": String), org.mockito.Matchers.eq(4.0F: Float))
       verify(streamer, VerificationModeFactory.times(1)).drawLine()
     }
-   }
+  }
 }

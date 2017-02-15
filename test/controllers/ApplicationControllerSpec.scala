@@ -16,11 +16,18 @@
 
 package controllers
 
+import akka.stream.Materializer
 import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import utils.ERSFakeApplicationConfig
 
-class ApplicationControllerSpec extends PlaySpec with OneServerPerSuite {
+class ApplicationControllerSpec extends PlaySpec with OneServerPerSuite with ERSFakeApplicationConfig {
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val materializer: Materializer = app.materializer
 
   "ApplicationController" must {
 

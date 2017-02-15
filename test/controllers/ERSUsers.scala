@@ -17,14 +17,16 @@
 package controllers
 
 import java.util.UUID
+
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
-import uk.gov.hmrc.domain.{EmpRef, Vrn, SaUtr}
+import uk.gov.hmrc.domain.{EmpRef, SaUtr, Vrn}
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.frontend.auth.connectors.domain._
 import uk.gov.hmrc.play.http.{HeaderCarrier, SessionKeys}
+
 import scala.concurrent.Future
 
 trait ERSUsers {
@@ -34,14 +36,14 @@ trait ERSUsers {
   def withAuthorisedUser(test: FakeRequest[AnyContentAsEmpty.type] => Any) {
     val userId = s"user-${UUID.randomUUID}"
     when(mockAuthConnector.currentAuthority(Matchers.any[HeaderCarrier]())) thenReturn {
-      Future.successful(Some(Authority(userId, Accounts(sa = Some(SaAccount("",SaUtr("1234567890"))), vat = Some(VatAccount("", Vrn("123456789"))), epaye = Some(EpayeAccount("", EmpRef("000", "AA00000")))), None, None, CredentialStrength.Strong, ConfidenceLevel.L50, None, None)))
+      Future.successful(Some(Authority(userId, Accounts(sa = Some(SaAccount("", SaUtr("1234567890"))), vat = Some(VatAccount("", Vrn("123456789"))), epaye = Some(EpayeAccount("", EmpRef("000", "AA00000")))), None, None, CredentialStrength.Strong, ConfidenceLevel.L50, None, None, None, "")))
     }
     val sessionId = s"session-${UUID.randomUUID}"
     lazy val request = FakeRequest().withSession(
-      (SessionKeys.sessionId -> sessionId),
-      (SessionKeys.token -> "RANDOMTOKEN"),
-      (SessionKeys.userId -> userId),
-      ("screenSchemeInfo" -> "2 - EMI - MYScheme - XX12345678 - 2016"))
+      SessionKeys.sessionId -> sessionId,
+      SessionKeys.token -> "RANDOMTOKEN",
+      SessionKeys.userId -> userId,
+      "screenSchemeInfo" -> "2 - EMI - MYScheme - XX12345678 - 2016")
     test(request)
   }
 

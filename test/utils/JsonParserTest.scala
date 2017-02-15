@@ -20,7 +20,7 @@ import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.UnitSpec
 import controllers._
 
-class JsonParserTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class JsonParserTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar {
 	"getSubmissionJson" should {
 		"return valid json for a summary submission to ETMP" in {
 			val schemeRef = "AA0000000000000"

@@ -16,17 +16,18 @@
 
 package controllers
 
-import models.{RSformMappings, TrusteeDetails, TrusteeDetailsList, _}
+import models.{RsFormMappings, TrusteeDetails, TrusteeDetailsList, _}
 import play.api.Logger
+import play.api.Play.current
 import play.api.data.Form
 import play.api.i18n.Messages
-import play.api.mvc.{AnyContent, Request, Result}
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 
 import scala.concurrent.Future
-
 
 object TrusteeController extends TrusteeController {
   override val cacheUtil: CacheUtil = CacheUtil
@@ -35,16 +36,16 @@ object TrusteeController extends TrusteeController {
 trait TrusteeController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
 
-  def trusteeDetailsPage(index: Int) = AuthorisedForAsync() {
+  def trusteeDetailsPage(index: Int): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showTrusteeDetailsPage(index)(user, request, hc)
   }
 
-  def showTrusteeDetailsPage(index: Int)(implicit authContext : AuthContext, request: Request[AnyContent], hc: HeaderCarrier): Future[Result] = {
+  def showTrusteeDetailsPage(index: Int)(implicit authContext: AuthContext, request: Request[AnyContent], hc: HeaderCarrier): Future[Result] = {
     val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[GroupSchemeInfo](CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER, scRef).map { groupSchemeActivity =>
-      Ok(views.html.trustee_details(groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT), index, RSformMappings.trusteeDetailsForm))
+      Ok(views.html.trustee_details(groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT), index, RsFormMappings.trusteeDetailsForm))
     } recover {
       case e: Exception => {
         Logger.error(s"showTrusteeDetailsPage: Get data from cache failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
@@ -53,15 +54,15 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
     }
   }
 
-  def trusteeDetailsSubmit(index: Int) = AuthorisedForAsync() {
+  def trusteeDetailsSubmit(index: Int): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
-       showTrusteeDetailsSubmit(index)(user, request, hc)
+        showTrusteeDetailsSubmit(index)(user, request, hc)
   }
 
-  def showTrusteeDetailsSubmit(index: Int)(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showTrusteeDetailsSubmit(index: Int)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
-    RSformMappings.trusteeDetailsForm.bindFromRequest.fold(
+    RsFormMappings.trusteeDetailsForm.bindFromRequest.fold(
       errors => {
         cacheUtil.fetch[GroupSchemeInfo](CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER, scRef).map { groupSchemeActivity =>
           val correctOrder = errors.errors.map(_.key).distinct
@@ -126,13 +127,13 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
     )
   }
 
-  def deleteTrustee(id: Int) = AuthorisedForAsync() {
+  def deleteTrustee(id: Int): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showDeleteTrustee(id)(user, request, hc)
   }
 
-  def showDeleteTrustee(id: Int)(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showDeleteTrustee(id: Int)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[TrusteeDetailsList](CacheUtil.TRUSTEES_CACHE, scRef).flatMap { cachedTrusteeList =>
 
@@ -161,13 +162,13 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
     }
   }
 
-  def editTrustee(id: Int) = AuthorisedForAsync() {
+  def editTrustee(id: Int): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showEditTrustee(id)(user, request, hc)
   }
 
-  def showEditTrustee(id: Int)(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showEditTrustee(id: Int)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
 
     cacheUtil.fetch[GroupSchemeInfo](CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER, scRef).flatMap { groupSchemeActivity =>
@@ -187,7 +188,7 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
             )
           }
         }
-        Ok(views.html.trustee_details(groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT), id, RSformMappings.trusteeDetailsForm.fill(trusteeDetails)))
+        Ok(views.html.trustee_details(groupSchemeActivity.groupScheme.getOrElse(PageBuilder.DEFAULT), id, RsFormMappings.trusteeDetailsForm.fill(trusteeDetails)))
       } recover {
         case e: Exception => {
           Logger.error(s"showEditTrustee: Get data from cache failed with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
@@ -202,13 +203,13 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
     }
   }
 
-  def trusteeSummaryPage() = AuthorisedForAsync() {
+  def trusteeSummaryPage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showTrusteeSummaryPage()(user, request, hc)
   }
 
-  def showTrusteeSummaryPage()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showTrusteeSummaryPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[TrusteeDetailsList](CacheUtil.TRUSTEES_CACHE, scRef).map { trusteeDetailsList =>
       Ok(views.html.trustee_summary(trusteeDetailsList))
@@ -220,16 +221,19 @@ trait TrusteeController extends ERSReturnBaseController with Authenticator {
     }
   }
 
-  def trusteeSummaryContinue()= AuthorisedForAsync() {
+  def trusteeSummaryContinue(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         continueFromTrusteeSummaryPage()(user, request, hc)
   }
 
-  def continueFromTrusteeSummaryPage()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def continueFromTrusteeSummaryPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     Future(Redirect(routes.AltAmendsController.altActivityPage()))
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(
+    Messages("ers.global_errors.title"),
+    Messages("ers.global_errors.heading"),
+    Messages("ers.global_errors.message")))
 
 }

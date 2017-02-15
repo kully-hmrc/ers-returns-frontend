@@ -16,19 +16,27 @@
 
 package controllers
 
-import models.{CheckFileType, RSformMappings}
+import akka.stream.Materializer
+import models.{CheckFileType, RsFormMappings}
 import org.jsoup.Jsoup
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
 import play.api.http.Status
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{PageBuilder, CacheUtil}
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+
 import scala.concurrent.Future
 
-class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class CheckFileTypeControllerTest extends UnitSpec with OneAppPerSuite with ERSFakeApplicationConfig with MockitoSugar {
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   "Check File Type Page GET" should {
 
@@ -36,7 +44,7 @@ class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplication with 
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
       override val cacheUtil: CacheUtil = mockCacheUtil
       when(
-        mockCacheUtil.fetch[CheckFileType](refEq(CacheUtil.FILE_TYPE_CACHE), any())(any(),any(),any())
+        mockCacheUtil.fetch[CheckFileType](refEq(CacheUtil.FILE_TYPE_CACHE), any())(any(), any(), any())
       ).thenReturn(
         fileTypeRes match {
           case true => Future.successful(CheckFileType(Some(PageBuilder.OPTION_CSV)))
@@ -107,7 +115,7 @@ class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplication with 
     "give a bad request status and stay on the same page if form errors" in {
       val controllerUnderTest = buildFakeCheckingServiceController()
       val fileTypeData = Map("" -> "")
-      val form = RSformMappings.checkFileTypeForm.bind(fileTypeData)
+      val form = RsFormMappings.checkFileTypeForm.bind(fileTypeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showCheckFileTypeSelected(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.OK
@@ -116,7 +124,7 @@ class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplication with 
     "if no form errors with file type = csv and save success" in {
       val controllerUnderTest = buildFakeCheckingServiceController(fileTypeRes = true)
       val checkFileTypeData = Map("checkFileType" -> "csv")
-      val form = RSformMappings.schemeTypeForm.bind(checkFileTypeData)
+      val form = RsFormMappings.schemeTypeForm.bind(checkFileTypeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showCheckFileTypeSelected(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -126,7 +134,7 @@ class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplication with 
     "if no form errors with file type = ods and save success" in {
       val controllerUnderTest = buildFakeCheckingServiceController(fileTypeRes = true)
       val checkFileTypeData = Map("checkFileType" -> "ods")
-      val form = RSformMappings.schemeTypeForm.bind(checkFileTypeData)
+      val form = RsFormMappings.schemeTypeForm.bind(checkFileTypeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showCheckFileTypeSelected(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -136,7 +144,7 @@ class CheckFileTypeControllerTest extends UnitSpec with ERSFakeApplication with 
     "if no form errors with scheme type and save fails" in {
       val controllerUnderTest = buildFakeCheckingServiceController(fileTypeRes = false)
       val schemeTypeData = Map("checkFileType" -> "csv")
-      val form = RSformMappings.schemeTypeForm.bind(schemeTypeData)
+      val form = RsFormMappings.schemeTypeForm.bind(schemeTypeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = await(controllerUnderTest.showCheckFileTypeSelected(Fixtures.buildFakeUser, request, hc))
       contentAsString(result) shouldBe contentAsString(controllerUnderTest.getGlobalErrorPage)

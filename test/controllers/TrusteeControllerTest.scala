@@ -16,27 +16,28 @@
 
 package controllers
 
+import akka.stream.Materializer
 import connectors.ErsConnector
 import models._
-import uk.gov.hmrc.http.cache.client.CacheMap
-import utils.PageBuilder
 import org.joda.time.DateTime
-import org.jsoup.Jsoup
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneServerPerSuite
+import play.api.Application
 import play.api.http.Status
-import play.api.libs.json.JsValue
-import play.api.mvc.{Result, Request}
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{CacheUtil, JsonParser}
-import scala.concurrent.{Await, Future}
+import utils._
 
-class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with MockitoSugar {
+import scala.concurrent.Future
+
+class TrusteeControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneServerPerSuite {
+
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
 
   "calling Trustee Details Page" should {
 
@@ -44,8 +45,8 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None,None)
-      val trustee = TrusteeDetails("Name","1 The Street",None,None,None,Some("UK"),None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
+      val trustee = TrusteeDetails("Name", "1 The Street", None, None, None, Some("UK"), None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
       val mockCacheUtil: CacheUtil = mock[CacheUtil]
@@ -115,7 +116,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "give a OK status and stay on the same page if form errors" in {
       val controllerUnderTest = buildFakeTrusteePageController(groupSchemeActivityRes = true)
       val trusteeData = Map("" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.OK
@@ -124,7 +125,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if form errors and if fetching groupSchemeActivity fails direct to ers errors page" in {
       val controllerUnderTest = buildFakeTrusteePageController(groupSchemeActivityRes = false)
       val trusteeData = Map("" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       contentAsString(await(controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc))) shouldBe contentAsString(controllerUnderTest.getGlobalErrorPage)
     }
@@ -132,7 +133,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors with new trustee (index 10000) and fetch trustee details success" in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = true, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -142,7 +143,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors with new trustee (index 10000) and fetch trustee details fails" in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = false, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(10000)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -152,7 +153,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors and fetch trustee details success for not updating an existing trustee (index 1) " in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = true, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(1)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -162,7 +163,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
     "if no form errors and fetch trustee details success for updating a trustee (index 0) " in {
       val controllerUnderTest = buildFakeTrusteePageController(trusteeDetailsRes = true, cacheRes = true)
       val trusteeData = Map("name" -> "Name", "addressLine1" -> "1 The Street", "addressLine2" -> "", "addressLine3" -> "", "addressLine4" -> "", "country" -> "UK", "postcode" -> "")
-      val form = RSformMappings.trusteeDetailsForm.bind(trusteeData)
+      val form = RsFormMappings.trusteeDetailsForm.bind(trusteeData)
       val request = Fixtures.buildFakeRequestWithSessionIdSIP("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
       val result = controllerUnderTest.showTrusteeDetailsSubmit(0)(Fixtures.buildFakeUser, request, hc)
       status(result) shouldBe Status.SEE_OTHER
@@ -177,7 +178,7 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
 
       val schemeInfo = SchemeInfo("XA1100000000000", DateTime.now, "1", "2016", "CSOP 2015/16", "CSOP")
       val rsc = ErsMetaData(schemeInfo, "ipRef", Some("aoRef"), "empRef", Some("agentRef"), Some("sapNumber"))
-      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None,None,None)
+      val ersSummary = ErsSummary("testbundle", "1", None, DateTime.now, rsc, None, None, None, None, None, None, None, None)
       val trustee = TrusteeDetails("Name", "1 The Street", None, None, None, Some("UK"), None)
       val trusteeList = List(trustee)
       val mockErsConnector: ErsConnector = mock[ErsConnector]
@@ -401,7 +402,6 @@ class TrusteeControllerTest extends UnitSpec with ERSFakeApplication with Mockit
 
 
   }
-
 
 
 }

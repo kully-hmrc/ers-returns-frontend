@@ -16,42 +16,52 @@
 
 package controllers
 
+import akka.stream.Materializer
 import models._
 import org.jsoup.Jsoup
+import org.mockito.Matchers._
+import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
+import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
-import play.api.mvc.{Result, AnyContentAsEmpty}
+import play.api.mvc.{AnyContentAsEmpty, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.test.UnitSpec
-import utils.{PageBuilder, CacheUtil}
+import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
+
 import scala.concurrent.Future
-import org.mockito.Matchers._
-import org.mockito.Mockito._
-import org.scalatest.mock.MockitoSugar
 
-class GroupSchemeControllerTest extends UnitSpec with MockitoSugar with ERSUsers with ERSFakeApplication with BeforeAndAfterEach {
+class GroupSchemeControllerTest extends UnitSpec with MockitoSugar with ERSUsers with ERSFakeApplicationConfig with BeforeAndAfterEach with OneAppPerSuite {
 
-  val mockAuthConnector = mock[AuthConnector]
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val materializer: Materializer = app.materializer
 
-  val companyDetailsList: CompanyDetailsList = CompanyDetailsList(
+  lazy val mockAuthConnector = mock[AuthConnector]
+
+  lazy val companyDetailsList: CompanyDetailsList = CompanyDetailsList(
     List(
       CompanyDetails(Fixtures.companyName, "Adress Line 1", None, None, None, None, None, None, None),
       CompanyDetails(Fixtures.companyName, "Adress Line 1", None, None, None, None, None, None, None)
     )
   )
 
-  val mockCacheUtil = mock[CacheUtil]
+  lazy val mockCacheUtil = mock[CacheUtil]
 
   override def beforeEach() = {
     super.beforeEach()
     reset(mockCacheUtil)
   }
 
-  val testGroupSchemeController = new GroupSchemeController {
+  lazy val testGroupSchemeController = new GroupSchemeController {
     override val cacheUtil: CacheUtil = mockCacheUtil
   }
 
@@ -99,7 +109,7 @@ class GroupSchemeControllerTest extends UnitSpec with MockitoSugar with ERSUsers
       else {
         Map("" -> "")
       }
-      val form = _root_.models.RSformMappings.companyDetailsForm.bind(data)
+      val form = _root_.models.RsFormMappings.companyDetailsForm.bind(data)
       Fixtures.buildFakeRequestWithSessionId("POST").withFormUrlEncodedBody(form.data.toSeq: _*)
     }
 
@@ -326,7 +336,7 @@ class GroupSchemeControllerTest extends UnitSpec with MockitoSugar with ERSUsers
         case Some(true) => Map("groupScheme" -> PageBuilder.OPTION_YES)
         case Some(false) => Map("groupScheme" -> PageBuilder.OPTION_NO)
       }
-      val form = _root_.models.RSformMappings.groupForm.bind(data)
+      val form = _root_.models.RsFormMappings.groupForm.bind(data)
       val request = scheme match {
         case "CSOP" => Fixtures.buildFakeRequestWithSessionIdCSOP("POST")
         case "SAYE" => Fixtures.buildFakeRequestWithSessionIdSAYE("POST")

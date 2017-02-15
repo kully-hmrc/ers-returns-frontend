@@ -16,4 +16,8 @@
 
 package controllers
 
-object AssetsController extends AssetsBuilder
+import play.api.http.{HttpErrorHandler, LazyHttpErrorHandler}
+
+class AssetsController(errorHandler: HttpErrorHandler) extends AssetsBuilder(errorHandler)
+
+object AssetsController extends AssetsController(LazyHttpErrorHandler)

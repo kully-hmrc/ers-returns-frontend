@@ -19,13 +19,14 @@ package controllers
 import _root_.models._
 import connectors.ErsConnector
 import play.api.Logger
-import play.api.libs.json._
-import play.api.mvc.{Request, Result}
+import play.api.Play.current
+import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
-import play.api.i18n.Messages
 
 import scala.concurrent.Future
 
@@ -34,18 +35,18 @@ object SummaryDeclarationController extends SummaryDeclarationController {
   override val ersConnector: ErsConnector = ErsConnector
 }
 
-trait SummaryDeclarationController extends ERSReturnBaseController with Authenticator  with ErsConstants{
+trait SummaryDeclarationController extends ERSReturnBaseController with Authenticator with ErsConstants {
 
   val cacheUtil: CacheUtil
   val ersConnector: ErsConnector
 
-  def summaryDeclarationPage() = AuthorisedForAsync() {
+  def summaryDeclarationPage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showSummaryDeclarationPage()(user, request, hc)
   }
 
-  def showSummaryDeclarationPage()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+  def showSummaryDeclarationPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetchAll(schemeRef).flatMap { all =>
       val schemeOrganiser: SchemeOrganiserDetails = all.getEntry[SchemeOrganiserDetails](CacheUtil.SCHEME_ORGANISER_CACHE).get
@@ -61,7 +62,7 @@ trait SummaryDeclarationController extends ERSReturnBaseController with Authenti
         fileType = all.getEntry[CheckFileType](CacheUtil.FILE_TYPE_CACHE).get.checkFileType.get
         if (fileType == PageBuilder.OPTION_CSV) {
           val csvFilesCallback: List[CsvFilesCallback] = all.getEntry[CsvFilesCallbackList](CacheUtil.CHECK_CSV_FILES).get.files
-          for (file <- csvFilesCallback if (file.callbackData.isDefined)) {
+          for (file <- csvFilesCallback if file.callbackData.isDefined) {
             fileNames = fileNames + Messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, file.fileId + ".file_name")) + "<br/>"
             fileCount += 1
           }
@@ -83,13 +84,13 @@ trait SummaryDeclarationController extends ERSReturnBaseController with Authenti
   }
 
   def getTrustees(cacheMap: CacheMap) =
-      cacheMap.getEntry[TrusteeDetailsList](CacheUtil.TRUSTEES_CACHE).getOrElse(TrusteeDetailsList(List[TrusteeDetails]()))
+    cacheMap.getEntry[TrusteeDetailsList](CacheUtil.TRUSTEES_CACHE).getOrElse(TrusteeDetailsList(List[TrusteeDetails]()))
 
   def getAltAmends(cacheMap: CacheMap) =
-        cacheMap.getEntry[AlterationAmends](CacheUtil.ALT_AMENDS_CACHE_CONTROLLER).getOrElse(new AlterationAmends(None, None, None, None, None))
+    cacheMap.getEntry[AlterationAmends](CacheUtil.ALT_AMENDS_CACHE_CONTROLLER).getOrElse(new AlterationAmends(None, None, None, None, None))
 
   def getCompDetails(cacheMap: CacheMap) =
-      cacheMap.getEntry[CompanyDetailsList](CacheUtil.GROUP_SCHEME_COMPANIES).getOrElse(CompanyDetailsList(List[CompanyDetails]()))
+    cacheMap.getEntry[CompanyDetailsList](CacheUtil.GROUP_SCHEME_COMPANIES).getOrElse(CompanyDetailsList(List[CompanyDetails]()))
 
   def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
 

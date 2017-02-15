@@ -16,13 +16,16 @@
 
 package utils
 
-import models.CsvFiles
-import play.api.i18n.Messages
 import controllers.routes
+import models.CsvFiles
+import play.api.Play.current
+import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.LegacyI18nSupport
 
 object PageBuilder extends PageBuilder
 
-trait PageBuilder {
+trait PageBuilder extends LegacyI18nSupport {
 
   val DEFAULT = ""
   val DEFAULT_COUNTRY = "UK"
@@ -182,11 +185,11 @@ trait PageBuilder {
             reportableEvents match {
               case OPTION_UPLOAD_SPREEDSHEET => {
                 condition match {
-                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString ()
-                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString ()
+                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString()
+                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString()
                 }
               }
-              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString ()
+              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString()
             }
           }
           case PAGE_ALT_ACTIVITY => {
@@ -198,7 +201,7 @@ trait PageBuilder {
           }
           case PAGE_ALT_AMENDS => routes.AltAmendsController.altActivityPage.toString()
           case PAGE_GROUP_SUMMARY => {
-              routes.GroupSchemeController.manualCompanyDetailsPage.toString()
+            routes.GroupSchemeController.manualCompanyDetailsPage.toString()
           }
           case PAGE_SUMMARY_DECLARATION => {
             condition match {
@@ -216,11 +219,11 @@ trait PageBuilder {
             reportableEvents match {
               case OPTION_UPLOAD_SPREEDSHEET => {
                 condition match {
-                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString ()
-                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString ()
+                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString()
+                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString()
                 }
               }
-              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString ()
+              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString()
             }
           }
           case PAGE_GROUP_SUMMARY => {
@@ -245,11 +248,11 @@ trait PageBuilder {
             reportableEvents match {
               case OPTION_UPLOAD_SPREEDSHEET => {
                 condition match {
-                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString ()
-                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString ()
+                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString()
+                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString()
                 }
               }
-              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString ()
+              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString()
             }
           }
           case PAGE_ALT_ACTIVITY => {
@@ -282,11 +285,11 @@ trait PageBuilder {
             reportableEvents match {
               case OPTION_UPLOAD_SPREEDSHEET => {
                 condition match {
-                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString ()
-                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString ()
+                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString()
+                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString()
                 }
               }
-              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString ()
+              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString()
             }
           }
           case PAGE_ALT_ACTIVITY => routes.TrusteeController.trusteeSummaryPage.toString()
@@ -317,11 +320,11 @@ trait PageBuilder {
             reportableEvents match {
               case OPTION_UPLOAD_SPREEDSHEET => {
                 condition match {
-                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString ()
-                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString ()
+                  case OPTION_ODS => routes.FileUploadController.uploadFilePage.toString()
+                  case OPTION_CSV => routes.CheckCsvFilesController.checkCsvFilesPage.toString()
                 }
               }
-              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString ()
+              case OPTION_NIL_RETURN => routes.ReportableEventsController.reportableEventsPage.toString()
             }
           }
           case PAGE_GROUP_SUMMARY => {

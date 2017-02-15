@@ -30,6 +30,9 @@ import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 import config._
 import scala.concurrent.Future
+import play.api.Play.current
+import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
 
 object ReturnServiceController extends ReturnServiceController {
   override val cacheUtil: CacheUtil = CacheUtil
@@ -39,10 +42,10 @@ object ReturnServiceController extends ReturnServiceController {
   override val metrics = Metrics
 }
 
-trait ErsConstants{
+trait ErsConstants {
   val screenSchemeInfo = "screenSchemeInfo"
   val schemeId = "schemeId"
-  val schemeRef  = "schemeRef"
+  val schemeRef = "schemeRef"
   implicit val context: ErsContext = ErsContextImpl
 }
 
@@ -55,35 +58,36 @@ trait ReturnServiceController extends ERSReturnBaseController with Authenticator
   val accessThreshold: Int
   val metrics: Metrics
 
-  def getSchemeId(schemeType: String) =
-  {
-      schemeType.toUpperCase match {
-        case PageBuilder.CSOP => PageBuilder.SCHEME_CSOP
-        case PageBuilder.EMI => PageBuilder.SCHEME_EMI
-        case PageBuilder.SAYE => PageBuilder.SCHEME_SAYE
-        case PageBuilder.SIP => PageBuilder.SCHEME_SIP
-        case PageBuilder.OTHER => PageBuilder.SCHEME_OTHER
-        case _ => PageBuilder.DEFAULT
-      }
+  def getSchemeId(schemeType: String): String = {
+    schemeType.toUpperCase match {
+      case PageBuilder.CSOP => PageBuilder.SCHEME_CSOP
+      case PageBuilder.EMI => PageBuilder.SCHEME_EMI
+      case PageBuilder.SAYE => PageBuilder.SCHEME_SAYE
+      case PageBuilder.SIP => PageBuilder.SCHEME_SIP
+      case PageBuilder.OTHER => PageBuilder.SCHEME_OTHER
+      case _ => PageBuilder.DEFAULT
+    }
   }
-  def cacheParams(ersRequestObject: RequestObject)(implicit authContext:AuthContext, request: Request[AnyRef], hc: HeaderCarrier) = {
+
+  def cacheParams(ersRequestObject: RequestObject)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
 
     implicit val formatRSParams = Json.format[ErsMetaData]
     val sr = ersRequestObject.getSchemeReference()
-    val schemeInfo = SchemeInfo(ersRequestObject.ersSchemeRef.get,DateTime.now,getSchemeId(ersRequestObject.getSchemeType()),ersRequestObject.taxYear.get,ersRequestObject.schemeName.get,ersRequestObject.schemeType.get)
+    val schemeInfo = SchemeInfo(ersRequestObject.ersSchemeRef.get, DateTime.now, getSchemeId(ersRequestObject.getSchemeType()), ersRequestObject.taxYear.get, ersRequestObject.schemeName.get, ersRequestObject.schemeType.get)
 
-      val metaData: ErsMetaData = ErsMetaData(schemeInfo, request.remoteAddress, ersRequestObject.aoRef, ersRequestObject.getEmpRef, ersRequestObject.agentRef, None)
-      Logger.debug("metaData created --> " + metaData)
-      cacheUtil.cache(CacheUtil.ersMetaData, metaData, sr).map {
-        cacheResult =>  {Logger.debug("metaData after cache --> " + metaData); showInitialStartPage(metaData)(authContext, request, hc)}
-      } recover { case e: Exception =>
-        Logger.warn(s"Caught exception ${e.getMessage}", e)
-        getGlobalErrorPage
+    val metaData: ErsMetaData = ErsMetaData(schemeInfo, request.remoteAddress, ersRequestObject.aoRef, ersRequestObject.getEmpRef, ersRequestObject.agentRef, None)
+    Logger.debug("metaData created --> " + metaData)
+    cacheUtil.cache(CacheUtil.ersMetaData, metaData, sr).map {
+      cacheResult => {
+        Logger.debug("metaData after cache --> " + metaData); showInitialStartPage(metaData)(authContext, request, hc)
       }
+    } recover { case e: Exception =>
+      Logger.warn(s"Caught exception ${e.getMessage}", e)
+      getGlobalErrorPage
+    }
   }
 
-  def getRequestParameters(request: Request[AnyContent]) =
-  {
+  def getRequestParameters(request: Request[AnyContent]): RequestObject = {
     val aoRef: Option[String] = request.getQueryString("aoRef")
     val taxYear: Option[String] = request.getQueryString("taxYear")
     val ersSchemeRef: Option[String] = request.getQueryString("ersSchemeRef")
@@ -108,31 +112,34 @@ trait ReturnServiceController extends ERSReturnBaseController with Authenticator
         } else {
           HMACUtil.isHmacAndTimestampValid(getRequestParameters(request)) match {
             case true => Logger.warn("HMAC Check Valid")
-              try {cacheParams(getRequestParameters(request))
+              try {
+                cacheParams(getRequestParameters(request))
               } catch {
                 case e: Throwable => Logger.warn(s"Caught exception ${e.getMessage}", e)
                   Future(getGlobalErrorPage)
               }
             case _ => Logger.warn("HMAC Check Invalid")
-              showUnauthPage(request)
+              showUnauthorisedPage(request)
           }
         }
   }
 
-  def showInitialStartPage(metaData: ErsMetaData)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier) = {
+  def showInitialStartPage(metaData: ErsMetaData)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Result = {
     Ok(views.html.start(ErsMetaDataHelper.getScreenSchemeInfo(metaData))).withSession(request.session + (screenSchemeInfo -> ErsMetaDataHelper.getScreenSchemeInfo(metaData)) - "bundelRef" - "dateTimeSubmitted")
   }
 
-  def startPage() = AuthenticatedBy(ERSGovernmentGateway, pageVisibility = AllowAll).async {
+  def startPage(): Action[AnyContent] = AuthenticatedBy(ERSGovernmentGateway, pageVisibility = AllowAll).async {
     implicit user =>
       implicit request =>
         Future(Ok(views.html.start(request.session.get(screenSchemeInfo).get)).withSession(request.session - "bundelRef" - "dateTimeSubmitted"))
   }
 
-  def showUnauthPage(request: Request[AnyRef]): Future[Result] = {
+  def showUnauthorisedPage(request: Request[AnyRef]): Future[Result] = {
     Future.successful(Ok(views.html.unauthorised()(request, context)))
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
-
+  def getGlobalErrorPage = Ok(views.html.global_error(
+    Messages("ers.global_errors.title"),
+    Messages("ers.global_errors.heading"),
+    Messages("ers.global_errors.message")))
 }

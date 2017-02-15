@@ -17,26 +17,23 @@
 package controllers
 
 import config.ERSFileValidatorAuthConnector
-
 import models.CallbackData
-
+import play.api.libs.json.JsValue
 import play.api.mvc.Action
-import play.api.{Logger, Configuration, Play}
+import play.api.{Configuration, Logger, Play}
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.Actions
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.logging.SessionId
-
 import utils.CacheUtil
 
-
-trait FileUploadCallbackController extends FrontendController with Actions with ErsConstants{
+trait FileUploadCallbackController extends FrontendController with Actions with ErsConstants {
 
   val cacheUtil: CacheUtil
   val currentConfig: Configuration
   val sessionService: SessionService
 
-  def callback() = Action.async(parse.json) {
+  def callback(): Action[JsValue] = Action.async(parse.json) {
     implicit request => {
 
       Logger.info("Attachments Callback: " + (System.currentTimeMillis() / 1000))
@@ -50,10 +47,10 @@ trait FileUploadCallbackController extends FrontendController with Actions with 
 
       sessionService.storeCallbackData(callbackData)(request, headerCarrier).map {
         case callback: Option[CallbackData] if callback.isDefined => Ok("")
-        case _ =>  Logger.error(s"storeCallbackData failed with Exception , timestamp: ${System.currentTimeMillis()}.")
+        case _ => Logger.error(s"storeCallbackData failed with Exception , timestamp: ${System.currentTimeMillis()}.")
           InternalServerError("Exception ")
-      } .recover {
-        case e:Throwable => Logger.error(s"storeCallbackData failed with Exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
+      }.recover {
+        case e: Throwable => Logger.error(s"storeCallbackData failed with Exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
           InternalServerError("Exception occurred when attempting to store data")
       }
     }
@@ -62,7 +59,7 @@ trait FileUploadCallbackController extends FrontendController with Actions with 
 
 object FileUploadCallbackController extends FileUploadCallbackController {
   val authConnector = ERSFileValidatorAuthConnector
-  val currentConfig = Play.current.configuration
+  val currentConfig: Configuration = Play.current.configuration
   val sessionService = SessionService
 
   override val cacheUtil: CacheUtil = CacheUtil

@@ -16,23 +16,33 @@
 
 package services.pdf
 
-import controllers.Fixtures
+import akka.stream.Materializer
 import models.{AltAmendsActivity, AlterationAmends, ErsSummary}
 import org.joda.time.DateTime
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.{ERSFakeApplicationConfig, Fixtures}
 
-class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
+class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
 
-  val altAmends = AlterationAmends(altAmendsTerms = Some("1"),
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val materializer: Materializer = app.materializer
+
+  lazy val altAmends = AlterationAmends(altAmendsTerms = Some("1"),
     altAmendsEligibility = Some("1"),
     altAmendsExchange = Some("1"),
     altAmendsVariations = Some("1"),
     altAmendsOther = Some("1")
   )
-  val ersSummary = ErsSummary(
+
+  lazy val ersSummary = ErsSummary(
     bundleRef = "",
     isNilReturn = "",
     fileType = None,
@@ -71,7 +81,7 @@ class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
     "add 5 decorators" in {
 
       val ersSummary = ErsSummary("testbundle", "1", None, new DateTime(2016, 6, 8, 11, 45), metaData = Fixtures.EMIMetaData, None, None,
-        Some(Fixtures.groupScheme), Some(Fixtures.schemeOrganiserDetails), Some(Fixtures.companiesList), None, None,None)
+        Some(Fixtures.groupScheme), Some(Fixtures.schemeOrganiserDetails), Some(Fixtures.companiesList), None, None, None)
       val decoratorController = PdfDecoratorControllerFactory.createPdfDecoratorControllerForScheme("emi", ersSummary, None)
 
       val decorators = decoratorController.getDecorators
@@ -152,10 +162,10 @@ class PdfDecoratorFactoryControllerSpec extends UnitSpec with MockitoSugar {
       decorators(2) should be(anInstanceOf[SchemeOrganiserDetailseDecorator])
       decorators(3) should be(anInstanceOf[YesNoDecorator])
       decorators(4) should be(anInstanceOf[GroupSummaryDecorator])
-     }
+    }
   }
 
-    "pdf decorator controller factory" should {
+  "pdf decorator controller factory" should {
     "map given alt amends for given schemes" in {
 
       Array("csop", "sip", "saye").map { scheme =>

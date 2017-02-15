@@ -16,19 +16,22 @@
 
 package controllers
 
+import _root_.models._
 import config.ERSFileValidatorAuthConnector
-import connectors.{ErsConnector, AttachmentsConnector}
-import play.api.mvc.{Result, Request}
+import connectors.{AttachmentsConnector, ErsConnector}
 import play.api.Logger
+import play.api.Play.current
+import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{Action, AnyContent, Request, Result}
 import play.twirl.api.Html
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.frontend.controller.FrontendController
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
-import _root_.models._
+
 import scala.concurrent.Future
-import play.api.i18n.Messages
 
 trait CsvFileUploadController extends FrontendController with Authenticator {
 
@@ -37,7 +40,7 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
   val cacheUtil: CacheUtil
   val ersConnector: ErsConnector
 
-  def uploadFilePage() = AuthorisedForAsync()  {
+  def uploadFilePage(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showUploadFilePage()(user, request, hc)
@@ -67,7 +70,7 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
     }
   }
 
-  def success() = AuthorisedForAsync()  {
+  def success(): Action[AnyContent] = AuthorisedForAsync() {
     implicit user =>
       implicit request =>
         showSuccess()
@@ -111,8 +114,8 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
 
   def updateCallbackData(callbackData: Option[CallbackData], csvFilesCallbackList: List[CsvFilesCallback])(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): List[CsvFilesCallback] = {
     val schemeId = request.session.get("screenSchemeInfo").get.split(" - ").head
-    for(csvFileCallback <- csvFilesCallbackList) yield {
-      val filename = Messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, csvFileCallback.fileId+".file_name"))
+    for (csvFileCallback <- csvFilesCallbackList) yield {
+      val filename = Messages(PageBuilder.getPageElement(schemeId, PageBuilder.PAGE_CHECK_CSV_FILE, csvFileCallback.fileId + ".file_name"))
       if (filename == callbackData.get.name.get) {
         CsvFilesCallback(csvFileCallback.fileId, callbackData)
       } else {
@@ -121,7 +124,7 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
     }
   }
 
-  def validationResults() = AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
+  def validationResults(): Action[AnyContent] = AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
     implicit user =>
       implicit request =>
         processValidationResults()
@@ -196,7 +199,7 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
     }
   }
 
-  def validationFailure() = AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
+  def validationFailure(): Action[AnyContent] = AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
     implicit user =>
       implicit request =>
         processValidationFailure()(user, request, hc)
@@ -219,14 +222,17 @@ trait CsvFileUploadController extends FrontendController with Authenticator {
     }
   }
 
-  def failure() = AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
+  def failure(): Action[AnyContent] = AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
     implicit user =>
       implicit request =>
         Logger.error("failure: Attachments Failure: " + (System.currentTimeMillis() / 1000))
         Future(getGlobalErrorPage)
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(
+    Messages("ers.global_errors.title"),
+    Messages("ers.global_errors.heading"),
+    Messages("ers.global_errors.message")))
 
 }
 

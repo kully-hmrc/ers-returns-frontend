@@ -16,13 +16,16 @@
 
 package controllers
 
-import models.{RSformMappings, _}
+import models.{RsFormMappings, _}
 import play.api.Logger
+import play.api.Play.current
 import play.api.i18n.Messages
-import play.api.mvc._
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{LegacyI18nSupport, _}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
-import utils._
+import utils.{PageBuilder, _}
+
 import scala.concurrent.Future
 
 
@@ -30,7 +33,7 @@ object CheckFileTypeController extends CheckFileTypeController {
   override val cacheUtil: CacheUtil = CacheUtil
 }
 
-trait CheckFileTypeController extends ERSReturnBaseController with Authenticator {
+trait CheckFileTypeController extends ERSReturnBaseController with Authenticator with LegacyI18nSupport {
 
   val jsonParser = JsonParser
   val contentUtil = ContentUtil
@@ -45,11 +48,11 @@ trait CheckFileTypeController extends ERSReturnBaseController with Authenticator
   def showCheckFileTypePage(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     cacheUtil.fetch[CheckFileType](CacheUtil.FILE_TYPE_CACHE, schemeRef).map { fileType =>
-      Ok(views.html.check_file_type(fileType.checkFileType, RSformMappings.checkFileTypeForm.fill(fileType)))
+      Ok(views.html.check_file_type(fileType.checkFileType, RsFormMappings.checkFileTypeForm.fill(fileType)))
     } recover {
       case e: NoSuchElementException => {
         val form = CheckFileType(Some(""))
-        Ok(views.html.check_file_type(Some(""), RSformMappings.checkFileTypeForm.fill(form)))
+        Ok(views.html.check_file_type(Some(""), RsFormMappings.checkFileTypeForm.fill(form)))
       }
     }
   }
@@ -61,7 +64,7 @@ trait CheckFileTypeController extends ERSReturnBaseController with Authenticator
   }
 
   def showCheckFileTypeSelected(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    RSformMappings.checkFileTypeForm.bindFromRequest.fold(
+    RsFormMappings.checkFileTypeForm.bindFromRequest.fold(
       errors => {
         Future.successful(Ok(views.html.check_file_type(Some(""), errors)))
       },
@@ -83,6 +86,6 @@ trait CheckFileTypeController extends ERSReturnBaseController with Authenticator
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
 
 }

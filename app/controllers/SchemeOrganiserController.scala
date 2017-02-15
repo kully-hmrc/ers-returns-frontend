@@ -18,9 +18,11 @@ package controllers
 
 import models._
 import play.api.Logger
+import play.api.Play.current
 import play.api.data.Form
 import play.api.i18n.Messages
-import play.api.mvc.{AnyContent, Request, Result}
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.{AnyContent, LegacyI18nSupport, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
@@ -29,10 +31,9 @@ import scala.concurrent.Future
 
 object SchemeOrganiserController extends SchemeOrganiserController {
   override val cacheUtil: CacheUtil = CacheUtil
-
 }
 
-trait SchemeOrganiserController extends ERSReturnBaseController with Authenticator {
+trait SchemeOrganiserController extends ERSReturnBaseController with Authenticator with LegacyI18nSupport {
   val cacheUtil: CacheUtil
 
   def schemeOrganiserPage() = AuthorisedForAsync() {
@@ -41,7 +42,7 @@ trait SchemeOrganiserController extends ERSReturnBaseController with Authenticat
         showSchemeOrganiserPage()(user, request, hc)
   }
 
-  def showSchemeOrganiserPage()(implicit authContext : AuthContext, request: Request[AnyContent], hc: HeaderCarrier): Future[Result] = {
+  def showSchemeOrganiserPage()(implicit authContext: AuthContext, request: Request[AnyContent], hc: HeaderCarrier): Future[Result] = {
     val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     Logger.warn(s"SchemeOrganiserController: showSchemeOrganiserPage:  schemeRef: ${schemeRef}.")
 
@@ -53,16 +54,16 @@ trait SchemeOrganiserController extends ERSReturnBaseController with Authenticat
           } else {
             ""
           }
-          Ok(views.html.scheme_organiser(FileType, RSformMappings.schemeOrganiserForm.fill(res), reportableEvent.isNilReturn.get))
+          Ok(views.html.scheme_organiser(FileType, RsFormMappings.schemeOrganiserForm.fill(res), reportableEvent.isNilReturn.get))
         } recover {
           case e: NoSuchElementException =>
             val form = SchemeOrganiserDetails("", "", Some(""), Some(""), Some(""), Some(PageBuilder.DEFAULT_COUNTRY), Some(""), Some(""), Some(""))
-            Ok(views.html.scheme_organiser(fileType.get.checkFileType.get, RSformMappings.schemeOrganiserForm.fill(form), reportableEvent.isNilReturn.get))
+            Ok(views.html.scheme_organiser(fileType.get.checkFileType.get, RsFormMappings.schemeOrganiserForm.fill(form), reportableEvent.isNilReturn.get))
         }
       } recover {
         case e: NoSuchElementException =>
           val form = SchemeOrganiserDetails("", "", Some(""), Some(""), Some(""), Some(PageBuilder.DEFAULT_COUNTRY), Some(""), Some(""), Some(""))
-          Ok(views.html.scheme_organiser("", RSformMappings.schemeOrganiserForm.fill(form), reportableEvent.isNilReturn.get))
+          Ok(views.html.scheme_organiser("", RsFormMappings.schemeOrganiserForm.fill(form), reportableEvent.isNilReturn.get))
       }
     } recover {
       case e: Exception => {
@@ -78,8 +79,8 @@ trait SchemeOrganiserController extends ERSReturnBaseController with Authenticat
         showSchemeOrganiserSubmit()(user, request, hc)
   }
 
-  def showSchemeOrganiserSubmit()(implicit authContext : AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    RSformMappings.schemeOrganiserForm.bindFromRequest.fold(
+  def showSchemeOrganiserSubmit()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+    RsFormMappings.schemeOrganiserForm.bindFromRequest.fold(
       errors => {
         val correctOrder = errors.errors.map(_.key).distinct
         val incorrectOrderGrouped = errors.errors.groupBy(_.key).map(_._2.head).toSeq
@@ -103,6 +104,10 @@ trait SchemeOrganiserController extends ERSReturnBaseController with Authenticat
     )
   }
 
-    def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(
+    Messages("ers.global_errors.title"),
+    Messages("ers.global_errors.heading"),
+    Messages("ers.global_errors.message")
+  ))
 
 }

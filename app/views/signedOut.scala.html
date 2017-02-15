@@ -1,7 +1,7 @@
 @(loginScreenUrl: String)(implicit request: Request[AnyContent], context: config.ErsContext)
 
-@import views.html.templates._
-@import utils.ContentUtil._
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 
 @ers_main(title = Messages("ers.app_title"), scripts=Html(""), showSignOutLink = false){
 	<p>@Html(Messages("ers_signed_out.info"))</p>

@@ -16,93 +16,81 @@
 
 package controllers
 
-import controllers.Fixtures
+import akka.stream.Materializer
 import models.CallbackData
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
-import play.api.libs.json.{Json, JsObject}
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.json.{JsObject, Json}
+import play.api.test.Helpers._
 import play.api.test.{FakeHeaders, FakeRequest}
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.test.UnitSpec
-import play.api.test.Helpers._
+import utils.{ERSFakeApplicationConfig, Fixtures}
+
 import scala.concurrent.Future
 
-class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplication with MockitoSugar {
+class CsvFileUploadCallbackControllerSpec extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
 
-  val metaData: JsObject = Json.obj(
-    "surname" -> Fixtures.surname,
-    "firstForename" -> Fixtures.firstName
-  )
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val materializer: Materializer = app.materializer
 
-  val mockAuthConnector = mock[AuthConnector]
+  lazy val metaData: JsObject = Json.obj("surname" -> Fixtures.surname, "firstForename" -> Fixtures.firstName)
 
-  val mockSessionService: SessionService = mock[SessionService]
+  lazy val mockAuthConnector: AuthConnector = mock[AuthConnector]
 
-  val csvFileUploadCallbackController: CsvFileUploadCallbackController = new CsvFileUploadCallbackController {
-    val authConnector = mockAuthConnector
+  lazy val mockSessionService: SessionService = mock[SessionService]
 
-    override val sessionService: SessionService = mockSessionService
+  lazy val fakeHeaders: FakeHeaders = FakeHeaders(Seq("Content-type" -> "application/json"))
+
+  lazy val csvFileUploadCallbackController: CsvFileUploadCallbackController = new CsvFileUploadCallbackController {
+    lazy val authConnector: AuthConnector = mockAuthConnector
+    override lazy val sessionService: SessionService = mockSessionService
   }
+
+  lazy val callbackData1 = CallbackData(collection = "collection",
+    id = "someid",
+    length = 1000L,
+    name = Some("John"),
+    contentType = Some("content-type"),
+    customMetadata = Some(metaData),
+    sessionId = Some("testId"),
+    noOfRows = None)
 
   "calling callback" should {
 
-    "return OK if attachments retun valid callback data and storing callback data is successful" in {
-      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("John"), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
-
+    "return OK if attachments return valid callback data and storing callback data is successful" in {
       reset(mockSessionService)
-      when(
-        mockSessionService.storeCallbackData(any[CallbackData]())(any(), any())
-      ).thenReturn(
-        Future.successful(Some(callbackData))
-      )
-      val fakeRequest = FakeRequest(method = "POST", uri = "", headers = FakeHeaders(Seq("Content-type" -> Seq("application/json"))), body = Json.toJson(callbackData))
-
-      val result = await(
-        csvFileUploadCallbackController.callback()(fakeRequest)
-      )
+      when(mockSessionService.storeCallbackData(any[CallbackData]())(any(), any()))
+        .thenReturn(Future.successful(Some(callbackData1)))
+      val fakeRequest = FakeRequest(method = "POST", uri = "", headers = fakeHeaders, body = Json.toJson(callbackData1))
+      val result = await(csvFileUploadCallbackController.callback()(fakeRequest))
       status(result) shouldBe OK
     }
 
-    "return INTERNAL_SERVER_ERROR if attachments retun invalid callback data and storing callback data is successful" in {
-      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some("John"), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
-
-
+    "return INTERNAL_SERVER_ERROR if attachments return invalid callback data and storing callback data is successful" in {
       reset(mockSessionService)
-      when(
-        mockSessionService.storeCallbackData(any[CallbackData]())(any(), any())
-      ).thenReturn(
-        Future.successful(None)
-      )
-      val fakeRequest = FakeRequest(method = "POST", uri = "", headers = FakeHeaders(Seq("Content-type" -> Seq("application/json"))), body = Json.toJson(callbackData))
-
-      val result = await(
-        csvFileUploadCallbackController.callback()(fakeRequest)
-      )
+      when(mockSessionService.storeCallbackData(any[CallbackData]())(any(), any()))
+        .thenReturn(Future.successful(None))
+      val fakeRequest = FakeRequest(method = "POST", uri = "", headers = fakeHeaders, body = Json.toJson(callbackData1))
+      val result = await(csvFileUploadCallbackController.callback()(fakeRequest))
       status(result) shouldBe INTERNAL_SERVER_ERROR
       bodyOf(result) shouldBe "Exception"
     }
 
     "return INTERNAL_SERVER_ERROR if storing callback data fails" in {
-      val callbackData = CallbackData(collection = "collection", id = "someid", length = 1000L, name = Some(Fixtures.firstName), contentType = Some("content-type"), customMetadata = Some(metaData), sessionId = Some("testId"), noOfRows = None)
-
+      val callbackData2 = callbackData1.copy(name = Some(Fixtures.firstName))
       reset(mockSessionService)
-      when(
-        mockSessionService.storeCallbackData(any[CallbackData]())(any(), any())
-      ).thenReturn(
-        Future.failed(new RuntimeException)
-      )
-      val fakeRequest = FakeRequest(method = "POST", uri = "", headers = FakeHeaders(Seq("Content-type" -> Seq("application/json"))), body = Json.toJson(callbackData))
-
-      val result = await(
-        csvFileUploadCallbackController.callback()(fakeRequest)
-      )
+      when(mockSessionService.storeCallbackData(any[CallbackData]())(any(), any()))
+        .thenReturn(Future.failed(new RuntimeException))
+      val fakeRequest = FakeRequest(method = "POST", uri = "", headers = fakeHeaders, body = Json.toJson(callbackData2))
+      val result = await(csvFileUploadCallbackController.callback()(fakeRequest))
       status(result) shouldBe INTERNAL_SERVER_ERROR
       bodyOf(result) shouldBe "Exception occurred when attempting to store data"
     }
-
   }
-
-
 }

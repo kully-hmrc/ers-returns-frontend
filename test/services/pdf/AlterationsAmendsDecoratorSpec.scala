@@ -16,23 +16,33 @@
 
 package services.pdf
 
+import akka.stream.Materializer
 import models._
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
 import org.scalatest.mock.MockitoSugar
+import org.scalatestplus.play.OneAppPerSuite
+import play.api.Application
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.play.test.UnitSpec
+import utils.ERSFakeApplicationConfig
 
-class AlterationsAmendsDecoratorSpec extends UnitSpec with MockitoSugar {
+class AlterationsAmendsDecoratorSpec extends UnitSpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
 
-  val altAmends = AlterationAmends(altAmendsTerms = Some("1"),
+  override lazy val app: Application = new GuiceApplicationBuilder().configure(config).build()
+  implicit lazy val mat: Materializer = app.materializer
+
+  lazy val altAmends = AlterationAmends(altAmendsTerms = Some("1"),
     altAmendsEligibility = None,
     altAmendsExchange = Some("1"),
     altAmendsVariations = None,
     altAmendsOther = Some("1")
   )
 
-  val map: Map[String, String] = Map(
+  lazy val map: Map[String, String] = Map(
     ("title", Messages("ers_trustee_summary.altamends.section")),
     ("option1", Messages("ers_alt_amends.csop.option_1")),
     ("option3", Messages("ers_alt_amends.csop.option_3")),
@@ -50,7 +60,7 @@ class AlterationsAmendsDecoratorSpec extends UnitSpec with MockitoSugar {
 
       verify(streamer, VerificationModeFactory.times(2)).drawText(org.mockito.Matchers.eq(Messages(""): String), org.mockito.Matchers.eq(4.0F: Float))
       verify(streamer, VerificationModeFactory.times(1)).drawLine()
-     }
+    }
 
     "stream nothing if map is empty" in {
       val decorator = new AlterationsAmendsDecorator(Map[String, String](), 1.0f, 2.0F, 3.0F, 4.0F)
@@ -59,7 +69,7 @@ class AlterationsAmendsDecoratorSpec extends UnitSpec with MockitoSugar {
       decorator.decorate(streamer)
 
       verify(streamer, VerificationModeFactory.times(0)).drawText(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyFloat())
-     }
+    }
 
     "stream csop alterations amends title and given fields" in {
 

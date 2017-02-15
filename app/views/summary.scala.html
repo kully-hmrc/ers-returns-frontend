@@ -1,7 +1,10 @@
 @(reportableEvents: String, fileType: String, filename: String, fileCount: Int = 0, groupScheme: String, schemeOrganiser: SchemeOrganiserDetails, companies: CompanyDetailsList, altAmendsActivity: String, altAmends: AlterationAmends, trustees: TrusteeDetailsList)(implicit request: Request[AnyRef], flash: Flash, context: config.ErsContext)
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
-@import views.html.templates._
+
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 @import utils.PageBuilder._
+@import views.html.templates._
 @import utils.CountryCodes._
 
 @scripts = {<script src='@routes.AssetsController.at("javascripts/ers_scripts.js")'> </script>}
@@ -78,7 +81,7 @@
 		  <td class="summary-declaration-section-text-align">@Html(getPageElement(schemeId, PAGE_GROUP_SUMMARY, "title"))</td>
 		  <td class="summary-declaration-text-align">
 		  @for(company <- companies.companies) {
-		  @company.companyName</br>
+		  @company.companyName<br>
 		  }
 		  </td>
 		  <td class="summary-declaration-text-align"><a href="@routes.GroupSchemeController.groupPlanSummaryPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>
@@ -89,7 +92,7 @@
 		  <td class="summary-declaration-section-text-align">@Html(Messages("ers_trustee_summary.title"))</td>
 		  <td class="summary-declaration-text-align">
 		  @for(trustee <- trustees.trustees) {
-		  @trustee.name</br>
+		  @trustee.name<br>
 		  }
 		  </td>
 		  <td class="summary-declaration-text-align"><a href="@routes.TrusteeController.trusteeSummaryPage()">@Html(Messages("ers_summary_declaration.change_this"))</a></td>

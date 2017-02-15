@@ -16,11 +16,11 @@
 
 package services.pdf
 
-import controllers.Fixtures
 import org.scalatest.mock.MockitoSugar
 import uk.gov.hmrc.play.test.UnitSpec
 import org.mockito.Mockito._
 import org.mockito.internal.verification.VerificationModeFactory
+import utils.Fixtures
 
 class GroupSummaryDecoratorSpec extends UnitSpec with MockitoSugar{
   val decorator = new GroupSummaryDecorator("title", Fixtures.ersSummary.companies, 1.0F, 2.0F, 3.0F, 4.0F)

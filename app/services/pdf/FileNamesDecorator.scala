@@ -16,13 +16,15 @@
 
 package services.pdf
 
-import controllers.ErsConstants
+import play.api.Play.current
 import play.api.i18n.Messages
+import play.api.i18n.Messages.Implicits._
+import play.api.mvc.LegacyI18nSupport
 import utils.PageBuilder
 
 import scala.collection.mutable.ListBuffer
 
-class FileNamesDecorator(reportableEvents: String, filesUploaded: Option[ListBuffer[String]], headingFontSize: Float, answerFontSize: Float, lineSpacer: Float, blockSpacer: Float) extends Decorator {
+class FileNamesDecorator(reportableEvents: String, filesUploaded: Option[ListBuffer[String]], headingFontSize: Float, answerFontSize: Float, lineSpacer: Float, blockSpacer: Float) extends Decorator with LegacyI18nSupport {
 
   def decorate(streamer: ErsContentsStreamer): Unit = {
     if (reportableEvents == PageBuilder.OPTION_NIL_RETURN)
