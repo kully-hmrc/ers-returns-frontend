@@ -71,13 +71,6 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
         showAltActivitySelected()(user, request, hc)
   }
 
-  def getSchemeRef(session: Session): String = {
-    session.get(screenSchemeInfo) match {
-      case Some(ref) => ref
-      case None => throw new Exception("Duff session")
-    }
-  }
-
   def showAltActivitySelected()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeRef = try {
       request.session.get(screenSchemeInfo).get
