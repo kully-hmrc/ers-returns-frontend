@@ -16,6 +16,8 @@
 
 package controllers
 
+import java.time.LocalDateTime
+
 import _root_.models._
 import connectors.ErsConnector
 import play.api.Logger
@@ -78,7 +80,7 @@ trait SummaryDeclarationController extends ERSReturnBaseController with Authenti
       }
       Future(Ok(views.html.summary(reportableEvents, fileType, fileNames, fileCount, groupScheme, schemeOrganiser, getCompDetails(all), altAmendsActivity, getAltAmends(all), getTrustees(all))))
     } recover {
-      case e: Throwable => Logger.error(s"showSummaryDeclarationPage failed to fetch data with exception ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
+      case e: Throwable => Logger.error(s"showSummaryDeclarationPage failed to fetch data with exception ${e.getMessage}, timestamp: ${LocalDateTime.now()}.", e)
         getGlobalErrorPage
     }
   }
