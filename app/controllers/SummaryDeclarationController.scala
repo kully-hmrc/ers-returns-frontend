@@ -74,26 +74,31 @@ trait SummaryDeclarationController extends ERSReturnBaseController with Authenti
         }
       }
 
-      val altAmendsActivity = schemeId match {
-        case PageBuilder.SCHEME_CSOP | PageBuilder.SCHEME_SIP | PageBuilder.SCHEME_SAYE => all.getEntry[AltAmendsActivity](CacheUtil.altAmendsActivity).get.altActivity
+      val altAmendsActivity = all.getEntry[AltAmendsActivity](CacheUtil.altAmendsActivity).getOrElse(AltAmendsActivity(""))
+      val altActivity = schemeId match {
+        case PageBuilder.SCHEME_CSOP | PageBuilder.SCHEME_SIP | PageBuilder.SCHEME_SAYE => altAmendsActivity.altActivity
         case _ => ""
       }
-      Future(Ok(views.html.summary(reportableEvents, fileType, fileNames, fileCount, groupScheme, schemeOrganiser, getCompDetails(all), altAmendsActivity, getAltAmends(all), getTrustees(all))))
+      Future(Ok(views.html.summary(reportableEvents, fileType, fileNames, fileCount, groupScheme, schemeOrganiser,
+        getCompDetails(all), altActivity, getAltAmends(all), getTrustees(all))))
     } recover {
-      case e: Throwable => Logger.error(s"showSummaryDeclarationPage failed to fetch data with exception ${e.getMessage}, timestamp: ${LocalDateTime.now()}.", e)
+      case e: Throwable => Logger.error(s"showSummaryDeclarationPage failed to fetch data with exception ${e.getMessage}.", e)
         getGlobalErrorPage
     }
   }
 
-  def getTrustees(cacheMap: CacheMap) =
+  def getTrustees(cacheMap: CacheMap): TrusteeDetailsList =
     cacheMap.getEntry[TrusteeDetailsList](CacheUtil.TRUSTEES_CACHE).getOrElse(TrusteeDetailsList(List[TrusteeDetails]()))
 
-  def getAltAmends(cacheMap: CacheMap) =
+  def getAltAmends(cacheMap: CacheMap): AlterationAmends =
     cacheMap.getEntry[AlterationAmends](CacheUtil.ALT_AMENDS_CACHE_CONTROLLER).getOrElse(new AlterationAmends(None, None, None, None, None))
 
-  def getCompDetails(cacheMap: CacheMap) =
+  def getCompDetails(cacheMap: CacheMap): CompanyDetailsList =
     cacheMap.getEntry[CompanyDetailsList](CacheUtil.GROUP_SCHEME_COMPANIES).getOrElse(CompanyDetailsList(List[CompanyDetails]()))
 
-  def getGlobalErrorPage = Ok(views.html.global_error(Messages("ers.global_errors.title"), Messages("ers.global_errors.heading"), Messages("ers.global_errors.message")))
+  def getGlobalErrorPage = Ok(views.html.global_error(
+    Messages("ers.global_errors.title"),
+    Messages("ers.global_errors.heading"),
+    Messages("ers.global_errors.message")))
 
 }
