@@ -74,7 +74,7 @@ trait PdfGenerationController extends ERSReturnBaseController with Authenticator
             .withHeaders(CONTENT_DISPOSITION -> s"inline; filename=$bundle-confirmation.pdf")
         } recover {
           case e: Throwable =>
-            Logger.error(s"Problem fetching file list from cache ${e.getMessage}, timestamp: ${System.currentTimeMillis()}.")
+            Logger.error(s"Problem fetching file list from cache ${e.getMessage}.", e)
             getGlobalErrorPage
         }
       }.recover {
