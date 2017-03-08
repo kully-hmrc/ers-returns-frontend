@@ -4,8 +4,7 @@
 @import play.api.Play.current
 @import play.api.i18n.Messages
 @import play.api.i18n.Messages.Implicits._
-@import uk.gov.hmrc.play.config.RunMode._
-
+@import utils.ERSRunMode
 @commonLinkElement = {
 <link rel="stylesheet" href='@routes.AssetsController.at("stylesheets/ers_styles.css")' media="screen" type="text/css" />
 <!--[if IE 7]><link href='@routes.AssetsController.at("stylesheets/ers_styles_ie7.css")' media="screen" rel="stylesheet" type="text/css" /><![endif]-->
@@ -14,7 +13,7 @@
 }
 
 @commonScriptElement = {
-	@Play.configuration.getString(s"govuk-tax.$env.google-analytics.token") match {
+	@Play.configuration.getString(s"govuk-tax.${ERSRunMode.env}.google-analytics.token") match {
         case Some(token) => {
 
 
@@ -23,7 +22,7 @@
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-                ga('create', '@Play.configuration.getString(s"govuk-tax.$env.google-analytics.token")', 'auto');
+                ga('create', '@Play.configuration.getString(s"govuk-tax.${ERSRunMode.env}.google-analytics.token")', 'auto');
                 ga('send', 'pageview', { 'anonymizeIp': true });
             </script>
 
@@ -34,7 +33,7 @@
 				m=s.getElementsByTagName(o)0;a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-				ga('create', '@Play.configuration.getString(s"govuk-tax.$env.google-analytics.token")', 'auto');
+				ga('create', '@Play.configuration.getString(s"govuk-tax.${ERSRunMode.env}.google-analytics.token")', 'auto');
 				ga('send', 'pageview');
 			</script -->
 
