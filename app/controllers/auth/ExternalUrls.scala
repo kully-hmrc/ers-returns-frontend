@@ -26,7 +26,8 @@ object ExternalUrls extends RunMode {
   val loginCallback = Play.configuration.getString(s"$env.microservice.services.auth.login-callback.url").getOrElse(routes.ReturnServiceController.hmacCheck().url)
   val loginPath = s"${Play.configuration.getString(s"$env.microservice.services.auth.login_path").getOrElse("sign-in")}"
   val signIn = s"$companyAuthHost/gg/$loginPath?continue=$loginCallback"
-  val signOut = s"$companyAuthHost/gg/sign-out"
+  val signOutCallback = s"${Play.configuration.getString(s"$env.microservice.services.feedback-survey-frontend.url").getOrElse("")}"
+  val signOut = s"$companyAuthHost/gg/sign-out?continue=$signOutCallback"
   val hmacToken = s"${Play.configuration.getString(s"hmac.hmac_token").getOrElse("")}"
   val hmacOnSwitch = s"${Play.configuration.getString(s"hmac.hmac_switch").getOrElse("true")}"  
 }
