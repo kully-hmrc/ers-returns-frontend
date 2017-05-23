@@ -36,8 +36,5 @@ object ExternalUrls extends RunMode {
   val hmacOnSwitch = s"${Play.configuration.getString(s"hmac.hmac_switch").getOrElse("true")}"
   val portalDomain = s"${Play.configuration.getString(s"portal.domain").getOrElse("")}"
   val fileTransferSwitch = s"${Play.configuration.getString(s"filetransfer.toggle").getOrElse("true")}"
-  
-  val betaFeedbackUrl = s"/contact/beta-feedback"
-  val betaFeedbackUnauthenticatedUrl = s"/contact/beta-feedback-unauthenticated"
- 
+
 }
