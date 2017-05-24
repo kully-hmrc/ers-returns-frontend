@@ -24,8 +24,6 @@ import scala.util.Try
 trait ApplicationConfig {
 
   val assetsPrefix: String
-  val betaFeedbackUrl: String
-  val betaFeedbackUnauthenticatedUrl: String
   val analyticsToken: Option[String]
   val analyticsHost: String
   val uploadCollection: String
@@ -55,8 +53,6 @@ object ApplicationConfig extends ApplicationConfig with ServicesConfig {
   private val contactFormServiceIdentifier = "ERS"
 
   override lazy val assetsPrefix: String = loadConfig(s"$env.assets.url") + loadConfig(s"$env.assets.version")
-  override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier"
-  override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated?service=$contactFormServiceIdentifier"
   override lazy val analyticsToken: Option[String] = configuration.getString(s"govuk-tax.$env.google-analytics.token")
   override lazy val analyticsHost: String = configuration.getString(s"govuk-tax.$env.google-analytics.host").getOrElse("service.gov.uk")
   override lazy val uploadCollection: String = loadConfig(s"$env.settings.upload-collection")
