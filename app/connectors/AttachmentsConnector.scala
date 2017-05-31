@@ -84,12 +84,20 @@ trait AttachmentsConnector {
   def getFileUploadPartial()(implicit request: Request[_], hc: HeaderCarrier): Future[HttpResponse] = {
     val uploadurl = UploadConfig()
     Logger.info("Connecting to attachments SessionId before Get /uploader --> " + hc.sessionId)
+    Logger.warn(s"""Headers carrier: ${hc}""")
+    Logger.warn(s"""Headers sent with request: \\n ${request.headers.toSimpleMap.mkString("<br />")}""")
+    Logger.warn(s"""Session with request: \\n ${request.session.data.mkString("<br />")}""")
+    Logger.warn(s"""Cookies with request: \\n ${request.cookies.mkString("<br />")}""")
     http.GET(uploadurl)(handleResponse(uploadurl),hc)
   }
 
   def getCsvFileUploadPartial()(implicit request: Request[_], hc: HeaderCarrier): Future[HttpResponse] = {
     val uploadurl = UploadCsvConfig()
     Logger.info("Connecting to attachments SessionId before Get /uploader --> " + hc.sessionId)
+    Logger.warn(s"""Headers carrier: ${hc}""")
+    Logger.warn(s"""Headers sent with request: ${request.headers.toSimpleMap.mkString("<br />")}""")
+    Logger.warn(s"""Session with request: ${request.session.data.mkString("<br />")}""")
+    Logger.warn(s"""Cookies with request: ${request.cookies.mkString("<br />")}""")
     http.GET(uploadurl)(handleResponse(uploadurl),hc)
   }
 
