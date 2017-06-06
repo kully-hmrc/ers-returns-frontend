@@ -55,11 +55,13 @@ trait ConfirmationPageController extends ERSReturnBaseController with Authentica
   }
 
   def showConfirmationPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
+    if (request.session.get(screenSchemeInfo).isDefined == false) Logger.error(s"Session doesn't contain scheme info: ${request.session}")
     val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
     val sessionBundelRef: String = request.session.get("bundelRef").getOrElse("")
     val sessionDateTimeSubmitted: String = request.session.get("dateTimeSubmitted").getOrElse("")
     if (sessionBundelRef == "") {
       cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, schemeRef).flatMap { all =>
+        if (all.sapNumber.isDefined == false) Logger.error(s"Did cache util fail for scheme ${schemeRef} all.sapNumber is empty: ${all}")
         ersConnector.connectToEtmpSummarySubmit(all.sapNumber.get, jsonParser.getSubmissionJson(all.schemeInfo.schemeRef, all.schemeInfo.schemeType, all.schemeInfo.taxYear, "EOY-RETURN")).flatMap { bundle =>
           cacheUtil.getAllData(bundle, all).flatMap { alldata =>
             if (alldata.isNilReturn == PageBuilder.OPTION_NIL_RETURN) {
@@ -78,7 +80,10 @@ trait ConfirmationPageController extends ERSReturnBaseController with Authentica
                     }
                   }
                 } recover {
-                  case _ => getGlobalErrorPage
+                  case e: Throwable => {
+                    Logger.error(s"ERS connector call failed: ${e.getMessage}")
+                    getGlobalErrorPage
+                  }
                 }
               }
             }
