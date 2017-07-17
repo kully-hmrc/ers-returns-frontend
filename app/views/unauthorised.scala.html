@@ -1,7 +1,10 @@
 @()(implicit request: Request[AnyRef], context: config.ErsContext)
 
-@ers_main(title = "Unauthorised") {
+@import play.api.Play.current
+@import play.api.i18n.Messages.Implicits._
 
-<h1>You are not authorised to view this page</h1>
+@ers_main(title = Messages("ers.error.title")) {
+
+<h1>@Messages("ers.error.unauthorise")</h1>
 
 }

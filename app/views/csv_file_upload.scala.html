@@ -51,7 +51,7 @@
     </h2>
     <p>
     @for(file <- csvFilesCallback if (file.callbackData.isDefined)) {
-        <span class="uploaded files" data-file-name="@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span> - UPLOADED<br>
+        <span class="uploaded files" data-file-name="@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span> @Messages("ers.uploaded")<br>
     }
     @for(file <- csvFilesCallback if (file.callbackData.isEmpty)) {
         <span id="@file.fileId" class="notUploaded files" data-file-name="@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span><br>

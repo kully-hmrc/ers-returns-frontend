@@ -1,3 +1,6 @@
+#********************************************************************
+# General messages
+#********************************************************************
 
 ers.csop=Company Share Option Plan
 ers.emi=Enterprise Management Incentives
@@ -19,6 +22,13 @@ ers.select_yes_or_no=Please select ''Yes'' or ''No''
 ers.eoy=annual
 ers.nil=nil
 ers.invalidCharacters=Remove invalid characters
+ers.uploaded = - UPLOADED
+ers.error.title = Unauthorised
+
+
+#********************************************************************
+# File upload messages
+#********************************************************************
 
 ers.start.page_title=Submit your annual return – Employment Related Securities – GOV.UK
 ers.reportable_events.page_title=Reportable events – Employment Related Securities – GOV.UK
@@ -32,6 +42,11 @@ ers.if_there_are_no_errors.page_title=If there are no errors – Employment Rela
 ers.title.postfix=– Employment Related Securities – GOV.UK
 
 ers.reference.info = Scheme information you have selected
+
+
+#********************************************************************
+# Group scheme messages
+#********************************************************************
 
 ers.csop.is_group_scheme.page_title=Group schemes
 ers.emi.is_group_scheme.page_title=Qualifying subsidiary companies
@@ -54,6 +69,10 @@ ers.other.group_summary.page_title=Companies
 ers.add_trustee.page_title=Add trustee details – Employment Related Securities – GOV.UK
 ers.trustees.page_title=Trustees – Employment Related Securities – GOV.UK
 
+#********************************************************************
+# Alternate messages
+#********************************************************************
+
 ers.csop.is_alterations.page_title=Alterations or a variation
 ers.saye.is_alterations.page_title=Alterations or a variation
 ers.sip.is_alterations.page_title=Alterations – Employment Related Securities – GOV.UK
@@ -65,9 +84,17 @@ ers.sip.what_alterations.page_title=What alterations – Employment Related Secu
 ers.summary.page_title=Annual return summary – Employment Related Securities – GOV.UK
 ers.confirmation.page_title=Confirmation – Employment Related Securities – GOV.UK
 
+#********************************************************************
+# Not found messages
+#********************************************************************
+
 ers_not_found.title=Page not found - 404
 ers_not_found.heading=This page can’t be found
 ers_not_found.message=Please check that you have entered the correct web address.
+
+#********************************************************************
+# Submit returns
+#********************************************************************
 
 ers_start.page_title=Submit your {0} annual return
 ers_start.csop.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 35.
@@ -148,6 +175,10 @@ ers_scheme_organiser.company_reg_number.hint=It''s usually an 8 digit number or 
 ers_scheme_organiser.corporation_tax_ref=Corporation Tax reference (optional)
 ers_scheme_organiser.corporation_tax_ref.hint=It''s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
 ers_scheme_organiser.continue=Continue
+
+#********************************************************************
+# Error messages
+#********************************************************************
 
 ers_scheme_organiser.err.summary.company_name_required=Enter the company name
 ers_scheme_organiser.err.summary.company_name_size=Reduce the number of characters entered for the company name
@@ -248,6 +279,10 @@ ers_group_file_check.format_errors=File contains formatting errors.
 ers_group_file_check.file_type_error=The attached file is in the wrong format. We are only able to accept .csv files.
 ers_group_file_check.no_file_error=No file selected. Please choose your file.
 
+#********************************************************************
+# Summary messages
+#********************************************************************
+
 ers_group_summary.csop.title=Companies in this group scheme
 ers_group_summary.saye.title=Companies in this group scheme
 ers_group_summary.emi.title=Subsidiary companies in this scheme or arrangement
@@ -271,6 +306,10 @@ ers_group_summary.emi.add_company=Add a subsidiary company
 ers_group_summary.sip.add_company=Add a company
 ers_group_summary.other.add_company=Add a company
 
+#********************************************************************
+# Company details
+#********************************************************************
+
 ers_manual_company_details.csop.title=Add company details
 ers_manual_company_details.csop.question=Where is the company registered?
 ers_manual_company_details.saye.title=Add company details
@@ -281,6 +320,12 @@ ers_manual_company_details.sip.title=Add company details
 ers_manual_company_details.sip.question=Where is your company registered?
 ers_manual_company_details.other.title=Add details for the included company
 ers_manual_company_details.other.question=Where is the company registered?
+
+
+#********************************************************************
+# Address messages
+#********************************************************************
+
 
 ers_manual_company_details.uk=UK
 ers_manual_company_details.overseas=Overseas
@@ -325,6 +370,10 @@ ers_manual_company_details.err.corporation_ref=Enter a valid Corporation Tax ref
 
 ers_manual_company_details.continue=Continue
 
+#********************************************************************
+# Declaration messages
+#********************************************************************
+
 ers_summary_declaration.change_this=Change
 ers_summary_declaration.spreadsheet_name=Spreadsheet name
 ers_summary_declaration.file_name=File name
@@ -341,6 +390,10 @@ ers_summary_declaration.saye.organiser=Scheme organiser
 ers_summary_declaration.emi.organiser=Employer company details
 ers_summary_declaration.sip.organiser=Establishing company details
 ers_summary_declaration.other.organiser=Company details
+
+#********************************************************************
+# Confirmation messages
+#********************************************************************
 
 ers_confirmation.page_title=Confirmation
 ers_confirmation.submitted=Your {0} annual return has been submitted
@@ -365,6 +418,10 @@ ers_signed_out.info=For your security, we signed you out because you didn''t use
 ers_signed_out.link=Sign back in to your HMRC Online services account
 
 
+#********************************************************************
+# Upload messages
+#********************************************************************
+
 file_upload.title=Choose the file you want to upload as part of your annual return
 file_upload.contact_us=Contact us on our feedback page
 
@@ -381,6 +438,7 @@ file_upload_errors.upload_link=choose a different file to upload
 file_upload_errors.go_fix=You need to fix your errors
 file_upload_errors.check_file=Use HM Revenue and Customs'' file check service
 file_upload_errors.info=to get a detailed error report.
+ers.error.unauthorise = You are not authorised to view this page
 
 file_upload_errors.csop.guidance=<a href="https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">Use the Company Share Option Plan guidance documents</a> to help you fix the errors.
 file_upload_errors.saye.guidance=<a href="https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">Use the Save As You Earn guidance documents</a> to help you fix the errors.
@@ -401,6 +459,10 @@ csv_file_upload.file_to_upload_title_still=Files you still need to upload
 csv_file_upload.you_have_uploaded=You have uploaded:
 csv_file_upload.summary_error=Choose a different file to upload
 
+#********************************************************************
+# Type messages
+#********************************************************************
+
 ers_scheme_type.page_title=ERS scheme or arrangement
 ers_scheme_type.question=Which type of ERS scheme or arrangement is this file for?
 ers_scheme_type.csop=Company Share Option Plan (CSOP - Form 35)
@@ -411,6 +473,7 @@ ers_scheme_type.other=Other (Form 42)
 ers_scheme_type.continue=Continue
 ers_scheme_type.back=Back
 ers_scheme_type.select_scheme_type=Select the type of ERS scheme or arrangement
+
 
 ers_check_file_type.title=Which type of file are you using to report events?
 ers_check_file_type.question=What type of file do you want to check?
@@ -462,6 +525,10 @@ ers_check_csv_file.sip.file0.file_name=SIP_Awards_V3.csv
 ers_check_csv_file.sip.file1.description=Shares withdrawn from the plan
 ers_check_csv_file.sip.file1.file_name=SIP_Out_V3.csv
 
+#********************************************************************
+# Other messages
+#********************************************************************
+
 ers_check_csv_file.other.file0.description=Grant of options
 ers_check_csv_file.other.file0.file_name=Other_Grants_V3.csv
 ers_check_csv_file.other.file1.description=Other option events
@@ -480,16 +547,6 @@ ers_check_csv_file.other.file7.description=Artificial enhancement of market valu
 ers_check_csv_file.other.file7.file_name=Other_Enhancement_V3.csv
 ers_check_csv_file.other.file8.description=Securities sold for more than market value post acquisition
 ers_check_csv_file.other.file8.file_name=Other_Sold_V3.csv
-
-
-
-
-
-
-
-
-
-
 
 
 ers_check_file.title=Choose and check your spreadsheet
@@ -555,6 +612,10 @@ ers.bulk.success.sip.info=If there are no errors in {0}, you''ll add the establi
 ers.bulk.success.saye.info=If there are no errors in {0}, you''ll add the scheme organiser''s details next
 
 
+#********************************************************************
+# Validation
+#********************************************************************
+
 validation.summary.heading=There is a problem
 validation.summary.info=Check your information is correct, in the right place and in the right format.
 validation.summary.info2=You need to:
@@ -611,6 +672,10 @@ ers_alt_amends.sip.err.message=Select all of the alterations that apply
 
 ers_alt_amends.continue=Accept and continue
 
+#********************************************************************
+# trustee messages
+#********************************************************************
+
 ers_trustee_details.title=Add trustee details
 ers_trustee_details.question=Where is the trustee based?
 ers_trustee_details.uk=UK
@@ -653,6 +718,10 @@ ers_trustee_summary.address=Address
 ers_trustee_summary.action=Action
 
 ers_trustee_summary.altamends.section=Alterations made to this plan
+
+#********************************************************************
+# Global error messages
+#********************************************************************
 
 ers.global_errors.message=Sorry, there is a technical problem and you cannot use the service at the moment. Please try again later.
 ers.global_errors.heading=Service unavailable
