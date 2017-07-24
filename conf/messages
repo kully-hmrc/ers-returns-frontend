@@ -1,3 +1,6 @@
+#********************************************************************
+# General messages
+#********************************************************************
 
 ers.csop=Company Share Option Plan
 ers.emi=Enterprise Management Incentives
@@ -15,10 +18,16 @@ ers.change_this=Change
 ers.delete=Delete
 ers.yes=Yes
 ers.no=No
-ers.select_yes_or_no=Please select ''Yes'' or ''No''
 ers.eoy=annual
 ers.nil=nil
 ers.invalidCharacters=Remove invalid characters
+ers.uploaded = - UPLOADED
+ers.error.title = Unauthorised
+
+
+#********************************************************************
+# File upload messages
+#********************************************************************
 
 ers.start.page_title=Submit your annual return – Employment Related Securities – GOV.UK
 ers.reportable_events.page_title=Reportable events – Employment Related Securities – GOV.UK
@@ -32,6 +41,11 @@ ers.if_there_are_no_errors.page_title=If there are no errors – Employment Rela
 ers.title.postfix=– Employment Related Securities – GOV.UK
 
 ers.reference.info = Scheme information you have selected
+
+
+#********************************************************************
+# Group scheme messages
+#********************************************************************
 
 ers.csop.is_group_scheme.page_title=Group schemes
 ers.emi.is_group_scheme.page_title=Qualifying subsidiary companies
@@ -54,6 +68,10 @@ ers.other.group_summary.page_title=Companies
 ers.add_trustee.page_title=Add trustee details – Employment Related Securities – GOV.UK
 ers.trustees.page_title=Trustees – Employment Related Securities – GOV.UK
 
+#********************************************************************
+# Alternate messages
+#********************************************************************
+
 ers.csop.is_alterations.page_title=Alterations or a variation
 ers.saye.is_alterations.page_title=Alterations or a variation
 ers.sip.is_alterations.page_title=Alterations – Employment Related Securities – GOV.UK
@@ -65,9 +83,17 @@ ers.sip.what_alterations.page_title=What alterations – Employment Related Secu
 ers.summary.page_title=Annual return summary – Employment Related Securities – GOV.UK
 ers.confirmation.page_title=Confirmation – Employment Related Securities – GOV.UK
 
+#********************************************************************
+# Not found messages
+#********************************************************************
+
 ers_not_found.title=Page not found - 404
 ers_not_found.heading=This page can’t be found
 ers_not_found.message=Please check that you have entered the correct web address.
+
+#********************************************************************
+# Submit returns
+#********************************************************************
 
 ers_start.page_title=Submit your {0} annual return
 ers_start.csop.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 35.
@@ -76,32 +102,32 @@ ers_start.saye.intro_para=Use this service to submit your return at the end of t
 ers_start.sip.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 39.
 ers_start.other.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 42.
 ers_start.sub_title=Before you start
-ers_start.large_files=If you have a .ods file that''s larger than 10MB or a .csv file that''s larger than 100MB
+ers_start.large_files=If you have a .ods file that’s larger than 10MB or a .csv file that’s larger than 100MB
 ers_start.help=The company secretary, or the person acting as the company secretary, must have approved this return and must agree to any declaration you make within this service.
 
 ers_start.you_need=Depending on your circumstances, you may need:
 ers_start.csop.bullet_1=to <a href="https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.csop.bullet_2=the scheme organiser''s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
-ers_start.csop.bullet_3=to know any alterations made to key features of the scheme and know whether there''s been a variation in the share capital
+ers_start.csop.bullet_2=the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
+ers_start.csop.bullet_3=to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
 ers_start.csop.intro_para_2=If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
 
 ers_start.emi.bullet_1=to <a href="https://www.gov.uk/government/publications/enterprise-management-incentives-end-of-year-template">record any events related to the scheme or arrangement in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.emi.bullet_2=the employer company''s name and address, Company Registration Number and Corporation Tax reference (and those of any qualifying subsidiary companies)
+ers_start.emi.bullet_2=the employer company’s name and address, Company Registration Number and Corporation Tax reference (and those of any qualifying subsidiary companies)
 ers_start.emi.intro_para_2=If relevant, qualifying subsidiary company details can be entered manually or uploaded in a .csv file (as appropriate).
 
 ers_start.saye.bullet_1=to <a href="https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.saye.bullet_2=the scheme organiser''s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
-ers_start.saye.bullet_3=to know any alterations made to key features of the scheme and know whether there''s been a variation in the share capital
+ers_start.saye.bullet_2=the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
+ers_start.saye.bullet_3=to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
 ers_start.saye.intro_para_2=If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
 
 ers_start.sip.bullet_1=to <a href="https://www.gov.uk/government/publications/share-incentive-plan-end-of-year-template">record any events related to the plan in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.sip.bullet_2=the establishing company''s name and address, Company Registration Number and Corporation Tax reference (and those of any participating group plan members)
+ers_start.sip.bullet_2=the establishing company’s name and address, Company Registration Number and Corporation Tax reference (and those of any participating group plan members)
 ers_start.sip.bullet_3=the name and address of any trustees
 ers_start.sip.bullet_4=to know any alterations made to key features of the plan
 ers_start.sip.intro_para_2=If relevant, group plan member details can be entered manually or uploaded in a .csv file (as appropriate).
 
 ers_start.other.bullet_1=to <a href="https://www.gov.uk/government/publications/other-employment-related-securities-schemes-and-arrangements-end-of-year-return-template">record any events related to the schemes or arrangements registered under this scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.other.bullet_2=the company''s name and address, Company Registration Number and Corporation Tax reference (and those of any other companies covered by this return)
+ers_start.other.bullet_2=the company’s name and address, Company Registration Number and Corporation Tax reference (and those of any other companies covered by this return)
 ers_start.other.intro_para_2=If relevant, the details of any other companies covered by this return can be entered manually or uploaded in a .csv file (as appropriate).
 
 ers_start.ifrelevant=If relevant:
@@ -112,7 +138,7 @@ ers_start.emi.relevant_bullet_3=qualifying subsidiary company details can be ent
 ers_start.saye.relevant_bullet_3=group scheme member details can be entered manually or uploaded in a .csv file
 ers_start.sip.relevant_bullet_3=group plan member details can be entered manually or uploaded in a .csv file
 ers_start.other.relevant_bullet_3=the details of any other companies covered by this return can be entered manually or uploaded in a .csv file
-ers_start.filesize=You can''t use this service. Email <a href="mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we''ll help you submit your return.
+ers_start.filesize=You can’t use this service. Email <a href="mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we’ll help you submit your return.
 ers_start.start_now_button=Start now
 
 ers_choose.title=Reportable events
@@ -141,13 +167,16 @@ ers_scheme_organiser.addressLine2=Second line of address
 ers_scheme_organiser.addressLine3=Third line of address
 ers_scheme_organiser.addressLine4=Fourth line of address
 ers_scheme_organiser.postcode=Postcode (optional)
-ers_scheme_organiser.postcode_zipcode=Postcode/ZIP code
 ers_scheme_organiser.country=Country (optional)
 ers_scheme_organiser.company_reg_number=Company Registration Number (optional)
-ers_scheme_organiser.company_reg_number.hint=It''s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
+ers_scheme_organiser.company_reg_number.hint=It’s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
 ers_scheme_organiser.corporation_tax_ref=Corporation Tax reference (optional)
-ers_scheme_organiser.corporation_tax_ref.hint=It''s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
+ers_scheme_organiser.corporation_tax_ref.hint=It’s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
 ers_scheme_organiser.continue=Continue
+
+#********************************************************************
+# Error messages
+#********************************************************************
 
 ers_scheme_organiser.err.summary.company_name_required=Enter the company name
 ers_scheme_organiser.err.summary.company_name_size=Reduce the number of characters entered for the company name
@@ -248,6 +277,10 @@ ers_group_file_check.format_errors=File contains formatting errors.
 ers_group_file_check.file_type_error=The attached file is in the wrong format. We are only able to accept .csv files.
 ers_group_file_check.no_file_error=No file selected. Please choose your file.
 
+#********************************************************************
+# Summary messages
+#********************************************************************
+
 ers_group_summary.csop.title=Companies in this group scheme
 ers_group_summary.saye.title=Companies in this group scheme
 ers_group_summary.emi.title=Subsidiary companies in this scheme or arrangement
@@ -259,17 +292,21 @@ ers_group_summary.crn=Company Registration Number
 ers_group_summary.ctr=Corporation Tax reference
 ers_group_summary.action=Action
 ers_group_summary.notice=Notice a mistake?
-ers_group_summary.csop.notice_info=If there''s a mistake in any of the company details shown, you''ll need to correct them in the .csv file and
-ers_group_summary.saye.notice_info=If there''s a mistake in any of the company details shown, you''ll need to correct them in the .csv file and
-ers_group_summary.emi.notice_info=If there''s a mistake in any of the subsidiary company details shown, you''ll need to correct them in the .csv file and
-ers_group_summary.sip.notice_info=If there''s a mistake in any of the group plan details shown, you''ll need to correct them in the .csv file and
-ers_group_summary.other.notice_info=If there''s a mistake in any of the covered company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.csop.notice_info=If there’s a mistake in any of the company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.saye.notice_info=If there’s a mistake in any of the company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.emi.notice_info=If there’s a mistake in any of the subsidiary company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.sip.notice_info=If there’s a mistake in any of the group plan details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.other.notice_info=If there’s a mistake in any of the covered company details shown, you’ll need to correct them in the .csv file and
 ers_group_summary.notice_info2=upload the file again
 ers_group_summary.csop.add_company=Add a company
 ers_group_summary.saye.add_company=Add a company
 ers_group_summary.emi.add_company=Add a subsidiary company
 ers_group_summary.sip.add_company=Add a company
 ers_group_summary.other.add_company=Add a company
+
+#********************************************************************
+# Company details
+#********************************************************************
 
 ers_manual_company_details.csop.title=Add company details
 ers_manual_company_details.csop.question=Where is the company registered?
@@ -281,6 +318,12 @@ ers_manual_company_details.sip.title=Add company details
 ers_manual_company_details.sip.question=Where is your company registered?
 ers_manual_company_details.other.title=Add details for the included company
 ers_manual_company_details.other.question=Where is the company registered?
+
+
+#********************************************************************
+# Address messages
+#********************************************************************
+
 
 ers_manual_company_details.uk=UK
 ers_manual_company_details.overseas=Overseas
@@ -294,9 +337,9 @@ ers_manual_company_details.postcode=Postcode (optional)
 ers_manual_company_details.postcode_zipcode=Postcode/ZIP code
 ers_manual_company_details.country=Country (optional)
 ers_manual_company_details.company_reg_number=Company Registration Number (optional)
-ers_manual_company_details.company_reg_number.hint=It''s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
+ers_manual_company_details.company_reg_number.hint=It’s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
 ers_manual_company_details.corporation_tax_ref=Corporation Tax reference (optional)
-ers_manual_company_details.corporation_tax_ref.hint=It''s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
+ers_manual_company_details.corporation_tax_ref.hint=It’s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
 
 ers_manual_company_details.err.summary.company_name_required=Enter the company name
 ers_manual_company_details.err.summary.company_name_size=Reduce the number of characters entered for the company name
@@ -325,6 +368,10 @@ ers_manual_company_details.err.corporation_ref=Enter a valid Corporation Tax ref
 
 ers_manual_company_details.continue=Continue
 
+#********************************************************************
+# Declaration messages
+#********************************************************************
+
 ers_summary_declaration.change_this=Change
 ers_summary_declaration.spreadsheet_name=Spreadsheet name
 ers_summary_declaration.file_name=File name
@@ -333,7 +380,7 @@ ers_summary_declaration.file_names=File names
 ers_summary_declaration.section=Section
 ers_summary_declaration.your_answers=Your answers
 ers_summary_declaration.title=Your annual return is nearly complete
-ers_summary_declaration.info=Check the information you''ve provided before you submit your return.
+ers_summary_declaration.info=Check the information you’ve provided before you submit your return.
 ers_summary_declaration.button=Accept and submit
 ers_summary_declaration.alert=The company secretary, or the person acting as the company secretary, agrees that the information submitted is correct and complete.
 ers_summary_declaration.csop.organiser=Scheme organiser details
@@ -341,6 +388,10 @@ ers_summary_declaration.saye.organiser=Scheme organiser
 ers_summary_declaration.emi.organiser=Employer company details
 ers_summary_declaration.sip.organiser=Establishing company details
 ers_summary_declaration.other.organiser=Company details
+
+#********************************************************************
+# Confirmation messages
+#********************************************************************
 
 ers_confirmation.page_title=Confirmation
 ers_confirmation.submitted=Your {0} annual return has been submitted
@@ -361,9 +412,13 @@ ers_confirmation.feedback=What did you think of this service?
 ers_confirmation.feedback_time=(takes 30 seconds)
 
 
-ers_signed_out.info=For your security, we signed you out because you didn''t use the service for 15 minutes or more.
+ers_signed_out.info=For your security, we signed you out because you didn’t use the service for 15 minutes or more.
 ers_signed_out.link=Sign back in to your HMRC Online services account
 
+
+#********************************************************************
+# Upload messages
+#********************************************************************
 
 file_upload.title=Choose the file you want to upload as part of your annual return
 file_upload.contact_us=Contact us on our feedback page
@@ -381,6 +436,7 @@ file_upload_errors.upload_link=choose a different file to upload
 file_upload_errors.go_fix=You need to fix your errors
 file_upload_errors.check_file=Use HM Revenue and Customs'' file check service
 file_upload_errors.info=to get a detailed error report.
+ers.error.unauthorise = You are not authorised to view this page
 
 file_upload_errors.csop.guidance=<a href="https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">Use the Company Share Option Plan guidance documents</a> to help you fix the errors.
 file_upload_errors.saye.guidance=<a href="https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">Use the Save As You Earn guidance documents</a> to help you fix the errors.
@@ -401,6 +457,10 @@ csv_file_upload.file_to_upload_title_still=Files you still need to upload
 csv_file_upload.you_have_uploaded=You have uploaded:
 csv_file_upload.summary_error=Choose a different file to upload
 
+#********************************************************************
+# Type messages
+#********************************************************************
+
 ers_scheme_type.page_title=ERS scheme or arrangement
 ers_scheme_type.question=Which type of ERS scheme or arrangement is this file for?
 ers_scheme_type.csop=Company Share Option Plan (CSOP - Form 35)
@@ -411,6 +471,7 @@ ers_scheme_type.other=Other (Form 42)
 ers_scheme_type.continue=Continue
 ers_scheme_type.back=Back
 ers_scheme_type.select_scheme_type=Select the type of ERS scheme or arrangement
+
 
 ers_check_file_type.title=Which type of file are you using to report events?
 ers_check_file_type.question=What type of file do you want to check?
@@ -462,6 +523,10 @@ ers_check_csv_file.sip.file0.file_name=SIP_Awards_V3.csv
 ers_check_csv_file.sip.file1.description=Shares withdrawn from the plan
 ers_check_csv_file.sip.file1.file_name=SIP_Out_V3.csv
 
+#********************************************************************
+# Other messages
+#********************************************************************
+
 ers_check_csv_file.other.file0.description=Grant of options
 ers_check_csv_file.other.file0.file_name=Other_Grants_V3.csv
 ers_check_csv_file.other.file1.description=Other option events
@@ -482,20 +547,10 @@ ers_check_csv_file.other.file8.description=Securities sold for more than market 
 ers_check_csv_file.other.file8.file_name=Other_Sold_V3.csv
 
 
-
-
-
-
-
-
-
-
-
-
 ers_check_file.title=Choose and check your spreadsheet
 ers_check_file.instruction=Choose the OpenDocument Spreadsheet (ODS, .ods file) that you want to check for formatting errors.
 ers_check_file.formatting_errors_link=What are formatting errors?
-ers_check_file.formatting_errors_help=Formatting errors are created when information isn''t entered correctly or structural changes are made to a spreadsheet. For example, a number has been entered where a letter was needed or a column has been removed.
+ers_check_file.formatting_errors_help=Formatting errors are created when information isn’t entered correctly or structural changes are made to a spreadsheet. For example, a number has been entered where a letter was needed or a column has been removed.
 ers_check_file.file_header_bar=File name
 ers_check_file.choose_file_button=Choose your file
 ers_check_file.file_name=No file selected.
@@ -548,12 +603,16 @@ ers_pdf_error_report.saye=Save As You Earn
 ers_pdf_error_report.sip=Share Incentive Plan
 ers_pdf_error_report.other=Other
 ers.bulk.success.title=File check
-ers.bulk.success.csop.info=If there are no errors in {0}, you''ll add the scheme organiser''s details next
-ers.bulk.success.emi.info=If there are no errors in {0}, you''ll add the employer company''s details next
-ers.bulk.success.other.info=If there are no errors in {0}, you''ll add the company''s details next
-ers.bulk.success.sip.info=If there are no errors in {0}, you''ll add the establishing company''s details next
-ers.bulk.success.saye.info=If there are no errors in {0}, you''ll add the scheme organiser''s details next
+ers.bulk.success.csop.info=If there are no errors in {0}, you’ll add the scheme organiser’s details next
+ers.bulk.success.emi.info=If there are no errors in {0}, you’ll add the employer company’s details next
+ers.bulk.success.other.info=If there are no errors in {0}, you’ll add the company’s details next
+ers.bulk.success.sip.info=If there are no errors in {0}, you’ll add the establishing company’s details next
+ers.bulk.success.saye.info=If there are no errors in {0}, you’ll add the scheme organiser’s details next
 
+
+#********************************************************************
+# Validation
+#********************************************************************
 
 validation.summary.heading=There is a problem
 validation.summary.info=Check your information is correct, in the right place and in the right format.
@@ -563,12 +622,12 @@ validation.summary.info2=You need to:
 ers_alt_activity.csop.title=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
 ers_alt_activity.csop.err.message=Confirm if alterations have been made or there’s been a variation in the share capital
 ers_alt_activity.csop.question=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
-ers_alt_activity.csop.intro_para=A ''key feature'' is anything that''s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
+ers_alt_activity.csop.intro_para=A ’key feature’ is anything that’s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
 
 ers_alt_activity.saye.title=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
 ers_alt_activity.saye.err.message=Confirm if alterations have been made or there’s been a variation in the share capital
 ers_alt_activity.saye.question=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
-ers_alt_activity.saye.intro_para=A ''key feature'' is anything that''s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
+ers_alt_activity.saye.intro_para=A ’key feature’ is anything that’s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
 
 ers_alt_amends.csop.title=Select scheme alterations and variations
 ers_alt_amends.csop.question=What alterations or variations have been made?
@@ -578,7 +637,7 @@ ers_alt_amends.csop.option_2=Alterations to the eligibility of individuals to jo
 ers_alt_amends.csop.option_3=Alterations arising from an exchange of share options on a company reorganisation
 ers_alt_amends.csop.option_4=A variation in the share capital of which the shares form a part
 ers_alt_amends.csop.option_5=Other
-ers_alt_amends.csop.alert=The company secretary, or the person acting as the company secretary, declares that the alteration or the variation in any share capital hasn''t caused the requirements of parts 2 to 6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Company Share Option Plan.
+ers_alt_amends.csop.alert=The company secretary, or the person acting as the company secretary, declares that the alteration or the variation in any share capital hasn’t caused the requirements of parts 2 to 6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Company Share Option Plan.
 ers_alt_amends.csop.err.message=Select all of the alterations or variations that apply
 
 ers_alt_amends.saye.title=Select scheme alterations and variations
@@ -589,14 +648,14 @@ ers_alt_amends.saye.option_2=Alterations to the eligibility of individuals to jo
 ers_alt_amends.saye.option_3=Alterations arising from an exchange of share options on a company reorganisation
 ers_alt_amends.saye.option_4=A variation in the share capital of which the shares form a part
 ers_alt_amends.saye.option_5=Other
-ers_alt_amends.saye.alert=The company secretary, or the person acting as company secretary, declares that the alteration or the variation in any share capital hasn''t caused the requirements of parts 2-6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Save As You Earn scheme.
+ers_alt_amends.saye.alert=The company secretary, or the person acting as company secretary, declares that the alteration or the variation in any share capital hasn’t caused the requirements of parts 2-6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Save As You Earn scheme.
 ers_alt_amends.saye.err.message=Select all of the alterations or variations that apply
 
 
 ers_alt_activity.sip.title=Plan alterations
 ers_alt_activity.sip.err.message=Confirm if alterations have been made
 ers_alt_activity.sip.question=Have alterations been made to key features of this plan?
-ers_alt_activity.sip.intro_para=A ''key feature'' is anything that''s needed for the plan to meet its legal requirements (for example, the eligibility of an individual to take part in the plan).
+ers_alt_activity.sip.intro_para=A ’key feature’ is anything that’s needed for the plan to meet its legal requirements (for example, the eligibility of an individual to take part in the plan).
 
 ers_alt_amends.sip.title=Select scheme alterations
 ers_alt_amends.sip.question=What alterations have been made?
@@ -606,10 +665,14 @@ ers_alt_amends.sip.option_2=Alterations to the eligibility of individuals to joi
 ers_alt_amends.sip.option_3=Alterations to existing share awards as the result of a company reconstruction
 ers_alt_amends.sip.option_4=A change of trustee
 ers_alt_amends.sip.option_5=Other
-ers_alt_amends.sip.alert=The company secretary, or the person acting as company secretary, declares that the alteration hasn''t caused the requirements of parts 2-6 of Schedule 2 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Share Incentive Plan.
+ers_alt_amends.sip.alert=The company secretary, or the person acting as company secretary, declares that the alteration hasn’t caused the requirements of parts 2-6 of Schedule 2 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Share Incentive Plan.
 ers_alt_amends.sip.err.message=Select all of the alterations that apply
 
 ers_alt_amends.continue=Accept and continue
+
+#********************************************************************
+# trustee messages
+#********************************************************************
 
 ers_trustee_details.title=Add trustee details
 ers_trustee_details.question=Where is the trustee based?
@@ -625,8 +688,8 @@ ers_trustee_details.postcode=Postcode (optional)
 ers_trustee_details.postcode_zipcode=Postcode/ZIP code
 ers_trustee_details.country=Country (optional)
 
-ers_trustee_details.err.summary.name_required=Enter the trustee''s name
-ers_trustee_details.err.summary.name_size=Reduce the number of characters entered for the trustee''s name
+ers_trustee_details.err.summary.name_required=Enter the trustee’s name
+ers_trustee_details.err.summary.name_size=Reduce the number of characters entered for the trustee’s name
 ers_trustee_details.err.summary.address_line1_required=Enter the first line of the address
 ers_trustee_details.err.summary.address_line1_size=Reduce the number of characters in this address line
 ers_trustee_details.err.summary.address_line2_size=Reduce the number of characters in this address line
@@ -634,8 +697,8 @@ ers_trustee_details.err.summary.address_line3_size=Reduce the number of characte
 ers_trustee_details.err.summary.address_line4_size=Reduce the number of characters in this address line
 ers_trustee_details.err.summary.postcode_size=Reduce the number of characters entered for the postcode
 
-ers_trustee_details.err.name=Check the trustee''s name (it must be less than 121 characters)
-ers_trustee_details.err.invalidChars.name=Check the trustee''s name (it contains invalid characters)
+ers_trustee_details.err.name=Check the trustee’s name (it must be less than 121 characters)
+ers_trustee_details.err.invalidChars.name=Check the trustee’s name (it contains invalid characters)
 ers_trustee_details.err.address_line1=Check the first line of the address (it must be less than 28 characters)
 ers_trustee_details.err.invalidChars.address_line1=Check the first line of the address (it contains invalid characters)
 ers_trustee_details.err.address_line2=Check the second line of the address (it must be less than 28 characters)
@@ -653,6 +716,10 @@ ers_trustee_summary.address=Address
 ers_trustee_summary.action=Action
 
 ers_trustee_summary.altamends.section=Alterations made to this plan
+
+#********************************************************************
+# Global error messages
+#********************************************************************
 
 ers.global_errors.message=Sorry, there is a technical problem and you cannot use the service at the moment. Please try again later.
 ers.global_errors.heading=Service unavailable
