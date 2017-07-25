@@ -42,7 +42,6 @@ ers.title.postfix = – Employment Related Securities – GOV.UK
 
 ers.reference.info = Scheme information you have selected
 
-
 #********************************************************************
 # Group scheme messages
 #********************************************************************
@@ -89,7 +88,7 @@ ers.confirmation.page_title = Confirmation – Employment Related Securities –
 
 ers_not_found.title = Page not found - 404
 ers_not_found.heading = This page can’t be found
-ers_not_found.message = Please check that you have entered the correct web address.
+ers_not_found.message = Please check that you’ve have entered the correct web address.
 
 #********************************************************************
 # Submit returns
@@ -274,7 +273,7 @@ ers_group_file_check.remove_file_link = Remove file
 ers_group_file_check.check_file_button = Upload file
 ers_group_file_check.file_name = No file selected.
 ers_group_file_check.format_errors = File contains formatting errors.
-ers_group_file_check.file_type_error = The attached file is in the wrong format. We are only able to accept .csv files.
+ers_group_file_check.file_type_error = The attached file is in the wrong format. We’re only able to accept .csv files.
 ers_group_file_check.no_file_error = No file selected. Please choose your file.
 
 #********************************************************************
@@ -318,7 +317,6 @@ ers_manual_company_details.sip.title = Add company details
 ers_manual_company_details.sip.question = Where is your company registered?
 ers_manual_company_details.other.title = Add details for the included company
 ers_manual_company_details.other.question = Where is the company registered?
-
 
 #********************************************************************
 # Address messages
@@ -411,10 +409,8 @@ ers_confirmation.other.finished = http://www.gov.uk/done/other-employment-relate
 ers_confirmation.feedback = What did you think of this service?
 ers_confirmation.feedback_time = (takes 30 seconds)
 
-
 ers_signed_out.info = For your security, we signed you out because you didn’t use the service for 15 minutes or more.
 ers_signed_out.link = Sign back in to your HMRC Online services account
-
 
 #********************************************************************
 # Upload messages
@@ -436,7 +432,7 @@ file_upload_errors.upload_link = choose a different file to upload
 file_upload_errors.go_fix = You need to fix your errors
 file_upload_errors.check_file = Use HM Revenue and Customs'' file check service
 file_upload_errors.info = to get a detailed error report.
-ers.error.unauthorise = You are not authorised to view this page
+ers.error.unauthorise = You’re not authorised to view this page
 
 file_upload_errors.csop.guidance = <a href = "https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">Use the Company Share Option Plan guidance documents</a> to help you fix the errors.
 file_upload_errors.saye.guidance = <a href = "https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">Use the Save As You Earn guidance documents</a> to help you fix the errors.
@@ -546,7 +542,6 @@ ers_check_csv_file.other.file7.file_name = Other_Enhancement_V3.csv
 ers_check_csv_file.other.file8.description = Securities sold for more than market value post acquisition
 ers_check_csv_file.other.file8.file_name = Other_Sold_V3.csv
 
-
 ers_check_file.title = Choose and check your spreadsheet
 ers_check_file.instruction = Choose the OpenDocument Spreadsheet (ODS, .ods file) that you want to check for formatting errors.
 ers_check_file.formatting_errors_link = What are formatting errors?
@@ -557,7 +552,7 @@ ers_check_file.file_name = No file selected.
 ers_check_file.remove_file_link = Remove file
 ers_check_file.check_file_button = Upload File
 ers_check_file.back = Back
-ers_check_file.file_type_error = The attached file is in the wrong format. We are only able to accept ODS files.
+ers_check_file.file_type_error = The attached file is in the wrong format. We’re only able to accept ODS files.
 ers_check_file.no_file_error = No file selected. Please choose your file.
 
 ers_error_report.page_title = Error report
@@ -570,7 +565,6 @@ ers_error_report.view_as_html2 = view this error report as a web page
 ers_error_report.instructions1 = Correct the formatting errors in your spreadsheet before you check it again or '
 ers_error_report.instructions2 = check a different ERS scheme or arrangement spreadsheet
 
-
 ers_file_format_successful.page_title = Check complete
 ers_file_format_successful.sub_heading = What happens next?
 ers_file_format_successful.instructions = Check your spreadsheets whenever you update them. Regular checks allow you to identify and then correct formatting errors.
@@ -581,7 +575,7 @@ ers_service_unavailable.page_title = Check your ERS files
 ers_service_unavailable.para1 = The Checking Service is currently unavailable, please try again later
 
 ers_not_authorised.page_title = Check your ERS files
-ers_not_authorised.para1 = You are not authorised to access ERS checking service
+ers_not_authorised.para1 = You’re not authorised to access ERS checking service
 
 ers_html_error_report.styles = <div></div>
 ers_html_error_report.styles2 = <style>article table td, article table th '{'background:none; padding:10px 20px 10px 0'}' article table td, article table th '{'border:none;'}' article table td, article table th '{'border-bottom: 1px solid #BFC1C3;'}' .column, .row '{'width:10%'}' .report-title '{'text-align:right; margin-top:0; margin-bottom:0;'}'</style>
@@ -609,15 +603,13 @@ ers.bulk.success.other.info = If there are no errors in {0}, you’ll add the co
 ers.bulk.success.sip.info = If there are no errors in {0}, you’ll add the establishing company’s details next
 ers.bulk.success.saye.info = If there are no errors in {0}, you’ll add the scheme organiser’s details next
 
-
 #********************************************************************
 # Validation
 #********************************************************************
 
-validation.summary.heading = There is a problem
+validation.summary.heading = There’s a problem
 validation.summary.info = Check your information is correct, in the right place and in the right format.
 validation.summary.info2 = You need to:
-
 
 ers_alt_activity.csop.title = Have alterations been made to key features of this scheme or has there been a variation in the share capital?
 ers_alt_activity.csop.err.message = Confirm if alterations have been made or there’s been a variation in the share capital
@@ -721,6 +713,6 @@ ers_trustee_summary.altamends.section = Alterations made to this plan
 # Global error messages
 #********************************************************************
 
-ers.global_errors.message = Sorry, there is a technical problem and you cannot use the service at the moment. Please try again later.
+ers.global_errors.message = Sorry, there’s a technical problem and you can’t use the service at the moment. Please try again later.
 ers.global_errors.heading = Service unavailable
 ers.global_errors.title = Service unavailable

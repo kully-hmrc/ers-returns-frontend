@@ -51,7 +51,7 @@ class ApplicationControllerSpec extends PlaySpec with OneServerPerSuite with ERS
 
     "have some text on the page" in {
       val result = ApplicationController.unauthorised.apply(FakeRequest())
-      contentAsString(result) must include("You are not authorised to view this page")
+      contentAsString(result) must include("You’re not authorised to view this page")
     }
   }
 }
