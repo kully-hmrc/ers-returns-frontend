@@ -2,25 +2,25 @@
 # General messages
 #********************************************************************
 
-ers.csop=Company Share Option Plan
-ers.emi=Enterprise Management Incentives
-ers.saye=Save As You Earn
-ers.sip=Share Incentive Plan
-ers.other=Other
-ers.header=Submit your ERS annual return
-ers.app_title=Submit your ERS annual return
-ers.finish=Finished
-ers.signout=Sign out
-ers.continue=Continue
-ers.back=Back
-ers.finish=Finished
-ers.change_this=Change
-ers.delete=Delete
-ers.yes=Yes
-ers.no=No
-ers.eoy=annual
-ers.nil=nil
-ers.invalidCharacters=Remove invalid characters
+ers.csop = Company Share Option Plan
+ers.emi = Enterprise Management Incentives
+ers.saye = Save As You Earn
+ers.sip = Share Incentive Plan
+ers.other = Other
+ers.header = Submit your ERS annual return
+ers.app_title = Submit your ERS annual return
+ers.finish = Finished
+ers.signout = Sign out
+ers.continue = Continue
+ers.back = Back
+ers.finish = Finished
+ers.change_this = Change
+ers.delete = Delete
+ers.yes = Yes
+ers.no = No
+ers.eoy = annual
+ers.nil = nil
+ers.invalidCharacters = Remove invalid characters
 ers.uploaded = - UPLOADED
 ers.error.title = Unauthorised
 
@@ -29,16 +29,16 @@ ers.error.title = Unauthorised
 # File upload messages
 #********************************************************************
 
-ers.start.page_title=Submit your annual return – Employment Related Securities – GOV.UK
-ers.reportable_events.page_title=Reportable events – Employment Related Securities – GOV.UK
-ers.choose_file_type.page_title=Choose file type – Employment Related Securities – GOV.UK
-ers.choose_csv_files.page_title=Choose the .csv files – Employment Related Securities – GOV.UK
-ers.upload_csv_file.page_title=Upload your file – Employment Related Securities – GOV.UK
-ers.upload_first_csv_file.page_title=Upload your first file – Employment Related Securities – GOV.UK
-ers.upload_next_csv_file.page_title=Upload your next file – Employment Related Securities – GOV.UK
-ers.upload_ods_file.page_title=Upload the .ods file – Employment Related Securities – GOV.UK
-ers.if_there_are_no_errors.page_title=If there are no errors – Employment Related Securities – GOV.UK
-ers.title.postfix=– Employment Related Securities – GOV.UK
+ers.start.page_title = Submit your annual return – Employment Related Securities – GOV.UK
+ers.reportable_events.page_title = Reportable events – Employment Related Securities – GOV.UK
+ers.choose_file_type.page_title = Choose file type – Employment Related Securities – GOV.UK
+ers.choose_csv_files.page_title = Choose the .csv files – Employment Related Securities – GOV.UK
+ers.upload_csv_file.page_title = Upload your file – Employment Related Securities – GOV.UK
+ers.upload_first_csv_file.page_title = Upload your first file – Employment Related Securities – GOV.UK
+ers.upload_next_csv_file.page_title = Upload your next file – Employment Related Securities – GOV.UK
+ers.upload_ods_file.page_title = Upload the .ods file – Employment Related Securities – GOV.UK
+ers.if_there_are_no_errors.page_title = If there are no errors – Employment Related Securities – GOV.UK
+ers.title.postfix = – Employment Related Securities – GOV.UK
 
 ers.reference.info = Scheme information you have selected
 
@@ -47,277 +47,277 @@ ers.reference.info = Scheme information you have selected
 # Group scheme messages
 #********************************************************************
 
-ers.csop.is_group_scheme.page_title=Group schemes
-ers.emi.is_group_scheme.page_title=Qualifying subsidiary companies
-ers.saye.is_group_scheme.page_title=Group schemes
-ers.sip.is_group_scheme.page_title=Group plans
-ers.other.is_group_scheme.page_title=Other companies
+ers.csop.is_group_scheme.page_title = Group schemes
+ers.emi.is_group_scheme.page_title = Qualifying subsidiary companies
+ers.saye.is_group_scheme.page_title = Group schemes
+ers.sip.is_group_scheme.page_title = Group plans
+ers.other.is_group_scheme.page_title = Other companies
 
-ers.csop.group_add.page_title=Add company details
-ers.emi.group_add.page_title=Add subsidiary company details
-ers.saye.group_add.page_title=Add company details
-ers.sip.group_add.page_title=Add company details
-ers.other.group_add.page_title=Add included company details
+ers.csop.group_add.page_title = Add company details
+ers.emi.group_add.page_title = Add subsidiary company details
+ers.saye.group_add.page_title = Add company details
+ers.sip.group_add.page_title = Add company details
+ers.other.group_add.page_title = Add included company details
 
-ers.csop.group_summary.page_title=Companies
-ers.emi.group_summary.page_title=Subsidiary companies
-ers.saye.group_summary.page_title=Companies
-ers.sip.group_summary.page_title=Companies
-ers.other.group_summary.page_title=Companies
+ers.csop.group_summary.page_title = Companies
+ers.emi.group_summary.page_title = Subsidiary companies
+ers.saye.group_summary.page_title = Companies
+ers.sip.group_summary.page_title = Companies
+ers.other.group_summary.page_title = Companies
 
-ers.add_trustee.page_title=Add trustee details – Employment Related Securities – GOV.UK
-ers.trustees.page_title=Trustees – Employment Related Securities – GOV.UK
+ers.add_trustee.page_title = Add trustee details – Employment Related Securities – GOV.UK
+ers.trustees.page_title = Trustees – Employment Related Securities – GOV.UK
 
 #********************************************************************
 # Alternate messages
 #********************************************************************
 
-ers.csop.is_alterations.page_title=Alterations or a variation
-ers.saye.is_alterations.page_title=Alterations or a variation
-ers.sip.is_alterations.page_title=Alterations – Employment Related Securities – GOV.UK
+ers.csop.is_alterations.page_title = Alterations or a variation
+ers.saye.is_alterations.page_title = Alterations or a variation
+ers.sip.is_alterations.page_title = Alterations – Employment Related Securities – GOV.UK
 
-ers.csop.what_alterations.page_title=What alterations or variations – Employment Related Securities – GOV.UK
-ers.saye.what_alterations.page_title=What alterations or variations – Employment Related Securities – GOV.UK
-ers.sip.what_alterations.page_title=What alterations – Employment Related Securities – GOV.UK
+ers.csop.what_alterations.page_title = What alterations or variations – Employment Related Securities – GOV.UK
+ers.saye.what_alterations.page_title = What alterations or variations – Employment Related Securities – GOV.UK
+ers.sip.what_alterations.page_title = What alterations – Employment Related Securities – GOV.UK
 
-ers.summary.page_title=Annual return summary – Employment Related Securities – GOV.UK
-ers.confirmation.page_title=Confirmation – Employment Related Securities – GOV.UK
+ers.summary.page_title = Annual return summary – Employment Related Securities – GOV.UK
+ers.confirmation.page_title = Confirmation – Employment Related Securities – GOV.UK
 
 #********************************************************************
 # Not found messages
 #********************************************************************
 
-ers_not_found.title=Page not found - 404
-ers_not_found.heading=This page can’t be found
-ers_not_found.message=Please check that you have entered the correct web address.
+ers_not_found.title = Page not found - 404
+ers_not_found.heading = This page can’t be found
+ers_not_found.message = Please check that you have entered the correct web address.
 
 #********************************************************************
 # Submit returns
 #********************************************************************
 
-ers_start.page_title=Submit your {0} annual return
-ers_start.csop.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 35.
-ers_start.emi.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form EMI40.
-ers_start.saye.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 34.
-ers_start.sip.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 39.
-ers_start.other.intro_para=Use this service to submit your return at the end of the tax year. This service replaces form 42.
-ers_start.sub_title=Before you start
-ers_start.large_files=If you have a .ods file that’s larger than 10MB or a .csv file that’s larger than 100MB
-ers_start.help=The company secretary, or the person acting as the company secretary, must have approved this return and must agree to any declaration you make within this service.
+ers_start.page_title = Submit your {0} annual return
+ers_start.csop.intro_para = Use this service to submit your return at the end of the tax year. This service replaces form 35.
+ers_start.emi.intro_para = Use this service to submit your return at the end of the tax year. This service replaces form EMI40.
+ers_start.saye.intro_para = Use this service to submit your return at the end of the tax year. This service replaces form 34.
+ers_start.sip.intro_para = Use this service to submit your return at the end of the tax year. This service replaces form 39.
+ers_start.other.intro_para = Use this service to submit your return at the end of the tax year. This service replaces form 42.
+ers_start.sub_title = Before you start
+ers_start.large_files = If you have a .ods file that’s larger than 10MB or a .csv file that’s larger than 100MB
+ers_start.help = The company secretary, or the person acting as the company secretary, must have approved this return and must agree to any declaration you make within this service.
 
-ers_start.you_need=Depending on your circumstances, you may need:
-ers_start.csop.bullet_1=to <a href="https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.csop.bullet_2=the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
-ers_start.csop.bullet_3=to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
-ers_start.csop.intro_para_2=If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
+ers_start.you_need = Depending on your circumstances, you may need:
+ers_start.csop.bullet_1 = to <a href = "https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.csop.bullet_2 = the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
+ers_start.csop.bullet_3 = to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
+ers_start.csop.intro_para_2 = If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.emi.bullet_1=to <a href="https://www.gov.uk/government/publications/enterprise-management-incentives-end-of-year-template">record any events related to the scheme or arrangement in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.emi.bullet_2=the employer company’s name and address, Company Registration Number and Corporation Tax reference (and those of any qualifying subsidiary companies)
-ers_start.emi.intro_para_2=If relevant, qualifying subsidiary company details can be entered manually or uploaded in a .csv file (as appropriate).
+ers_start.emi.bullet_1 = to <a href = "https://www.gov.uk/government/publications/enterprise-management-incentives-end-of-year-template">record any events related to the scheme or arrangement in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.emi.bullet_2 = the employer company’s name and address, Company Registration Number and Corporation Tax reference (and those of any qualifying subsidiary companies)
+ers_start.emi.intro_para_2 = If relevant, qualifying subsidiary company details can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.saye.bullet_1=to <a href="https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.saye.bullet_2=the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
-ers_start.saye.bullet_3=to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
-ers_start.saye.intro_para_2=If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
+ers_start.saye.bullet_1 = to <a href = "https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.saye.bullet_2 = the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
+ers_start.saye.bullet_3 = to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
+ers_start.saye.intro_para_2 = If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.sip.bullet_1=to <a href="https://www.gov.uk/government/publications/share-incentive-plan-end-of-year-template">record any events related to the plan in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.sip.bullet_2=the establishing company’s name and address, Company Registration Number and Corporation Tax reference (and those of any participating group plan members)
-ers_start.sip.bullet_3=the name and address of any trustees
-ers_start.sip.bullet_4=to know any alterations made to key features of the plan
-ers_start.sip.intro_para_2=If relevant, group plan member details can be entered manually or uploaded in a .csv file (as appropriate).
+ers_start.sip.bullet_1 = to <a href = "https://www.gov.uk/government/publications/share-incentive-plan-end-of-year-template">record any events related to the plan in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.sip.bullet_2 = the establishing company’s name and address, Company Registration Number and Corporation Tax reference (and those of any participating group plan members)
+ers_start.sip.bullet_3 = the name and address of any trustees
+ers_start.sip.bullet_4 = to know any alterations made to key features of the plan
+ers_start.sip.intro_para_2 = If relevant, group plan member details can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.other.bullet_1=to <a href="https://www.gov.uk/government/publications/other-employment-related-securities-schemes-and-arrangements-end-of-year-return-template">record any events related to the schemes or arrangements registered under this scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
-ers_start.other.bullet_2=the company’s name and address, Company Registration Number and Corporation Tax reference (and those of any other companies covered by this return)
-ers_start.other.intro_para_2=If relevant, the details of any other companies covered by this return can be entered manually or uploaded in a .csv file (as appropriate).
+ers_start.other.bullet_1 = to <a href = "https://www.gov.uk/government/publications/other-employment-related-securities-schemes-and-arrangements-end-of-year-return-template">record any events related to the schemes or arrangements registered under this scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.other.bullet_2 = the company’s name and address, Company Registration Number and Corporation Tax reference (and those of any other companies covered by this return)
+ers_start.other.intro_para_2 = If relevant, the details of any other companies covered by this return can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.ifrelevant=If relevant:
-ers_start.relevant_bullet_1=.ods files used to record events must be no larger than 10MB
-ers_start.relevant_bullet_2=.csv files used to record events must be no larger than 100MB
-ers_start.csop.relevant_bullet_3=group scheme member details can be entered manually or uploaded in a .csv file
-ers_start.emi.relevant_bullet_3=qualifying subsidiary company details can be entered manually or uploaded in a .csv file
-ers_start.saye.relevant_bullet_3=group scheme member details can be entered manually or uploaded in a .csv file
-ers_start.sip.relevant_bullet_3=group plan member details can be entered manually or uploaded in a .csv file
-ers_start.other.relevant_bullet_3=the details of any other companies covered by this return can be entered manually or uploaded in a .csv file
-ers_start.filesize=You can’t use this service. Email <a href="mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we’ll help you submit your return.
-ers_start.start_now_button=Start now
+ers_start.ifrelevant = If relevant:
+ers_start.relevant_bullet_1 = .ods files used to record events must be no larger than 10MB
+ers_start.relevant_bullet_2 = .csv files used to record events must be no larger than 100MB
+ers_start.csop.relevant_bullet_3 = group scheme member details can be entered manually or uploaded in a .csv file
+ers_start.emi.relevant_bullet_3 = qualifying subsidiary company details can be entered manually or uploaded in a .csv file
+ers_start.saye.relevant_bullet_3 = group scheme member details can be entered manually or uploaded in a .csv file
+ers_start.sip.relevant_bullet_3 = group plan member details can be entered manually or uploaded in a .csv file
+ers_start.other.relevant_bullet_3 = the details of any other companies covered by this return can be entered manually or uploaded in a .csv file
+ers_start.filesize = You can’t use this service. Email <a href = "mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we’ll help you submit your return.
+ers_start.start_now_button = Start now
 
-ers_choose.title=Reportable events
-ers_choose.csop.question=Have options been granted, exercised, released (including exchanges), lapsed or cancelled during the tax year?
-ers_choose.saye.question=Have options been granted, exercised, released (including exchanges), lapsed or cancelled during the tax year?
-ers_choose.emi.question=Have options been adjusted, replaced, released, lapsed, cancelled or exercised during the tax year?
-ers_choose.sip.question=Have shares been awarded or have shares ceased to be part of the plan during the tax year?
-ers_choose.other.question=Have there been any events in relation to options or securities (including shares) during the tax year?
-ers_choose.option_1=Yes
-ers_choose.option_2=No (nil return)
-ers_choose.err.message=Confirm if there have been any reportable events
+ers_choose.title = Reportable events
+ers_choose.csop.question = Have options been granted, exercised, released (including exchanges), lapsed or cancelled during the tax year?
+ers_choose.saye.question = Have options been granted, exercised, released (including exchanges), lapsed or cancelled during the tax year?
+ers_choose.emi.question = Have options been adjusted, replaced, released, lapsed, cancelled or exercised during the tax year?
+ers_choose.sip.question = Have shares been awarded or have shares ceased to be part of the plan during the tax year?
+ers_choose.other.question = Have there been any events in relation to options or securities (including shares) during the tax year?
+ers_choose.option_1 = Yes
+ers_choose.option_2 = No (nil return)
+ers_choose.err.message = Confirm if there have been any reportable events
 
-ers_scheme_organiser.csop.title=Add scheme organiser details
-ers_scheme_organiser.sip.title=Add establishing company details
-ers_scheme_organiser.saye.title=Add scheme organiser details
-ers_scheme_organiser.emi.title=Add employer company details
-ers_scheme_organiser.other.title=Add company details
-ers_scheme_organiser.question=Where is the company registered?
+ers_scheme_organiser.csop.title = Add scheme organiser details
+ers_scheme_organiser.sip.title = Add establishing company details
+ers_scheme_organiser.saye.title = Add scheme organiser details
+ers_scheme_organiser.emi.title = Add employer company details
+ers_scheme_organiser.other.title = Add company details
+ers_scheme_organiser.question = Where is the company registered?
 
-ers_scheme_organiser.uk=UK
-ers_scheme_organiser.overseas=Overseas
-ers_scheme_organiser.company_name=Company name
-ers_scheme_organiser.address=Address
-ers_scheme_organiser.addressLine1=First line of address
-ers_scheme_organiser.addressLine2=Second line of address
-ers_scheme_organiser.addressLine3=Third line of address
-ers_scheme_organiser.addressLine4=Fourth line of address
-ers_scheme_organiser.postcode=Postcode (optional)
-ers_scheme_organiser.country=Country (optional)
-ers_scheme_organiser.company_reg_number=Company Registration Number (optional)
-ers_scheme_organiser.company_reg_number.hint=It’s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
-ers_scheme_organiser.corporation_tax_ref=Corporation Tax reference (optional)
-ers_scheme_organiser.corporation_tax_ref.hint=It’s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
-ers_scheme_organiser.continue=Continue
+ers_scheme_organiser.uk = UK
+ers_scheme_organiser.overseas = Overseas
+ers_scheme_organiser.company_name = Company name
+ers_scheme_organiser.address = Address
+ers_scheme_organiser.addressLine1 = First line of address
+ers_scheme_organiser.addressLine2 = Second line of address
+ers_scheme_organiser.addressLine3 = Third line of address
+ers_scheme_organiser.addressLine4 = Fourth line of address
+ers_scheme_organiser.postcode = Postcode (optional)
+ers_scheme_organiser.country = Country (optional)
+ers_scheme_organiser.company_reg_number = Company Registration Number (optional)
+ers_scheme_organiser.company_reg_number.hint = It’s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
+ers_scheme_organiser.corporation_tax_ref = Corporation Tax reference (optional)
+ers_scheme_organiser.corporation_tax_ref.hint = It’s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
+ers_scheme_organiser.continue = Continue
 
 #********************************************************************
 # Error messages
 #********************************************************************
 
-ers_scheme_organiser.err.summary.company_name_required=Enter the company name
-ers_scheme_organiser.err.summary.company_name_size=Reduce the number of characters entered for the company name
-ers_scheme_organiser.err.summary.address_line1_required=Enter the first line of the address
-ers_scheme_organiser.err.summary.address_line1_size=Reduce the number of characters in this address line
-ers_scheme_organiser.err.summary.address_line2_size=Reduce the number of characters in this address line
-ers_scheme_organiser.err.summary.address_line3_size=Reduce the number of characters in this address line
-ers_scheme_organiser.err.summary.address_line4_size=Reduce the number of characters in this address line
-ers_scheme_organiser.err.summary.postcode_size=Reduce the number of characters entered for the postcode
-ers_scheme_organiser.err.summary.company_reg_pattern=Enter a valid Company Registration Number
-ers_scheme_organiser.err.summary.corporation_ref_pattern=Enter a valid Corporation Tax reference
-ers_scheme_organiser.err.summary.invalid_country=Select a valid Country
+ers_scheme_organiser.err.summary.company_name_required = Enter the company name
+ers_scheme_organiser.err.summary.company_name_size = Reduce the number of characters entered for the company name
+ers_scheme_organiser.err.summary.address_line1_required = Enter the first line of the address
+ers_scheme_organiser.err.summary.address_line1_size = Reduce the number of characters in this address line
+ers_scheme_organiser.err.summary.address_line2_size = Reduce the number of characters in this address line
+ers_scheme_organiser.err.summary.address_line3_size = Reduce the number of characters in this address line
+ers_scheme_organiser.err.summary.address_line4_size = Reduce the number of characters in this address line
+ers_scheme_organiser.err.summary.postcode_size = Reduce the number of characters entered for the postcode
+ers_scheme_organiser.err.summary.company_reg_pattern = Enter a valid Company Registration Number
+ers_scheme_organiser.err.summary.corporation_ref_pattern = Enter a valid Corporation Tax reference
+ers_scheme_organiser.err.summary.invalid_country = Select a valid Country
 
-ers_scheme_organiser.err.company_name=Check the company name (it must be less than 36 characters)
-ers_scheme_organiser.err.invalidChars.company_name=Check the company name (it contains invalid characters)
-ers_scheme_organiser.err.address_line1=Check the first line of the address (it must be less than 28 characters)
-ers_scheme_organiser.err.invalidChars.address_line1=Check the first line of the address (it contains invalid characters)
-ers_scheme_organiser.err.address_line2=Check the second line of the address (it must be less than 28 characters)
-ers_scheme_organiser.err.invalidChars.address_line2=Check the second line of the address (it contains invalid characters)
-ers_scheme_organiser.err.address_line3=Check the third line of the address (it must be less than 28 characters)
-ers_scheme_organiser.err.invalidChars.address_line3=Check the third line of the address (it contains invalid characters)
-ers_scheme_organiser.err.address_line4=Check the fourth line of the address (it must be less than 19 characters)
-ers_scheme_organiser.err.invalidChars.address_line4=Check the fourth line of the address (it contains invalid characters)
-ers_scheme_organiser.err.postcode=Check the postcode (it must be valid and less than 9 characters)
-ers_scheme_organiser.err.company_reg=Enter a valid Company Registration Number
-ers_scheme_organiser.err.corporation_ref=Enter a valid Corporation Tax reference
+ers_scheme_organiser.err.company_name = Check the company name (it must be less than 36 characters)
+ers_scheme_organiser.err.invalidChars.company_name = Check the company name (it contains invalid characters)
+ers_scheme_organiser.err.address_line1 = Check the first line of the address (it must be less than 28 characters)
+ers_scheme_organiser.err.invalidChars.address_line1 = Check the first line of the address (it contains invalid characters)
+ers_scheme_organiser.err.address_line2 = Check the second line of the address (it must be less than 28 characters)
+ers_scheme_organiser.err.invalidChars.address_line2 = Check the second line of the address (it contains invalid characters)
+ers_scheme_organiser.err.address_line3 = Check the third line of the address (it must be less than 28 characters)
+ers_scheme_organiser.err.invalidChars.address_line3 = Check the third line of the address (it contains invalid characters)
+ers_scheme_organiser.err.address_line4 = Check the fourth line of the address (it must be less than 19 characters)
+ers_scheme_organiser.err.invalidChars.address_line4 = Check the fourth line of the address (it contains invalid characters)
+ers_scheme_organiser.err.postcode = Check the postcode (it must be valid and less than 9 characters)
+ers_scheme_organiser.err.company_reg = Enter a valid Company Registration Number
+ers_scheme_organiser.err.corporation_ref = Enter a valid Corporation Tax reference
 
-ers_group_activity.csop.err.message=Confirm if this is a group scheme
-ers_group_activity.emi.err.message=Confirm if there are any qualifying subsidiary companies
-ers_group_activity.saye.err.message=Confirm if this is a group scheme
-ers_group_activity.sip.err.message=Confirm if this is a group plan
-ers_group_activity.other.err.message=Confirm if any other companies are included in this return
-ers_group_activity.csop.title=Group schemes
-ers_group_activity.emi.title=Qualifying subsidiaries
-ers_group_activity.saye.title=Group schemes
-ers_group_activity.sip.title=Group plans
-ers_group_activity.other.title=Companies included in this return
+ers_group_activity.csop.err.message = Confirm if this is a group scheme
+ers_group_activity.emi.err.message = Confirm if there are any qualifying subsidiary companies
+ers_group_activity.saye.err.message = Confirm if this is a group scheme
+ers_group_activity.sip.err.message = Confirm if this is a group plan
+ers_group_activity.other.err.message = Confirm if any other companies are included in this return
+ers_group_activity.csop.title = Group schemes
+ers_group_activity.emi.title = Qualifying subsidiaries
+ers_group_activity.saye.title = Group schemes
+ers_group_activity.sip.title = Group plans
+ers_group_activity.other.title = Companies included in this return
 
-ers_group_activity.csop.question=Is this a group scheme?
-ers_group_activity.emi.question=Are there any qualifying subsidiary companies?
-ers_group_activity.saye.question=Is this a group scheme?
-ers_group_activity.sip.question=Is this a group plan?
-ers_group_activity.other.question=Are any other companies included in this return?
+ers_group_activity.csop.question = Is this a group scheme?
+ers_group_activity.emi.question = Are there any qualifying subsidiary companies?
+ers_group_activity.saye.question = Is this a group scheme?
+ers_group_activity.sip.question = Is this a group plan?
+ers_group_activity.other.question = Are any other companies included in this return?
 
-ers_group_activity.csop.intro_para=If the scheme organiser is part of a group of companies, the scheme may be offered to the other companies within that group.
-ers_group_activity.emi.intro_para=A company must meet set conditions to qualify for Enterprise Management Incentives, and any subsidiaries of that company must be qualifying subsidiaries.
-ers_group_activity.saye.intro_para=If the company that set up the scheme is a member of a group of companies, the scheme may be offered to the other companies within that group. 
-ers_group_activity.sip.intro_para=If the establishing company is part of a group of companies, the plan may be offered to the other companies within that group.
-ers_group_activity.other.intro_para=If the company that set up this scheme is part of a group of companies, the return may include the shares and employees of any of the companies within that group.
+ers_group_activity.csop.intro_para = If the scheme organiser is part of a group of companies, the scheme may be offered to the other companies within that group.
+ers_group_activity.emi.intro_para = A company must meet set conditions to qualify for Enterprise Management Incentives, and any subsidiaries of that company must be qualifying subsidiaries.
+ers_group_activity.saye.intro_para = If the company that set up the scheme is a member of a group of companies, the scheme may be offered to the other companies within that group. 
+ers_group_activity.sip.intro_para = If the establishing company is part of a group of companies, the plan may be offered to the other companies within that group.
+ers_group_activity.other.intro_para = If the company that set up this scheme is part of a group of companies, the return may include the shares and employees of any of the companies within that group.
 
-ers_group_scheme.yes=Yes
-ers_group_scheme.no=No
+ers_group_scheme.yes = Yes
+ers_group_scheme.no = No
 
-ers_group_scheme_type.csop.err.message=Choose how you want to add the group scheme details
-ers_group_scheme_type.emi.err.message=Choose how you want to add the company details
-ers_group_scheme_type.other.err.message=Choose how you want to add the company details
-ers_group_scheme_type.saye.err.message=Choose how you want to add the group scheme details
-ers_group_scheme_type.sip.err.message=Choose how you want to add the group plan details
+ers_group_scheme_type.csop.err.message = Choose how you want to add the group scheme details
+ers_group_scheme_type.emi.err.message = Choose how you want to add the company details
+ers_group_scheme_type.other.err.message = Choose how you want to add the company details
+ers_group_scheme_type.saye.err.message = Choose how you want to add the group scheme details
+ers_group_scheme_type.sip.err.message = Choose how you want to add the group plan details
 
-ers_group_scheme_type.csop.title=Group scheme details
-ers_group_scheme_type.csop.info=How do you want to add the group scheme details?
-ers_group_scheme_type.saye.title=Group scheme details
-ers_group_scheme_type.saye.info=How do you want to add your group scheme details?
-ers_group_scheme_type.emi.title=Qualifying subsidiary company details
-ers_group_scheme_type.emi.info=How do you want to add your qualifying subsidiary company details?
-ers_group_scheme_type.sip.title=Group plan details
-ers_group_scheme_type.sip.info=How do you want to add your group plan details?
-ers_group_scheme_type.other.title=Other company details
-ers_group_scheme_type.other.info=How do you want to add the company details?
+ers_group_scheme_type.csop.title = Group scheme details
+ers_group_scheme_type.csop.info = How do you want to add the group scheme details?
+ers_group_scheme_type.saye.title = Group scheme details
+ers_group_scheme_type.saye.info = How do you want to add your group scheme details?
+ers_group_scheme_type.emi.title = Qualifying subsidiary company details
+ers_group_scheme_type.emi.info = How do you want to add your qualifying subsidiary company details?
+ers_group_scheme_type.sip.title = Group plan details
+ers_group_scheme_type.sip.info = How do you want to add your group plan details?
+ers_group_scheme_type.other.title = Other company details
+ers_group_scheme_type.other.info = How do you want to add the company details?
 
-ers_group_scheme_type.option_1=Upload a comma separated values (.csv) file
-ers_group_scheme_type.csop.option_2=Manually enter the company details
-ers_group_scheme_type.emi.option_2=Manually enter the subsidiary company details
-ers_group_scheme_type.saye.option_2=Manually enter the company details
-ers_group_scheme_type.sip.option_2=Manually enter the company details
-ers_group_scheme_type.other.option_2=Manually enter the covered company details
+ers_group_scheme_type.option_1 = Upload a comma separated values (.csv) file
+ers_group_scheme_type.csop.option_2 = Manually enter the company details
+ers_group_scheme_type.emi.option_2 = Manually enter the subsidiary company details
+ers_group_scheme_type.saye.option_2 = Manually enter the company details
+ers_group_scheme_type.sip.option_2 = Manually enter the company details
+ers_group_scheme_type.other.option_2 = Manually enter the covered company details
 
-ers_group_file_check.csop.title=Upload the group scheme details
-ers_group_file_check.csop.intro_para=Choose the comma separated values (.csv) file that you want to upload.
+ers_group_file_check.csop.title = Upload the group scheme details
+ers_group_file_check.csop.intro_para = Choose the comma separated values (.csv) file that you want to upload.
 
-ers_group_file_check.emi.title=Upload your qualifying subsidiary company details
-ers_group_file_check.emi.intro_para=Choose the comma separated values (.csv) file that you want to upload.
+ers_group_file_check.emi.title = Upload your qualifying subsidiary company details
+ers_group_file_check.emi.intro_para = Choose the comma separated values (.csv) file that you want to upload.
 
-ers_group_file_check.saye.title=Upload your group scheme details
-ers_group_file_check.saye.intro_para=Choose the comma separated values (.csv) file that you want to upload.
+ers_group_file_check.saye.title = Upload your group scheme details
+ers_group_file_check.saye.intro_para = Choose the comma separated values (.csv) file that you want to upload.
 
-ers_group_file_check.sip.title=Upload your group plan details
-ers_group_file_check.sip.intro_para=Choose the comma separated values (.csv) file that you want to upload.
+ers_group_file_check.sip.title = Upload your group plan details
+ers_group_file_check.sip.intro_para = Choose the comma separated values (.csv) file that you want to upload.
 
-ers_group_file_check.other.title=Upload your covered company details
-ers_group_file_check.other.intro_para=Choose the comma separated values (.csv) file that you want to upload.
+ers_group_file_check.other.title = Upload your covered company details
+ers_group_file_check.other.intro_para = Choose the comma separated values (.csv) file that you want to upload.
 
-ers_group_file_check.choose_file_button=Choose your file
-ers_group_file_check.remove_file_link=Remove file
-ers_group_file_check.check_file_button=Upload file
-ers_group_file_check.file_name=No file selected.
-ers_group_file_check.format_errors=File contains formatting errors.
-ers_group_file_check.file_type_error=The attached file is in the wrong format. We are only able to accept .csv files.
-ers_group_file_check.no_file_error=No file selected. Please choose your file.
+ers_group_file_check.choose_file_button = Choose your file
+ers_group_file_check.remove_file_link = Remove file
+ers_group_file_check.check_file_button = Upload file
+ers_group_file_check.file_name = No file selected.
+ers_group_file_check.format_errors = File contains formatting errors.
+ers_group_file_check.file_type_error = The attached file is in the wrong format. We are only able to accept .csv files.
+ers_group_file_check.no_file_error = No file selected. Please choose your file.
 
 #********************************************************************
 # Summary messages
 #********************************************************************
 
-ers_group_summary.csop.title=Companies in this group scheme
-ers_group_summary.saye.title=Companies in this group scheme
-ers_group_summary.emi.title=Subsidiary companies in this scheme or arrangement
-ers_group_summary.sip.title=Companies in this group plan
-ers_group_summary.other.title=Companies covered by this return
-ers_group_summary.company_name=Company name
-ers_group_summary.address=Address
-ers_group_summary.crn=Company Registration Number
-ers_group_summary.ctr=Corporation Tax reference
-ers_group_summary.action=Action
-ers_group_summary.notice=Notice a mistake?
-ers_group_summary.csop.notice_info=If there’s a mistake in any of the company details shown, you’ll need to correct them in the .csv file and
-ers_group_summary.saye.notice_info=If there’s a mistake in any of the company details shown, you’ll need to correct them in the .csv file and
-ers_group_summary.emi.notice_info=If there’s a mistake in any of the subsidiary company details shown, you’ll need to correct them in the .csv file and
-ers_group_summary.sip.notice_info=If there’s a mistake in any of the group plan details shown, you’ll need to correct them in the .csv file and
-ers_group_summary.other.notice_info=If there’s a mistake in any of the covered company details shown, you’ll need to correct them in the .csv file and
-ers_group_summary.notice_info2=upload the file again
-ers_group_summary.csop.add_company=Add a company
-ers_group_summary.saye.add_company=Add a company
-ers_group_summary.emi.add_company=Add a subsidiary company
-ers_group_summary.sip.add_company=Add a company
-ers_group_summary.other.add_company=Add a company
+ers_group_summary.csop.title = Companies in this group scheme
+ers_group_summary.saye.title = Companies in this group scheme
+ers_group_summary.emi.title = Subsidiary companies in this scheme or arrangement
+ers_group_summary.sip.title = Companies in this group plan
+ers_group_summary.other.title = Companies covered by this return
+ers_group_summary.company_name = Company name
+ers_group_summary.address = Address
+ers_group_summary.crn = Company Registration Number
+ers_group_summary.ctr = Corporation Tax reference
+ers_group_summary.action = Action
+ers_group_summary.notice = Notice a mistake?
+ers_group_summary.csop.notice_info = If there’s a mistake in any of the company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.saye.notice_info = If there’s a mistake in any of the company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.emi.notice_info = If there’s a mistake in any of the subsidiary company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.sip.notice_info = If there’s a mistake in any of the group plan details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.other.notice_info = If there’s a mistake in any of the covered company details shown, you’ll need to correct them in the .csv file and
+ers_group_summary.notice_info2 = upload the file again
+ers_group_summary.csop.add_company = Add a company
+ers_group_summary.saye.add_company = Add a company
+ers_group_summary.emi.add_company = Add a subsidiary company
+ers_group_summary.sip.add_company = Add a company
+ers_group_summary.other.add_company = Add a company
 
 #********************************************************************
 # Company details
 #********************************************************************
 
-ers_manual_company_details.csop.title=Add company details
-ers_manual_company_details.csop.question=Where is the company registered?
-ers_manual_company_details.saye.title=Add company details
-ers_manual_company_details.saye.question=Where is your company registered?
-ers_manual_company_details.emi.title=Add subsidiary company details
-ers_manual_company_details.emi.question=Where is the company registered?
-ers_manual_company_details.sip.title=Add company details
-ers_manual_company_details.sip.question=Where is your company registered?
-ers_manual_company_details.other.title=Add details for the included company
-ers_manual_company_details.other.question=Where is the company registered?
+ers_manual_company_details.csop.title = Add company details
+ers_manual_company_details.csop.question = Where is the company registered?
+ers_manual_company_details.saye.title = Add company details
+ers_manual_company_details.saye.question = Where is your company registered?
+ers_manual_company_details.emi.title = Add subsidiary company details
+ers_manual_company_details.emi.question = Where is the company registered?
+ers_manual_company_details.sip.title = Add company details
+ers_manual_company_details.sip.question = Where is your company registered?
+ers_manual_company_details.other.title = Add details for the included company
+ers_manual_company_details.other.question = Where is the company registered?
 
 
 #********************************************************************
@@ -325,402 +325,402 @@ ers_manual_company_details.other.question=Where is the company registered?
 #********************************************************************
 
 
-ers_manual_company_details.uk=UK
-ers_manual_company_details.overseas=Overseas
-ers_manual_company_details.company_name=Company name
-ers_manual_company_details.address=Address
-ers_manual_company_details.addressLine1=First line of address
-ers_manual_company_details.addressLine2=Second line of address
-ers_manual_company_details.addressLine3=Third line of address
-ers_manual_company_details.addressLine4=Fourth line of address
-ers_manual_company_details.postcode=Postcode (optional)
-ers_manual_company_details.postcode_zipcode=Postcode/ZIP code
-ers_manual_company_details.country=Country (optional)
-ers_manual_company_details.company_reg_number=Company Registration Number (optional)
-ers_manual_company_details.company_reg_number.hint=It’s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
-ers_manual_company_details.corporation_tax_ref=Corporation Tax reference (optional)
-ers_manual_company_details.corporation_tax_ref.hint=It’s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
+ers_manual_company_details.uk = UK
+ers_manual_company_details.overseas = Overseas
+ers_manual_company_details.company_name = Company name
+ers_manual_company_details.address = Address
+ers_manual_company_details.addressLine1 = First line of address
+ers_manual_company_details.addressLine2 = Second line of address
+ers_manual_company_details.addressLine3 = Third line of address
+ers_manual_company_details.addressLine4 = Fourth line of address
+ers_manual_company_details.postcode = Postcode (optional)
+ers_manual_company_details.postcode_zipcode = Postcode/ZIP code
+ers_manual_company_details.country = Country (optional)
+ers_manual_company_details.company_reg_number = Company Registration Number (optional)
+ers_manual_company_details.company_reg_number.hint = It’s usually an 8 digit number or 2 letters followed by a 6 digit number, issued by Companies House. For example, 12345678 or AB123456.
+ers_manual_company_details.corporation_tax_ref = Corporation Tax reference (optional)
+ers_manual_company_details.corporation_tax_ref.hint = It’s a 10 digit number issued by HM Revenue and Customs, usually used in company tax returns. For example, 1234567890.
 
-ers_manual_company_details.err.summary.company_name_required=Enter the company name
-ers_manual_company_details.err.summary.company_name_size=Reduce the number of characters entered for the company name
-ers_manual_company_details.err.summary.address_line1_required=Enter the first line of the address
-ers_manual_company_details.err.summary.address_line1_size=Reduce the number of characters in this address line
-ers_manual_company_details.err.summary.address_line2_size=Reduce the number of characters in this address line
-ers_manual_company_details.err.summary.address_line3_size=Reduce the number of characters in this address line
-ers_manual_company_details.err.summary.address_line4_size=Reduce the number of characters in this address line
-ers_manual_company_details.err.summary.postcode_size=Reduce the number of characters entered for the postcode
-ers_manual_company_details.err.summary.company_reg_pattern=Enter a valid Company Registration Number
-ers_manual_company_details.err.summary.corporation_ref_pattern=Enter a valid Corporation Tax reference
+ers_manual_company_details.err.summary.company_name_required = Enter the company name
+ers_manual_company_details.err.summary.company_name_size = Reduce the number of characters entered for the company name
+ers_manual_company_details.err.summary.address_line1_required = Enter the first line of the address
+ers_manual_company_details.err.summary.address_line1_size = Reduce the number of characters in this address line
+ers_manual_company_details.err.summary.address_line2_size = Reduce the number of characters in this address line
+ers_manual_company_details.err.summary.address_line3_size = Reduce the number of characters in this address line
+ers_manual_company_details.err.summary.address_line4_size = Reduce the number of characters in this address line
+ers_manual_company_details.err.summary.postcode_size = Reduce the number of characters entered for the postcode
+ers_manual_company_details.err.summary.company_reg_pattern = Enter a valid Company Registration Number
+ers_manual_company_details.err.summary.corporation_ref_pattern = Enter a valid Corporation Tax reference
 
-ers_manual_company_details.err.company_name=Check the company name (it must be less than 121 characters)
-ers_manual_company_details.err.invalidChars.company_name=Check the company name (it contains invalid characters)
-ers_manual_company_details.err.address_line1=Check the first line of the address (it must be less than 28 characters)
-ers_manual_company_details.err.invalidChars.address_line1=Check the first line of the address (it contains invalid characters)
-ers_manual_company_details.err.address_line2=Check the second line of the address (it must be less than 28 characters)
-ers_manual_company_details.err.invalidChars.address_line2=Check the second line of the address (it contains invalid characters)
-ers_manual_company_details.err.address_line3=Check the third line of the address (it must be less than 28 characters)
-ers_manual_company_details.err.invalidChars.address_line3=Check the third line of the address (it contains invalid characters)
-ers_manual_company_details.err.address_line4=Check the fourth line of the address (it must be less than 19 characters)
-ers_manual_company_details.err.invalidChars.address_line4=Check the fourth line of the address (it contains invalid characters)
-ers_manual_company_details.err.postcode=Check the postcode (it must be valid and less than 9 characters)
-ers_manual_company_details.err.company_reg=Enter a valid Company Registration Number
-ers_manual_company_details.err.corporation_ref=Enter a valid Corporation Tax reference
+ers_manual_company_details.err.company_name = Check the company name (it must be less than 121 characters)
+ers_manual_company_details.err.invalidChars.company_name = Check the company name (it contains invalid characters)
+ers_manual_company_details.err.address_line1 = Check the first line of the address (it must be less than 28 characters)
+ers_manual_company_details.err.invalidChars.address_line1 = Check the first line of the address (it contains invalid characters)
+ers_manual_company_details.err.address_line2 = Check the second line of the address (it must be less than 28 characters)
+ers_manual_company_details.err.invalidChars.address_line2 = Check the second line of the address (it contains invalid characters)
+ers_manual_company_details.err.address_line3 = Check the third line of the address (it must be less than 28 characters)
+ers_manual_company_details.err.invalidChars.address_line3 = Check the third line of the address (it contains invalid characters)
+ers_manual_company_details.err.address_line4 = Check the fourth line of the address (it must be less than 19 characters)
+ers_manual_company_details.err.invalidChars.address_line4 = Check the fourth line of the address (it contains invalid characters)
+ers_manual_company_details.err.postcode = Check the postcode (it must be valid and less than 9 characters)
+ers_manual_company_details.err.company_reg = Enter a valid Company Registration Number
+ers_manual_company_details.err.corporation_ref = Enter a valid Corporation Tax reference
 
-ers_manual_company_details.continue=Continue
+ers_manual_company_details.continue = Continue
 
 #********************************************************************
 # Declaration messages
 #********************************************************************
 
-ers_summary_declaration.change_this=Change
-ers_summary_declaration.spreadsheet_name=Spreadsheet name
-ers_summary_declaration.file_name=File name
-ers_summary_declaration.file_names=File names
+ers_summary_declaration.change_this = Change
+ers_summary_declaration.spreadsheet_name = Spreadsheet name
+ers_summary_declaration.file_name = File name
+ers_summary_declaration.file_names = File names
 
-ers_summary_declaration.section=Section
-ers_summary_declaration.your_answers=Your answers
-ers_summary_declaration.title=Your annual return is nearly complete
-ers_summary_declaration.info=Check the information you’ve provided before you submit your return.
-ers_summary_declaration.button=Accept and submit
-ers_summary_declaration.alert=The company secretary, or the person acting as the company secretary, agrees that the information submitted is correct and complete.
-ers_summary_declaration.csop.organiser=Scheme organiser details
-ers_summary_declaration.saye.organiser=Scheme organiser
-ers_summary_declaration.emi.organiser=Employer company details
-ers_summary_declaration.sip.organiser=Establishing company details
-ers_summary_declaration.other.organiser=Company details
+ers_summary_declaration.section = Section
+ers_summary_declaration.your_answers = Your answers
+ers_summary_declaration.title = Your annual return is nearly complete
+ers_summary_declaration.info = Check the information you’ve provided before you submit your return.
+ers_summary_declaration.button = Accept and submit
+ers_summary_declaration.alert = The company secretary, or the person acting as the company secretary, agrees that the information submitted is correct and complete.
+ers_summary_declaration.csop.organiser = Scheme organiser details
+ers_summary_declaration.saye.organiser = Scheme organiser
+ers_summary_declaration.emi.organiser = Employer company details
+ers_summary_declaration.sip.organiser = Establishing company details
+ers_summary_declaration.other.organiser = Company details
 
 #********************************************************************
 # Confirmation messages
 #********************************************************************
 
-ers_confirmation.page_title=Confirmation
-ers_confirmation.submitted=Your {0} annual return has been submitted
-ers_confirmation.tax_year=for tax year {0}
-ers_confirmation.date_and_time=Date and time submitted: {0}
-ers_confirmation.sub_heading=What next
-ers_confirmation.instructions=Allow 48 hours before you use HMRC Online services to check the status of your submission in Employment Related Securities (view schemes and arrangements).
-ers_confirmation.download_confirmation=Download confirmation (PDF, {0}KB)
-ers_confirmation.submission_ref=Reference code and time:
-ers_confirmation.return=Submit another return
-ers_confirmation.pdf_info=You can download confirmation as a PDF (it will open in a new window or tab).
-ers_confirmation.csop.finished=http://www.gov.uk/done/company-share-option-plan-return
-ers_confirmation.emi.finished=http://www.gov.uk/done/enterprise-management-incentives-return
-ers_confirmation.saye.finished=http://www.gov.uk/done/save-as-you-earn-return
-ers_confirmation.sip.finished=http://www.gov.uk/done/share-incentive-plan-return
-ers_confirmation.other.finished=http://www.gov.uk/done/other-employment-related-securities-return
-ers_confirmation.feedback=What did you think of this service?
-ers_confirmation.feedback_time=(takes 30 seconds)
+ers_confirmation.page_title = Confirmation
+ers_confirmation.submitted = Your {0} annual return has been submitted
+ers_confirmation.tax_year = for tax year {0}
+ers_confirmation.date_and_time = Date and time submitted: {0}
+ers_confirmation.sub_heading = What next
+ers_confirmation.instructions = Allow 48 hours before you use HMRC Online services to check the status of your submission in Employment Related Securities (view schemes and arrangements).
+ers_confirmation.download_confirmation = Download confirmation (PDF, {0}KB)
+ers_confirmation.submission_ref = Reference code and time:
+ers_confirmation.return = Submit another return
+ers_confirmation.pdf_info = You can download confirmation as a PDF (it will open in a new window or tab).
+ers_confirmation.csop.finished = http://www.gov.uk/done/company-share-option-plan-return
+ers_confirmation.emi.finished = http://www.gov.uk/done/enterprise-management-incentives-return
+ers_confirmation.saye.finished = http://www.gov.uk/done/save-as-you-earn-return
+ers_confirmation.sip.finished = http://www.gov.uk/done/share-incentive-plan-return
+ers_confirmation.other.finished = http://www.gov.uk/done/other-employment-related-securities-return
+ers_confirmation.feedback = What did you think of this service?
+ers_confirmation.feedback_time = (takes 30 seconds)
 
 
-ers_signed_out.info=For your security, we signed you out because you didn’t use the service for 15 minutes or more.
-ers_signed_out.link=Sign back in to your HMRC Online services account
+ers_signed_out.info = For your security, we signed you out because you didn’t use the service for 15 minutes or more.
+ers_signed_out.link = Sign back in to your HMRC Online services account
 
 
 #********************************************************************
 # Upload messages
 #********************************************************************
 
-file_upload.title=Choose the file you want to upload as part of your annual return
-file_upload.contact_us=Contact us on our feedback page
+file_upload.title = Choose the file you want to upload as part of your annual return
+file_upload.contact_us = Contact us on our feedback page
 
-file_upload.file_size=if your .ods file is larger than 10MB.
-file_upload.csop.info=Choose the {0} file you want to upload as part of your Company Share Option Plan annual return.
-file_upload.emi.info=Choose the {0} file you want to upload as part of your Enterprise Management Incentives annual return.
-file_upload.other.info=Choose the {0} file you want to upload as part of your Other annual return.
-file_upload.sip.info=Choose the {0} file you want to upload as part of your Share Incentive Plan annual return.
-file_upload.saye.info=Choose the {0} file you want to upload as part of your Save As You Earn annual return.
+file_upload.file_size = if your .ods file is larger than 10MB.
+file_upload.csop.info = Choose the {0} file you want to upload as part of your Company Share Option Plan annual return.
+file_upload.emi.info = Choose the {0} file you want to upload as part of your Enterprise Management Incentives annual return.
+file_upload.other.info = Choose the {0} file you want to upload as part of your Other annual return.
+file_upload.sip.info = Choose the {0} file you want to upload as part of your Share Incentive Plan annual return.
+file_upload.saye.info = Choose the {0} file you want to upload as part of your Save As You Earn annual return.
 
-file_upload_errors.title=Errors have been found
-file_upload_errors.para1=Fix the errors before you use this service again or
-file_upload_errors.upload_link=choose a different file to upload
-file_upload_errors.go_fix=You need to fix your errors
-file_upload_errors.check_file=Use HM Revenue and Customs'' file check service
-file_upload_errors.info=to get a detailed error report.
+file_upload_errors.title = Errors have been found
+file_upload_errors.para1 = Fix the errors before you use this service again or
+file_upload_errors.upload_link = choose a different file to upload
+file_upload_errors.go_fix = You need to fix your errors
+file_upload_errors.check_file = Use HM Revenue and Customs'' file check service
+file_upload_errors.info = to get a detailed error report.
 ers.error.unauthorise = You are not authorised to view this page
 
-file_upload_errors.csop.guidance=<a href="https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">Use the Company Share Option Plan guidance documents</a> to help you fix the errors.
-file_upload_errors.saye.guidance=<a href="https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">Use the Save As You Earn guidance documents</a> to help you fix the errors.
-file_upload_errors.emi.guidance=<a href="https://www.gov.uk/government/publications/enterprise-management-incentives-end-of-year-template">Use the Enterprise Management Incentives guidance documents</a> to help you fix the errors.
-file_upload_errors.sip.guidance=<a href="https://www.gov.uk/government/publications/share-incentive-plan-end-of-year-template">Use the Share Incentive Plan guidance documents</a> to help you fix the errors.
-file_upload_errors.other.guidance=<a href="https://www.gov.uk/government/publications/other-employment-related-securities-schemes-and-arrangements-end-of-year-return-template">Use the Other employment related securities schemes and arrangements guidance documents</a> to help you fix the errors.
+file_upload_errors.csop.guidance = <a href = "https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">Use the Company Share Option Plan guidance documents</a> to help you fix the errors.
+file_upload_errors.saye.guidance = <a href = "https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">Use the Save As You Earn guidance documents</a> to help you fix the errors.
+file_upload_errors.emi.guidance = <a href = "https://www.gov.uk/government/publications/enterprise-management-incentives-end-of-year-template">Use the Enterprise Management Incentives guidance documents</a> to help you fix the errors.
+file_upload_errors.sip.guidance = <a href = "https://www.gov.uk/government/publications/share-incentive-plan-end-of-year-template">Use the Share Incentive Plan guidance documents</a> to help you fix the errors.
+file_upload_errors.other.guidance = <a href = "https://www.gov.uk/government/publications/other-employment-related-securities-schemes-and-arrangements-end-of-year-return-template">Use the Other employment related securities schemes and arrangements guidance documents</a> to help you fix the errors.
 
-ers_upload_successful.page_title=Successful upload
+ers_upload_successful.page_title = Successful upload
 
-csv_file_upload.file_title=Upload your file
-csv_file_upload.first_file_title=Upload your first file
-csv_file_upload.next_file_title=Upload your next file
-csv_file_upload.contact_us=Contact us on our feedback page
-csv_file_upload.file_size=if any of your files are larger than 100MB.
-csv_file_upload.file_to_upload_title=This is the file you said you needed to upload:
-csv_file_upload.files_to_upload_title=These are the files you said you needed to upload:
-csv_file_upload.file_to_upload_title_still=Files you still need to upload
-csv_file_upload.you_have_uploaded=You have uploaded:
-csv_file_upload.summary_error=Choose a different file to upload
+csv_file_upload.file_title = Upload your file
+csv_file_upload.first_file_title = Upload your first file
+csv_file_upload.next_file_title = Upload your next file
+csv_file_upload.contact_us = Contact us on our feedback page
+csv_file_upload.file_size = if any of your files are larger than 100MB.
+csv_file_upload.file_to_upload_title = This is the file you said you needed to upload:
+csv_file_upload.files_to_upload_title = These are the files you said you needed to upload:
+csv_file_upload.file_to_upload_title_still = Files you still need to upload
+csv_file_upload.you_have_uploaded = You have uploaded:
+csv_file_upload.summary_error = Choose a different file to upload
 
 #********************************************************************
 # Type messages
 #********************************************************************
 
-ers_scheme_type.page_title=ERS scheme or arrangement
-ers_scheme_type.question=Which type of ERS scheme or arrangement is this file for?
-ers_scheme_type.csop=Company Share Option Plan (CSOP - Form 35)
-ers_scheme_type.emi=Enterprise Management Incentives (EMI - Form EMI40)
-ers_scheme_type.saye=Save As You Earn (SAYE - Form 34)
-ers_scheme_type.sip=Share Incentive Plan (SIP - Form 39)
-ers_scheme_type.other=Other (Form 42)
-ers_scheme_type.continue=Continue
-ers_scheme_type.back=Back
-ers_scheme_type.select_scheme_type=Select the type of ERS scheme or arrangement
+ers_scheme_type.page_title = ERS scheme or arrangement
+ers_scheme_type.question = Which type of ERS scheme or arrangement is this file for?
+ers_scheme_type.csop = Company Share Option Plan (CSOP - Form 35)
+ers_scheme_type.emi = Enterprise Management Incentives (EMI - Form EMI40)
+ers_scheme_type.saye = Save As You Earn (SAYE - Form 34)
+ers_scheme_type.sip = Share Incentive Plan (SIP - Form 39)
+ers_scheme_type.other = Other (Form 42)
+ers_scheme_type.continue = Continue
+ers_scheme_type.back = Back
+ers_scheme_type.select_scheme_type = Select the type of ERS scheme or arrangement
 
 
-ers_check_file_type.title=Which type of file are you using to report events?
-ers_check_file_type.question=What type of file do you want to check?
-ers_check_file_type.option_1=Comma separated values (.csv)
-ers_check_file_type.option_2=OpenDocument Spreadsheet (.ods)
-ers_check_file_type.err.message=Choose the type of file you are using to report events
+ers_check_file_type.title = Which type of file are you using to report events?
+ers_check_file_type.question = What type of file do you want to check?
+ers_check_file_type.option_1 = Comma separated values (.csv)
+ers_check_file_type.option_2 = OpenDocument Spreadsheet (.ods)
+ers_check_file_type.err.message = Choose the type of file you are using to report events
 
-ers_check_csv_file.title=Choose the .csv files you need to upload as part of your annual return
-ers_check_csv_file.sip.intro=Choose the comma separated values (.csv) files you need to upload as part of your Share Incentive Plan annual return.
-ers_check_csv_file.emi.intro=Choose the comma separated values (.csv) files you need to upload as part of your Enterprise Management Incentives annual return.
-ers_check_csv_file.other.intro=Choose the comma seperated values (.csv) files you need to upload as part of your Other annual return.
-ers_check_csv_file.csop.intro=Choose the comma seperated values (.csv) files you need to upload as part of your Company Share Option Plan annual return.
-ers_check_csv_file.saye.intro=Choose the comma seperated values (.csv) files you need to upload as part of your Save As You Earn annual return.
+ers_check_csv_file.title = Choose the .csv files you need to upload as part of your annual return
+ers_check_csv_file.sip.intro = Choose the comma separated values (.csv) files you need to upload as part of your Share Incentive Plan annual return.
+ers_check_csv_file.emi.intro = Choose the comma separated values (.csv) files you need to upload as part of your Enterprise Management Incentives annual return.
+ers_check_csv_file.other.intro = Choose the comma seperated values (.csv) files you need to upload as part of your Other annual return.
+ers_check_csv_file.csop.intro = Choose the comma seperated values (.csv) files you need to upload as part of your Company Share Option Plan annual return.
+ers_check_csv_file.saye.intro = Choose the comma seperated values (.csv) files you need to upload as part of your Save As You Earn annual return.
 
-ers_check_csv_file.continue=Continue
-ers_check_csv_file.check_file_button=Check for errors
-ers_check_csv_file.file_type_error=This isn’t a .csv file.
-ers_check_csv_file.no_file_error=No files selected. Please choose your files.
-ers_check_csv_file.clear_all_link=Clear all
-ers_check_csv_file.err.message=Select all the files that you need to upload
+ers_check_csv_file.continue = Continue
+ers_check_csv_file.check_file_button = Check for errors
+ers_check_csv_file.file_type_error = This isn’t a .csv file.
+ers_check_csv_file.no_file_error = No files selected. Please choose your files.
+ers_check_csv_file.clear_all_link = Clear all
+ers_check_csv_file.err.message = Select all the files that you need to upload
 
-ers_check_csv_file.csop.file0.description=Options granted
-ers_check_csv_file.csop.file0.file_name=CSOP_OptionsGranted_V3.csv
-ers_check_csv_file.csop.file1.description=Options released (including exchanges) cancelled or lapsed in year
-ers_check_csv_file.csop.file1.file_name=CSOP_OptionsRCL_V3.csv
-ers_check_csv_file.csop.file2.description=Options and replacement options exercised
-ers_check_csv_file.csop.file2.file_name=CSOP_OptionsExercised_V3.csv
+ers_check_csv_file.csop.file0.description = Options granted
+ers_check_csv_file.csop.file0.file_name = CSOP_OptionsGranted_V3.csv
+ers_check_csv_file.csop.file1.description = Options released (including exchanges) cancelled or lapsed in year
+ers_check_csv_file.csop.file1.file_name = CSOP_OptionsRCL_V3.csv
+ers_check_csv_file.csop.file2.description = Options and replacement options exercised
+ers_check_csv_file.csop.file2.file_name = CSOP_OptionsExercised_V3.csv
 
-ers_check_csv_file.emi.file0.description=Adjustment of options
-ers_check_csv_file.emi.file0.file_name=EMI40_Adjustments_V3.csv
-ers_check_csv_file.emi.file1.description=Replacement of options
-ers_check_csv_file.emi.file1.file_name=EMI40_Replaced_V3.csv
-ers_check_csv_file.emi.file2.description=Options released, lapsed or cancelled
-ers_check_csv_file.emi.file2.file_name=EMI40_RLC_V3.csv
-ers_check_csv_file.emi.file3.description=Non-taxable exercise of options
-ers_check_csv_file.emi.file3.file_name=EMI40_NonTaxable_V3.csv
-ers_check_csv_file.emi.file4.description=Taxable exercise of options
-ers_check_csv_file.emi.file4.file_name=EMI40_Taxable_V3.csv
+ers_check_csv_file.emi.file0.description = Adjustment of options
+ers_check_csv_file.emi.file0.file_name = EMI40_Adjustments_V3.csv
+ers_check_csv_file.emi.file1.description = Replacement of options
+ers_check_csv_file.emi.file1.file_name = EMI40_Replaced_V3.csv
+ers_check_csv_file.emi.file2.description = Options released, lapsed or cancelled
+ers_check_csv_file.emi.file2.file_name = EMI40_RLC_V3.csv
+ers_check_csv_file.emi.file3.description = Non-taxable exercise of options
+ers_check_csv_file.emi.file3.file_name = EMI40_NonTaxable_V3.csv
+ers_check_csv_file.emi.file4.description = Taxable exercise of options
+ers_check_csv_file.emi.file4.file_name = EMI40_Taxable_V3.csv
 
-ers_check_csv_file.saye.file0.description=Options granted
-ers_check_csv_file.saye.file0.file_name=SAYE_Granted_V3.csv
-ers_check_csv_file.saye.file1.description=Options released (including exchanges), cancelled or lapsed in year
-ers_check_csv_file.saye.file1.file_name=SAYE_RCL_V3.csv
-ers_check_csv_file.saye.file2.description=Options exercised
-ers_check_csv_file.saye.file2.file_name=SAYE_Exercised_V3.csv
+ers_check_csv_file.saye.file0.description = Options granted
+ers_check_csv_file.saye.file0.file_name = SAYE_Granted_V3.csv
+ers_check_csv_file.saye.file1.description = Options released (including exchanges), cancelled or lapsed in year
+ers_check_csv_file.saye.file1.file_name = SAYE_RCL_V3.csv
+ers_check_csv_file.saye.file2.description = Options exercised
+ers_check_csv_file.saye.file2.file_name = SAYE_Exercised_V3.csv
 
-ers_check_csv_file.sip.file0.description=Share awards
-ers_check_csv_file.sip.file0.file_name=SIP_Awards_V3.csv
-ers_check_csv_file.sip.file1.description=Shares withdrawn from the plan
-ers_check_csv_file.sip.file1.file_name=SIP_Out_V3.csv
+ers_check_csv_file.sip.file0.description = Share awards
+ers_check_csv_file.sip.file0.file_name = SIP_Awards_V3.csv
+ers_check_csv_file.sip.file1.description = Shares withdrawn from the plan
+ers_check_csv_file.sip.file1.file_name = SIP_Out_V3.csv
 
 #********************************************************************
 # Other messages
 #********************************************************************
 
-ers_check_csv_file.other.file0.description=Grant of options
-ers_check_csv_file.other.file0.file_name=Other_Grants_V3.csv
-ers_check_csv_file.other.file1.description=Other option events
-ers_check_csv_file.other.file1.file_name=Other_Options_V3.csv
-ers_check_csv_file.other.file2.description=Acquisition of securities
-ers_check_csv_file.other.file2.file_name=Other_Acquisition_V3.csv
-ers_check_csv_file.other.file3.description=Restricted securities post acquisition events
-ers_check_csv_file.other.file3.file_name=Other_RestrictedSecurities_V3.csv
-ers_check_csv_file.other.file4.description=Receipt of other benefits from securities post acquisition
-ers_check_csv_file.other.file4.file_name=Other_OtherBenefits_V3.csv
-ers_check_csv_file.other.file5.description=Convertible securities post-acquisition
-ers_check_csv_file.other.file5.file_name=Other_Convertible_V3.csv
-ers_check_csv_file.other.file6.description=Discharge of notional loans post-acquisition
-ers_check_csv_file.other.file6.file_name=Other_Notional_V3.csv
-ers_check_csv_file.other.file7.description=Artificial enhancement of market value. Value of securities post acquisition
-ers_check_csv_file.other.file7.file_name=Other_Enhancement_V3.csv
-ers_check_csv_file.other.file8.description=Securities sold for more than market value post acquisition
-ers_check_csv_file.other.file8.file_name=Other_Sold_V3.csv
+ers_check_csv_file.other.file0.description = Grant of options
+ers_check_csv_file.other.file0.file_name = Other_Grants_V3.csv
+ers_check_csv_file.other.file1.description = Other option events
+ers_check_csv_file.other.file1.file_name = Other_Options_V3.csv
+ers_check_csv_file.other.file2.description = Acquisition of securities
+ers_check_csv_file.other.file2.file_name = Other_Acquisition_V3.csv
+ers_check_csv_file.other.file3.description = Restricted securities post acquisition events
+ers_check_csv_file.other.file3.file_name = Other_RestrictedSecurities_V3.csv
+ers_check_csv_file.other.file4.description = Receipt of other benefits from securities post acquisition
+ers_check_csv_file.other.file4.file_name = Other_OtherBenefits_V3.csv
+ers_check_csv_file.other.file5.description = Convertible securities post-acquisition
+ers_check_csv_file.other.file5.file_name = Other_Convertible_V3.csv
+ers_check_csv_file.other.file6.description = Discharge of notional loans post-acquisition
+ers_check_csv_file.other.file6.file_name = Other_Notional_V3.csv
+ers_check_csv_file.other.file7.description = Artificial enhancement of market value. Value of securities post acquisition
+ers_check_csv_file.other.file7.file_name = Other_Enhancement_V3.csv
+ers_check_csv_file.other.file8.description = Securities sold for more than market value post acquisition
+ers_check_csv_file.other.file8.file_name = Other_Sold_V3.csv
 
 
-ers_check_file.title=Choose and check your spreadsheet
-ers_check_file.instruction=Choose the OpenDocument Spreadsheet (ODS, .ods file) that you want to check for formatting errors.
-ers_check_file.formatting_errors_link=What are formatting errors?
-ers_check_file.formatting_errors_help=Formatting errors are created when information isn’t entered correctly or structural changes are made to a spreadsheet. For example, a number has been entered where a letter was needed or a column has been removed.
-ers_check_file.file_header_bar=File name
-ers_check_file.choose_file_button=Choose your file
-ers_check_file.file_name=No file selected.
-ers_check_file.remove_file_link=Remove file
-ers_check_file.check_file_button=Upload File
-ers_check_file.back=Back
-ers_check_file.file_type_error=The attached file is in the wrong format. We are only able to accept ODS files.
-ers_check_file.no_file_error=No file selected. Please choose your file.
+ers_check_file.title = Choose and check your spreadsheet
+ers_check_file.instruction = Choose the OpenDocument Spreadsheet (ODS, .ods file) that you want to check for formatting errors.
+ers_check_file.formatting_errors_link = What are formatting errors?
+ers_check_file.formatting_errors_help = Formatting errors are created when information isn’t entered correctly or structural changes are made to a spreadsheet. For example, a number has been entered where a letter was needed or a column has been removed.
+ers_check_file.file_header_bar = File name
+ers_check_file.choose_file_button = Choose your file
+ers_check_file.file_name = No file selected.
+ers_check_file.remove_file_link = Remove file
+ers_check_file.check_file_button = Upload File
+ers_check_file.back = Back
+ers_check_file.file_type_error = The attached file is in the wrong format. We are only able to accept ODS files.
+ers_check_file.no_file_error = No file selected. Please choose your file.
 
-ers_error_report.page_title=Error report
-ers_error_report.alert=Your spreadsheet contains formatting errors.
-ers_error_report.download_error_report=View error report (PDF, {0}k)
-ers_error_report.intro_para=View and then save your copy of the error report PDF.
-ers_error_report.sub_heading=What happens next?
-ers_error_report.view_as_html1=You can also
-ers_error_report.view_as_html2=view this error report as a web page
-ers_error_report.instructions1=Correct the formatting errors in your spreadsheet before you check it again or '
-ers_error_report.instructions2=check a different ERS scheme or arrangement spreadsheet
+ers_error_report.page_title = Error report
+ers_error_report.alert = Your spreadsheet contains formatting errors.
+ers_error_report.download_error_report = View error report (PDF, {0}k)
+ers_error_report.intro_para = View and then save your copy of the error report PDF.
+ers_error_report.sub_heading = What happens next?
+ers_error_report.view_as_html1 = You can also
+ers_error_report.view_as_html2 = view this error report as a web page
+ers_error_report.instructions1 = Correct the formatting errors in your spreadsheet before you check it again or '
+ers_error_report.instructions2 = check a different ERS scheme or arrangement spreadsheet
 
 
-ers_file_format_successful.page_title=Check complete
-ers_file_format_successful.sub_heading=What happens next?
-ers_file_format_successful.instructions=Check your spreadsheets whenever you update them. Regular checks allow you to identify and then correct formatting errors.
-ers_file_format_successful.return_to_start_page_link=Check another ERS scheme or arrangement spreadsheet
-ers_file_format_successful.banner=&#10004 There are no formatting errors in your spreadsheet
+ers_file_format_successful.page_title = Check complete
+ers_file_format_successful.sub_heading = What happens next?
+ers_file_format_successful.instructions = Check your spreadsheets whenever you update them. Regular checks allow you to identify and then correct formatting errors.
+ers_file_format_successful.return_to_start_page_link = Check another ERS scheme or arrangement spreadsheet
+ers_file_format_successful.banner = &#10004 There are no formatting errors in your spreadsheet
 
-ers_service_unavailable.page_title=Check your ERS files
-ers_service_unavailable.para1=The Checking Service is currently unavailable, please try again later
+ers_service_unavailable.page_title = Check your ERS files
+ers_service_unavailable.para1 = The Checking Service is currently unavailable, please try again later
 
-ers_not_authorised.page_title=Check your ERS files
-ers_not_authorised.para1=You are not authorised to access ERS checking service
+ers_not_authorised.page_title = Check your ERS files
+ers_not_authorised.para1 = You are not authorised to access ERS checking service
 
-ers_html_error_report.styles=<div></div>
-ers_html_error_report.styles2=<style>article table td, article table th '{'background:none; padding:10px 20px 10px 0'}' article table td, article table th '{'border:none;'}' article table td, article table th '{'border-bottom: 1px solid #BFC1C3;'}' .column, .row '{'width:10%'}' .report-title '{'text-align:right; margin-top:0; margin-bottom:0;'}'</style>
-ers_html_error_report.report_title=Formatting error report
-ers_html_error_report.formatting_errors=<p id='summary' class='heading-medium'>Your spreadsheet contains {0} formatting errors.</p>
-ers_html_error_report.formatting_errors_singular=<p id='summary' class='heading-medium'>Your spreadsheet contains 1 formatting error.</p>
-ers_html_error_report.summary_title=<h3 class='heading-small'>Summary of errors</h3>
-ers_html_error_report.errors_title=<h2 id='errors-by-sheet' class='heading-small'>Errors by {0}</h2>
-ers_html_error_report.table_column_names=<tr><th class='column' scope='col'>Column</th><th class='row' scope='col'>Row</th><th class='error' scope='col'>Error</th></tr>
-ers_html_error_report.sheet_name=<h3 class='sheet-title'>{1}: <span class='font-small'>{0}</span></h3>
-ers_html_error_report.table_row=<tr><td>{0}</td><td>{1}</td><td class='error'>{2}</td></tr>
-ers_html_error_report.sheet={0}<table>{1}{2}</table>
-ers_html_error_report.finish=Finish
-ers_html_error_report.following_pages=<div class='following-pages'>For a more detailed summary of your errors, continue to next page.</div>
+ers_html_error_report.styles = <div></div>
+ers_html_error_report.styles2 = <style>article table td, article table th '{'background:none; padding:10px 20px 10px 0'}' article table td, article table th '{'border:none;'}' article table td, article table th '{'border-bottom: 1px solid #BFC1C3;'}' .column, .row '{'width:10%'}' .report-title '{'text-align:right; margin-top:0; margin-bottom:0;'}'</style>
+ers_html_error_report.report_title = Formatting error report
+ers_html_error_report.formatting_errors = <p id = 'summary' class = 'heading-medium'>Your spreadsheet contains {0} formatting errors.</p>
+ers_html_error_report.formatting_errors_singular = <p id = 'summary' class = 'heading-medium'>Your spreadsheet contains 1 formatting error.</p>
+ers_html_error_report.summary_title = <h3 class = 'heading-small'>Summary of errors</h3>
+ers_html_error_report.errors_title = <h2 id = 'errors-by-sheet' class = 'heading-small'>Errors by {0}</h2>
+ers_html_error_report.table_column_names = <tr><th class = 'column' scope = 'col'>Column</th><th class = 'row' scope = 'col'>Row</th><th class = 'error' scope = 'col'>Error</th></tr>
+ers_html_error_report.sheet_name = <h3 class = 'sheet-title'>{1}: <span class = 'font-small'>{0}</span></h3>
+ers_html_error_report.table_row = <tr><td>{0}</td><td>{1}</td><td class = 'error'>{2}</td></tr>
+ers_html_error_report.sheet = {0}<table>{1}{2}</table>
+ers_html_error_report.finish = Finish
+ers_html_error_report.following_pages = <div class = 'following-pages'>For a more detailed summary of your errors, continue to next page.</div>
 
-ers_pdf_error_report.csop=Company Share Option Plan
-ers_pdf_error_report.emi=Enterprise Management Incentives
-ers_pdf_error_report.saye=Save As You Earn
-ers_pdf_error_report.sip=Share Incentive Plan
-ers_pdf_error_report.other=Other
-ers.bulk.success.title=File check
-ers.bulk.success.csop.info=If there are no errors in {0}, you’ll add the scheme organiser’s details next
-ers.bulk.success.emi.info=If there are no errors in {0}, you’ll add the employer company’s details next
-ers.bulk.success.other.info=If there are no errors in {0}, you’ll add the company’s details next
-ers.bulk.success.sip.info=If there are no errors in {0}, you’ll add the establishing company’s details next
-ers.bulk.success.saye.info=If there are no errors in {0}, you’ll add the scheme organiser’s details next
+ers_pdf_error_report.csop = Company Share Option Plan
+ers_pdf_error_report.emi = Enterprise Management Incentives
+ers_pdf_error_report.saye = Save As You Earn
+ers_pdf_error_report.sip = Share Incentive Plan
+ers_pdf_error_report.other = Other
+ers.bulk.success.title = File check
+ers.bulk.success.csop.info = If there are no errors in {0}, you’ll add the scheme organiser’s details next
+ers.bulk.success.emi.info = If there are no errors in {0}, you’ll add the employer company’s details next
+ers.bulk.success.other.info = If there are no errors in {0}, you’ll add the company’s details next
+ers.bulk.success.sip.info = If there are no errors in {0}, you’ll add the establishing company’s details next
+ers.bulk.success.saye.info = If there are no errors in {0}, you’ll add the scheme organiser’s details next
 
 
 #********************************************************************
 # Validation
 #********************************************************************
 
-validation.summary.heading=There is a problem
-validation.summary.info=Check your information is correct, in the right place and in the right format.
-validation.summary.info2=You need to:
+validation.summary.heading = There is a problem
+validation.summary.info = Check your information is correct, in the right place and in the right format.
+validation.summary.info2 = You need to:
 
 
-ers_alt_activity.csop.title=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
-ers_alt_activity.csop.err.message=Confirm if alterations have been made or there’s been a variation in the share capital
-ers_alt_activity.csop.question=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
-ers_alt_activity.csop.intro_para=A ’key feature’ is anything that’s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
+ers_alt_activity.csop.title = Have alterations been made to key features of this scheme or has there been a variation in the share capital?
+ers_alt_activity.csop.err.message = Confirm if alterations have been made or there’s been a variation in the share capital
+ers_alt_activity.csop.question = Have alterations been made to key features of this scheme or has there been a variation in the share capital?
+ers_alt_activity.csop.intro_para = A ’key feature’ is anything that’s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
 
-ers_alt_activity.saye.title=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
-ers_alt_activity.saye.err.message=Confirm if alterations have been made or there’s been a variation in the share capital
-ers_alt_activity.saye.question=Have alterations been made to key features of this scheme or has there been a variation in the share capital?
-ers_alt_activity.saye.intro_para=A ’key feature’ is anything that’s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
+ers_alt_activity.saye.title = Have alterations been made to key features of this scheme or has there been a variation in the share capital?
+ers_alt_activity.saye.err.message = Confirm if alterations have been made or there’s been a variation in the share capital
+ers_alt_activity.saye.question = Have alterations been made to key features of this scheme or has there been a variation in the share capital?
+ers_alt_activity.saye.intro_para = A ’key feature’ is anything that’s needed for the scheme to meet its legal requirements (for example, the eligibility of an individual to take part in the scheme).
 
-ers_alt_amends.csop.title=Select scheme alterations and variations
-ers_alt_amends.csop.question=What alterations or variations have been made?
-ers_alt_amends.csop.instruction=Select all that apply.
-ers_alt_amends.csop.option_1=Alterations to the terms of an existing option (other than by a variation in the share capital of which the shares form a part)
-ers_alt_amends.csop.option_2=Alterations to the eligibility of individuals to join the scheme
-ers_alt_amends.csop.option_3=Alterations arising from an exchange of share options on a company reorganisation
-ers_alt_amends.csop.option_4=A variation in the share capital of which the shares form a part
-ers_alt_amends.csop.option_5=Other
-ers_alt_amends.csop.alert=The company secretary, or the person acting as the company secretary, declares that the alteration or the variation in any share capital hasn’t caused the requirements of parts 2 to 6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Company Share Option Plan.
-ers_alt_amends.csop.err.message=Select all of the alterations or variations that apply
+ers_alt_amends.csop.title = Select scheme alterations and variations
+ers_alt_amends.csop.question = What alterations or variations have been made?
+ers_alt_amends.csop.instruction = Select all that apply.
+ers_alt_amends.csop.option_1 = Alterations to the terms of an existing option (other than by a variation in the share capital of which the shares form a part)
+ers_alt_amends.csop.option_2 = Alterations to the eligibility of individuals to join the scheme
+ers_alt_amends.csop.option_3 = Alterations arising from an exchange of share options on a company reorganisation
+ers_alt_amends.csop.option_4 = A variation in the share capital of which the shares form a part
+ers_alt_amends.csop.option_5 = Other
+ers_alt_amends.csop.alert = The company secretary, or the person acting as the company secretary, declares that the alteration or the variation in any share capital hasn’t caused the requirements of parts 2 to 6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Company Share Option Plan.
+ers_alt_amends.csop.err.message = Select all of the alterations or variations that apply
 
-ers_alt_amends.saye.title=Select scheme alterations and variations
-ers_alt_amends.saye.question=What alterations or variations have been made?
-ers_alt_amends.saye.instruction=Select all that apply.
-ers_alt_amends.saye.option_1=Alterations to the terms of an existing option (other than by a variation in the share capital of which the shares form a part)
-ers_alt_amends.saye.option_2=Alterations to the eligibility of individuals to join the scheme
-ers_alt_amends.saye.option_3=Alterations arising from an exchange of share options on a company reorganisation
-ers_alt_amends.saye.option_4=A variation in the share capital of which the shares form a part
-ers_alt_amends.saye.option_5=Other
-ers_alt_amends.saye.alert=The company secretary, or the person acting as company secretary, declares that the alteration or the variation in any share capital hasn’t caused the requirements of parts 2-6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Save As You Earn scheme.
-ers_alt_amends.saye.err.message=Select all of the alterations or variations that apply
+ers_alt_amends.saye.title = Select scheme alterations and variations
+ers_alt_amends.saye.question = What alterations or variations have been made?
+ers_alt_amends.saye.instruction = Select all that apply.
+ers_alt_amends.saye.option_1 = Alterations to the terms of an existing option (other than by a variation in the share capital of which the shares form a part)
+ers_alt_amends.saye.option_2 = Alterations to the eligibility of individuals to join the scheme
+ers_alt_amends.saye.option_3 = Alterations arising from an exchange of share options on a company reorganisation
+ers_alt_amends.saye.option_4 = A variation in the share capital of which the shares form a part
+ers_alt_amends.saye.option_5 = Other
+ers_alt_amends.saye.alert = The company secretary, or the person acting as company secretary, declares that the alteration or the variation in any share capital hasn’t caused the requirements of parts 2-6 of Schedule 4 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Save As You Earn scheme.
+ers_alt_amends.saye.err.message = Select all of the alterations or variations that apply
 
 
-ers_alt_activity.sip.title=Plan alterations
-ers_alt_activity.sip.err.message=Confirm if alterations have been made
-ers_alt_activity.sip.question=Have alterations been made to key features of this plan?
-ers_alt_activity.sip.intro_para=A ’key feature’ is anything that’s needed for the plan to meet its legal requirements (for example, the eligibility of an individual to take part in the plan).
+ers_alt_activity.sip.title = Plan alterations
+ers_alt_activity.sip.err.message = Confirm if alterations have been made
+ers_alt_activity.sip.question = Have alterations been made to key features of this plan?
+ers_alt_activity.sip.intro_para = A ’key feature’ is anything that’s needed for the plan to meet its legal requirements (for example, the eligibility of an individual to take part in the plan).
 
-ers_alt_amends.sip.title=Select scheme alterations
-ers_alt_amends.sip.question=What alterations have been made?
-ers_alt_amends.sip.instruction=Select all that apply.
-ers_alt_amends.sip.option_1=Alterations to shares within the plan
-ers_alt_amends.sip.option_2=Alterations to the eligibility of individuals to join the plan
-ers_alt_amends.sip.option_3=Alterations to existing share awards as the result of a company reconstruction
-ers_alt_amends.sip.option_4=A change of trustee
-ers_alt_amends.sip.option_5=Other
-ers_alt_amends.sip.alert=The company secretary, or the person acting as company secretary, declares that the alteration hasn’t caused the requirements of parts 2-6 of Schedule 2 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Share Incentive Plan.
-ers_alt_amends.sip.err.message=Select all of the alterations that apply
+ers_alt_amends.sip.title = Select scheme alterations
+ers_alt_amends.sip.question = What alterations have been made?
+ers_alt_amends.sip.instruction = Select all that apply.
+ers_alt_amends.sip.option_1 = Alterations to shares within the plan
+ers_alt_amends.sip.option_2 = Alterations to the eligibility of individuals to join the plan
+ers_alt_amends.sip.option_3 = Alterations to existing share awards as the result of a company reconstruction
+ers_alt_amends.sip.option_4 = A change of trustee
+ers_alt_amends.sip.option_5 = Other
+ers_alt_amends.sip.alert = The company secretary, or the person acting as company secretary, declares that the alteration hasn’t caused the requirements of parts 2-6 of Schedule 2 Income Tax (Earnings and Pensions) Act 2003 not to be met in relation to the Share Incentive Plan.
+ers_alt_amends.sip.err.message = Select all of the alterations that apply
 
-ers_alt_amends.continue=Accept and continue
+ers_alt_amends.continue = Accept and continue
 
 #********************************************************************
 # trustee messages
 #********************************************************************
 
-ers_trustee_details.title=Add trustee details
-ers_trustee_details.question=Where is the trustee based?
-ers_trustee_details.uk=UK
-ers_trustee_details.overseas=Overseas
-ers_trustee_details.name=Name
-ers_trustee_details.address=Address
-ers_trustee_details.addressLine1=First line of address
-ers_trustee_details.addressLine2=Second line of address
-ers_trustee_details.addressLine3=Third line of address
-ers_trustee_details.addressLine4=Fourth line of address
-ers_trustee_details.postcode=Postcode (optional)
-ers_trustee_details.postcode_zipcode=Postcode/ZIP code
-ers_trustee_details.country=Country (optional)
+ers_trustee_details.title = Add trustee details
+ers_trustee_details.question = Where is the trustee based?
+ers_trustee_details.uk = UK
+ers_trustee_details.overseas = Overseas
+ers_trustee_details.name = Name
+ers_trustee_details.address = Address
+ers_trustee_details.addressLine1 = First line of address
+ers_trustee_details.addressLine2 = Second line of address
+ers_trustee_details.addressLine3 = Third line of address
+ers_trustee_details.addressLine4 = Fourth line of address
+ers_trustee_details.postcode = Postcode (optional)
+ers_trustee_details.postcode_zipcode = Postcode/ZIP code
+ers_trustee_details.country = Country (optional)
 
-ers_trustee_details.err.summary.name_required=Enter the trustee’s name
-ers_trustee_details.err.summary.name_size=Reduce the number of characters entered for the trustee’s name
-ers_trustee_details.err.summary.address_line1_required=Enter the first line of the address
-ers_trustee_details.err.summary.address_line1_size=Reduce the number of characters in this address line
-ers_trustee_details.err.summary.address_line2_size=Reduce the number of characters in this address line
-ers_trustee_details.err.summary.address_line3_size=Reduce the number of characters in this address line
-ers_trustee_details.err.summary.address_line4_size=Reduce the number of characters in this address line
-ers_trustee_details.err.summary.postcode_size=Reduce the number of characters entered for the postcode
+ers_trustee_details.err.summary.name_required = Enter the trustee’s name
+ers_trustee_details.err.summary.name_size = Reduce the number of characters entered for the trustee’s name
+ers_trustee_details.err.summary.address_line1_required = Enter the first line of the address
+ers_trustee_details.err.summary.address_line1_size = Reduce the number of characters in this address line
+ers_trustee_details.err.summary.address_line2_size = Reduce the number of characters in this address line
+ers_trustee_details.err.summary.address_line3_size = Reduce the number of characters in this address line
+ers_trustee_details.err.summary.address_line4_size = Reduce the number of characters in this address line
+ers_trustee_details.err.summary.postcode_size = Reduce the number of characters entered for the postcode
 
-ers_trustee_details.err.name=Check the trustee’s name (it must be less than 121 characters)
-ers_trustee_details.err.invalidChars.name=Check the trustee’s name (it contains invalid characters)
-ers_trustee_details.err.address_line1=Check the first line of the address (it must be less than 28 characters)
-ers_trustee_details.err.invalidChars.address_line1=Check the first line of the address (it contains invalid characters)
-ers_trustee_details.err.address_line2=Check the second line of the address (it must be less than 28 characters)
-ers_trustee_details.err.invalidChars.address_line2=Check the second line of the address (it contains invalid characters)
-ers_trustee_details.err.address_line3=Check the third line of the address (it must be less than 28 characters)
-ers_trustee_details.err.invalidChars.address_line3=Check the third line of the address (it contains invalid characters)
-ers_trustee_details.err.address_line4=Check the fourth line of the address (it must be less than 19 characters)
-ers_trustee_details.err.invalidChars.address_line4=Check the fourth line of the address (it contains invalid characters)
-ers_trustee_details.err.postcode=Check the postcode (it must be valid and less than 9 characters)
+ers_trustee_details.err.name = Check the trustee’s name (it must be less than 121 characters)
+ers_trustee_details.err.invalidChars.name = Check the trustee’s name (it contains invalid characters)
+ers_trustee_details.err.address_line1 = Check the first line of the address (it must be less than 28 characters)
+ers_trustee_details.err.invalidChars.address_line1 = Check the first line of the address (it contains invalid characters)
+ers_trustee_details.err.address_line2 = Check the second line of the address (it must be less than 28 characters)
+ers_trustee_details.err.invalidChars.address_line2 = Check the second line of the address (it contains invalid characters)
+ers_trustee_details.err.address_line3 = Check the third line of the address (it must be less than 28 characters)
+ers_trustee_details.err.invalidChars.address_line3 = Check the third line of the address (it contains invalid characters)
+ers_trustee_details.err.address_line4 = Check the fourth line of the address (it must be less than 19 characters)
+ers_trustee_details.err.invalidChars.address_line4 = Check the fourth line of the address (it contains invalid characters)
+ers_trustee_details.err.postcode = Check the postcode (it must be valid and less than 9 characters)
 
-ers_trustee_summary.title=Trustees of this Share Incentive Plan
-ers_trustee_summary.add_trustee=Add a trustee
-ers_trustee_summary.name=Name
-ers_trustee_summary.address=Address
-ers_trustee_summary.action=Action
+ers_trustee_summary.title = Trustees of this Share Incentive Plan
+ers_trustee_summary.add_trustee = Add a trustee
+ers_trustee_summary.name = Name
+ers_trustee_summary.address = Address
+ers_trustee_summary.action = Action
 
-ers_trustee_summary.altamends.section=Alterations made to this plan
+ers_trustee_summary.altamends.section = Alterations made to this plan
 
 #********************************************************************
 # Global error messages
 #********************************************************************
 
-ers.global_errors.message=Sorry, there is a technical problem and you cannot use the service at the moment. Please try again later.
-ers.global_errors.heading=Service unavailable
-ers.global_errors.title=Service unavailable
+ers.global_errors.message = Sorry, there is a technical problem and you cannot use the service at the moment. Please try again later.
+ers.global_errors.heading = Service unavailable
+ers.global_errors.title = Service unavailable
