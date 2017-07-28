@@ -45,7 +45,7 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
 
   def showCheckCsvFilesPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeType = request.session.get(screenSchemeInfo).get.split(" - ")(1).toUpperCase()
-    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
 
     val csvFilesList: List[CsvFiles] = PageBuilder.getCsvFilesList(schemeType)
     cacheUtil.fetch[CsvFilesCallbackList](CacheUtil.CHECK_CSV_FILES, schemeRef).map { cacheData =>
@@ -92,7 +92,7 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
       reloadWithError()
     }
     else {
-      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
       cacheUtil.cache(CacheUtil.CHECK_CSV_FILES, CsvFilesCallbackList(csvFilesCallbackList), schemeRef).map { data =>
         Redirect(routes.CsvFileUploadController.uploadFilePage())
       }.recover {

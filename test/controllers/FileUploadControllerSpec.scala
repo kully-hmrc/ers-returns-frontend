@@ -370,7 +370,7 @@ class FileUploadControllerSpec extends PlaySpec with OneAppPerSuite
     Matchers.any(), Matchers.any())).thenReturn(Future.successful(CheckFileType(Some("csv"))))
   when(mockCacheUtil.fetchOption[CsvFilesCallbackList](Matchers.any[String](), Matchers.any[String]())(Matchers.any(),
     Matchers.any(), Matchers.any())).thenReturn(Future.successful(Some(csvCallBackList)))
-  when(mockCacheUtil.getSchemeRefFromScreenSchemeInfo(anyString())).thenReturn("")
+  when(mockCacheUtil.getSchemeRefFromScreenSchemeInfo(Some(anyString()))).thenReturn("")
 
   object TestFileUploadController extends FileUploadController {
     val attachmentsConnector = mockAttachmentsConnector

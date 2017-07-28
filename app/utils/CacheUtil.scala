@@ -246,10 +246,14 @@ trait CacheUtil {
     hc.sessionId.getOrElse(throw new RuntimeException("")).value
   }
 
-  def getSchemeRefFromScreenSchemeInfo(screenSchemeInfo:String):String = {
+  def getSchemeRefFromScreenSchemeInfo(screenSchemeInfo:Option[String]):String = {
     Logger.warn(s"CacheUtil: form getSchemeRefFromScreenSchemeInfo : ${screenSchemeInfo}.")
-    screenSchemeInfo.split(" - ").init.last
+    val schemeInfo = screenSchemeInfo.getOrElse("").split(" - ").init
+    if (schemeInfo.length == 0)
+      Logger.error(s"CacheUtil: screenSchemeInfo not in valid format : ${screenSchemeInfo}.")
+    schemeInfo.last
   }
+
   def isNilReturn(nilReturn:String) :Boolean = (nilReturn == PageBuilder.OPTION_NIL_RETURN)
 
 }

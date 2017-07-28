@@ -43,7 +43,7 @@ trait SchemeOrganiserController extends ERSReturnBaseController with Authenticat
   }
 
   def showSchemeOrganiserPage()(implicit authContext: AuthContext, request: Request[AnyContent], hc: HeaderCarrier): Future[Result] = {
-    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     Logger.warn(s"SchemeOrganiserController: showSchemeOrganiserPage:  schemeRef: ${schemeRef}.")
 
     cacheUtil.fetch[ReportableEvents](CacheUtil.reportableEvents, schemeRef).flatMap { reportableEvent =>
@@ -89,7 +89,7 @@ trait SchemeOrganiserController extends ERSReturnBaseController with Authenticat
         Future.successful(Ok(views.html.scheme_organiser("", firstErrors)))
       },
       successful => {
-        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
         Logger.warn(s"SchemeOrganiserController: showSchemeOrganiserSubmit:  schemeRef: ${schemeRef}.")
 
         cacheUtil.cache(CacheUtil.SCHEME_ORGANISER_CACHE, successful, schemeRef).map {

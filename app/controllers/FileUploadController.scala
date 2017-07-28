@@ -58,7 +58,7 @@ trait FileUploadController extends FrontendController with Authenticator with Le
 
 
   def showSuccess()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     Logger.info("success: Attachments Success: " + (System.currentTimeMillis() / 1000))
     sessionService.retrieveCallbackData().flatMap { callbackData =>
       cacheUtil.cache[String](CacheUtil.FILE_NAME_CACHE, callbackData.get.name.get, scRef).map { cached =>
@@ -76,7 +76,7 @@ trait FileUploadController extends FrontendController with Authenticator with Le
   def validationResults() = AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
     implicit user =>
       implicit request => {
-        val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+        val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
         cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, scRef).flatMap { all =>
           sessionService.retrieveCallbackData().flatMap { callbackData =>
             ersConnector.removePresubmissionData(all.schemeInfo).flatMap(result =>
@@ -115,7 +115,7 @@ trait FileUploadController extends FrontendController with Authenticator with Le
     implicit user =>
       implicit request =>
         Logger.info("validationFailure: Validation Failure: " + (System.currentTimeMillis() / 1000))
-        val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+        val scRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
         cacheUtil.fetch[CheckFileType](CacheUtil.FILE_TYPE_CACHE, scRef).flatMap { fileType =>
           cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, scRef).map { all =>
             val scheme: String = all.schemeInfo.schemeId
