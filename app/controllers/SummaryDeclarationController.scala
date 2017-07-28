@@ -49,7 +49,7 @@ trait SummaryDeclarationController extends ERSReturnBaseController with Authenti
   }
 
   def showSummaryDeclarationPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     cacheUtil.fetchAll(schemeRef).flatMap { all =>
       val schemeOrganiser: SchemeOrganiserDetails = all.getEntry[SchemeOrganiserDetails](CacheUtil.SCHEME_ORGANISER_CACHE).get
       val groupSchemeInfo: GroupSchemeInfo = all.getEntry[GroupSchemeInfo](CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER).getOrElse(new GroupSchemeInfo(None, None))

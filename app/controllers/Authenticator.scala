@@ -56,7 +56,7 @@ trait Authenticator extends Actions with ErsConstants {
     implicit val formatRSParams = Json.format[ErsMetaData]
     val defined = authContext.principal.accounts.agent.isDefined
     if (defined) {
-      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
       cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, schemeRef).map { all =>
         body(delegationModelUser(all, authContext: AuthContext))(request)
       }
@@ -70,7 +70,7 @@ trait Authenticator extends Actions with ErsConstants {
     implicit val formatRSParams = Json.format[ErsMetaData]
     val defined = authContext.principal.accounts.agent.isDefined
     if (defined) {
-      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
       cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, schemeRef).flatMap { all =>
         body(delegationModelUser(all, authContext: AuthContext))(request)
       }
