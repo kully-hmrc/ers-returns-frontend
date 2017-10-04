@@ -23,9 +23,9 @@ import org.joda.time.DateTime
 import org.scalatest.{Matchers, WordSpec}
 import play.api.test.FakeRequest
 import services.audit.{AuditEvents, AuditService, AuditServiceConnector}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.model.DataEvent
 import scala.collection.mutable.ListBuffer
+import uk.gov.hmrc.http.HeaderCarrier
 
 class AuditEventsTest    extends WordSpec with Matchers {
 

@@ -19,7 +19,7 @@ package connectors
 import java.util.UUID
 
 import akka.stream.Materializer
-import config.ERSFileValidatorAuditConnector
+import config.{ERSFileValidatorAuditConnector, WSHttp}
 import org.mockito.Matchers
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach
@@ -32,13 +32,14 @@ import play.api.test.{FakeApplication, FakeRequest}
 import uk.gov.hmrc.play.audit.http.HttpAuditing
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.http._
-import uk.gov.hmrc.play.http.logging.{RequestId, SessionId}
-import uk.gov.hmrc.play.http.ws.{WSGet, WSHttp, WSPost}
+import uk.gov.hmrc.play.http.ws.{WSGet, WSPost}
 import uk.gov.hmrc.play.partials.HeaderCarrierForPartials
 import utils.ERSFakeApplicationConfig
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{HeaderCarrier, HttpPut, HttpResponse}
+import uk.gov.hmrc.http.logging.{RequestId, SessionId}
 
 class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach {
 
@@ -46,7 +47,6 @@ class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with ERSF
   implicit lazy val mat: Materializer = app.materializer
 
   class MockHttp extends WSHttp with WSGet with WSPost with HttpAuditing {
-    override val auditConnector: AuditConnector = ERSFileValidatorAuditConnector
     override val hooks = Seq(AuditingHook)
 
     override def appName = Play.configuration.getString("appName").getOrElse("submit-your-ers-annual-return")
@@ -72,7 +72,7 @@ class AttachmentsConnectorSpec extends PlaySpec with OneServerPerSuite with ERSF
         implicit val request = FakeRequest()
 
         val html = "<h1>helloworld</h1>"
-        when(mockHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200, responseString = Some
+        when(mockHttp.GET[HttpResponse](Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200, responseString = Some
         (html))))
         TestAttachmentsConnector.getFileUploadPartial().map {
           response => response.body must equal(html)

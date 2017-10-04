@@ -24,8 +24,8 @@ import play.api.{Configuration, Logger, Play}
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.Actions
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.logging.SessionId
 import utils.CacheUtil
+import uk.gov.hmrc.http.logging.SessionId
 
 trait FileUploadCallbackController extends FrontendController with Actions with ErsConstants {
 

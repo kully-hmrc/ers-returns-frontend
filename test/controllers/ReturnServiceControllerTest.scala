@@ -40,12 +40,12 @@ import play.api.test.Helpers._
 import play.api.test.{FakeRequest, Helpers}
 import services.SessionService
 import uk.gov.hmrc.http.cache.client.ShortLivedCache
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
 import utils.ContentUtil._
 import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpGet, HttpPost, HttpResponse }
 
 
 class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
@@ -67,7 +67,7 @@ class ReturnServiceControllerTest extends UnitSpec with ERSFakeApplicationConfig
 
 
     when(
-      mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
+      mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())
     ).thenReturn(
       Future.successful(HttpResponse(200))
     )

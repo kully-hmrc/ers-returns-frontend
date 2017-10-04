@@ -24,10 +24,10 @@ import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
 
 import scala.concurrent._
+import uk.gov.hmrc.http.HeaderCarrier
 
 object AltAmendsController extends AltAmendsController {
   override val cacheUtil: CacheUtil = CacheUtil

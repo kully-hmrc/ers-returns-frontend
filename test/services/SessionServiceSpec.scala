@@ -25,9 +25,9 @@ import org.scalatestplus.play.{OneServerPerSuite, PlaySpec}
 import play.api.libs.json._
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.cache.client.{CacheMap, SessionCache}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import uk.gov.hmrc.http.HeaderCarrier
 
 class SessionServiceSpec extends PlaySpec with OneServerPerSuite with ScalaFutures with MockitoSugar {
 
@@ -50,7 +50,7 @@ class SessionServiceSpec extends PlaySpec with OneServerPerSuite with ScalaFutur
       val json = Json.toJson[String](foo)
       when(TestSessionService.sessionCache.cache[String]
         (any[String], any[String])
-        (any[Writes[String]], any[HeaderCarrier]))
+        (any[Writes[String]], any[HeaderCarrier], any()))
         .thenReturn(Future.successful(CacheMap("sessionValue", Map("fookey" -> json))))
 
       val result = Await.result(TestSessionService.storeString("fookey", foo)(request, hc), 10 seconds)
@@ -63,7 +63,7 @@ class SessionServiceSpec extends PlaySpec with OneServerPerSuite with ScalaFutur
       val json = Json.toJson[String](foo)
       when(TestSessionService.sessionCache.cache[String]
         (any[String], any[String])
-        (any[Writes[String]], any[HeaderCarrier]))
+        (any[Writes[String]], any[HeaderCarrier], any()))
         .thenReturn(Future.failed(new RuntimeException))
 
 
@@ -78,7 +78,7 @@ class SessionServiceSpec extends PlaySpec with OneServerPerSuite with ScalaFutur
       val json = Json.toJson[CallbackData](postData)
       when(TestSessionService.sessionCache.cache[CallbackData]
         (any[String], any[CallbackData])
-        (any[Writes[CallbackData]], any[HeaderCarrier]))
+        (any[Writes[CallbackData]], any[HeaderCarrier], any()))
         .thenReturn(Future.successful(CacheMap("sessionValue", Map(SessionService.CALLBACK_DATA_KEY -> json))))
 
       val result: Option[CallbackData] = Await.result(TestSessionService.storeCallbackData(postData)(request, hc), 10 seconds)
@@ -94,7 +94,7 @@ class SessionServiceSpec extends PlaySpec with OneServerPerSuite with ScalaFutur
       val json = Json.toJson[CallbackData](postData)
       when(TestSessionService.sessionCache.cache[CallbackData]
         (any[String], any[CallbackData])
-        (any[Writes[CallbackData]], any[HeaderCarrier])).thenReturn(Future.failed(new RuntimeException))
+        (any[Writes[CallbackData]], any[HeaderCarrier], any())).thenReturn(Future.failed(new RuntimeException))
 
       val result: Option[CallbackData] = Await.result(TestSessionService.storeCallbackData(postData)(request, hc), 10 seconds)
 
@@ -106,7 +106,7 @@ class SessionServiceSpec extends PlaySpec with OneServerPerSuite with ScalaFutur
       val postData = CallbackData(id = "theid", collection = "thecollection", length = 1000L, name = Some("thefilename"), contentType = None, sessionId = Some("testId"), customMetadata
         = None, noOfRows = Some(1000))
 
-      when(TestSessionService.sessionCache.fetchAndGetEntry[CallbackData](any())(any(), any())).thenReturn(Future.successful(Some
+      when(TestSessionService.sessionCache.fetchAndGetEntry[CallbackData](any())(any(), any(), any())).thenReturn(Future.successful(Some
         (postData)))
 
       val result = Await.result(TestSessionService.retrieveCallbackData()(request, hc), 10 seconds)

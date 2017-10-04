@@ -37,11 +37,11 @@ import services.SessionService
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.http.cache.client.{CacheMap, ShortLivedCache}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
 import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures, PageBuilder}
 
 import scala.concurrent.{ExecutionContext, Future}
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpGet, HttpPost, HttpResponse }
 
 class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with OneAppPerSuite {
 
@@ -76,7 +76,7 @@ class SummaryDeclarationControllerTest extends UnitSpec with ERSFakeApplicationC
         override def connectToEtmpSapRequest(schemeRef: String)(implicit authContext: AuthContext, hc: HeaderCarrier): Future[String] = Future("1234567890")
 
       }
-    when(mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200)))
+    when(mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())).thenReturn(Future.successful(HttpResponse(200)))
 
     override val cacheUtil: CacheUtil = new CacheUtil {
       override val sessionService: SessionService = mockSessionCache

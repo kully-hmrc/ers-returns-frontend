@@ -31,13 +31,13 @@ import play.api.mvc.Request
 import play.api.test.FakeRequest
 import services.SessionService
 import uk.gov.hmrc.http.cache.client.{CacheMap, ShortLivedCache}
-import uk.gov.hmrc.play.http.HeaderCarrier
-import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.play.test.UnitSpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.logging.SessionId
 
 class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach with OneAppPerSuite with ERSFakeApplicationConfig {
 
@@ -63,7 +63,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     "saves entry to shortLivedCache" in {
       val altAmends = AltAmends(Option("0"), Option("0"), Option("0"), Option("0"), Option("0"))
       when(
-        mockShortLivedCache.cache[AltAmends](anyString(), anyString(), any[AltAmends]())(any(), any())
+        mockShortLivedCache.cache[AltAmends](anyString(), anyString(), any[AltAmends]())(any(), any(), any())
       ).thenReturn(
         Future.successful(mock[CacheMap])
       )
@@ -74,7 +74,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     "saves entry to shortLivedCache by given key and body" in {
       val altAmends = AltAmends(Option("0"), Option("0"), Option("0"), Option("0"), Option("0"))
       when(
-        mockShortLivedCache.cache[AltAmends](anyString(), anyString(), any[AltAmends]())(any(), any())
+        mockShortLivedCache.cache[AltAmends](anyString(), anyString(), any[AltAmends]())(any(), any(), any())
       ).thenReturn(
         Future.successful(mock[CacheMap])
       )
@@ -89,7 +89,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
     "return required value from cache if no cacheId is given" in {
       val altAmends = AltAmends(Option("0"), Option("0"), Option("0"), Option("0"), Option("0"))
       when(
-        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
+        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any(), any())
       ).thenReturn(
         Future.successful(
           Some(Json.toJson(altAmends))
@@ -101,7 +101,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
     "throw NoSuchElementException if value is not found in cache" in {
       when(
-        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
+        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any(), any())
       ).thenReturn(
         Future.failed(new NoSuchElementException)
       )
@@ -112,7 +112,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
     "throw Exception if an exception occurs" in {
       when(
-        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any())
+        mockShortLivedCache.fetchAndGetEntry[JsValue](anyString(), anyString())(any(), any(), any())
       ).thenReturn(
         Future.failed(new RuntimeException)
       )
@@ -148,7 +148,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
     "return value from cache if it exists" in {
       when(
-        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any())
+        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any(), any())
       ).thenReturn(
         Future.successful(Some(""))
       )
@@ -158,7 +158,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
     "throw NoSuchElementException if value doesn't exist" in {
       when(
-        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any())
+        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any(), any())
       ).thenReturn(
         Future.failed(new NoSuchElementException)
       )
@@ -169,7 +169,7 @@ class CacheUtilSpec extends UnitSpec with MockitoSugar with BeforeAndAfterEach w
 
     "throw Exception if exception occurs" in {
       when(
-        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any())
+        mockShortLivedCache.fetchAndGetEntry[String](anyString, anyString())(any(), any(), any())
       ).thenReturn(
         Future.failed(new RuntimeException)
       )

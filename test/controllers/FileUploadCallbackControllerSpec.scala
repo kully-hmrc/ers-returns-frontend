@@ -32,10 +32,10 @@ import play.api.{Application, Configuration}
 import services.SessionService
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 class FileUploadCallbackControllerSpec extends PlaySpec with MockitoSugar with ERSFakeApplicationConfig with OneAppPerSuite {
 

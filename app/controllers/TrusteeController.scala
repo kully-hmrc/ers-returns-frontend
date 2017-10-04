@@ -24,10 +24,10 @@ import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
 import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 object TrusteeController extends TrusteeController {
   override val cacheUtil: CacheUtil = CacheUtil

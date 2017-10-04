@@ -26,13 +26,13 @@ import play.api.i18n.Messages
 import play.api.libs.json.Json
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.auth.{AllowAll, AuthContext}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 import config._
 import scala.concurrent.Future
 import play.api.Play.current
 import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
+import uk.gov.hmrc.http.HeaderCarrier
 
 object ReturnServiceController extends ReturnServiceController {
   override val cacheUtil: CacheUtil = CacheUtil

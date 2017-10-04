@@ -26,11 +26,11 @@ import play.api.{Configuration, Logger, Play}
 import services.SessionService
 import services.pdf.{ApachePdfContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait PdfGenerationController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil

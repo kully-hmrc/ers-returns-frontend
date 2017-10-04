@@ -29,10 +29,10 @@ import play.api.i18n.Messages.Implicits._
 import play.api.mvc.{Request, Result}
 import services.audit.AuditEvents
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, ExternalUrls, _}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 object ConfirmationPageController extends ConfirmationPageController {
   override val cacheUtil: CacheUtil = CacheUtil
