@@ -24,7 +24,7 @@ import play.api.mvc.Action
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.Actions
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.logging.SessionId
+import uk.gov.hmrc.http.logging.SessionId
 
 trait CsvFileUploadCallbackController extends FrontendController with Actions with ErsConstants {
   val sessionService: SessionService

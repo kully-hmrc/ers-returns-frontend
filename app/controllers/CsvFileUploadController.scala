@@ -28,10 +28,10 @@ import play.twirl.api.Html
 import services.SessionService
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait CsvFileUploadController extends FrontendController with Authenticator {
 
