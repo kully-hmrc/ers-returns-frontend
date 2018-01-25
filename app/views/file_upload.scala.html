@@ -13,6 +13,9 @@
 	@reference()
 	<p class="font-xsmall"><a href="@routes.CheckFileTypeController.checkFileTypePage" class="link-back">@Html(Messages("ers.back"))</a></p>
 	@header(Messages("file_upload.title"))
+	<div class="panel-indent">
+		<p>@Html(Messages("file_upload.size_warning"))</p>
+	</div>
 	<div id="errors" class="validation-summary visibility" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
 		<h1 class="heading-medium error-summary-heading" id="error-summary-heading">
 			@Html(Messages("validation.summary.heading"))
