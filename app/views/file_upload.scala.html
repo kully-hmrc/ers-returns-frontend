@@ -13,9 +13,7 @@
 	@reference()
 	<p class="font-xsmall"><a href="@routes.CheckFileTypeController.checkFileTypePage" class="link-back">@Html(Messages("ers.back"))</a></p>
 	@header(Messages("file_upload.title"))
-	<div class="panel-indent">
-		<p>@Html(Messages("file_upload.size_warning"))</p>
-	</div>
+
 	<div id="errors" class="validation-summary visibility" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
 		<h1 class="heading-medium error-summary-heading" id="error-summary-heading">
 			@Html(Messages("validation.summary.heading"))
@@ -23,6 +21,9 @@
 		<ul class="error-summary-list">
 			<li class="validation-summary-message"><a href="#fileToUpload" data-focuses="fileToUpload">@Messages("csv_file_upload.summary_error")</a></li>
 		</ul>
+	</div>
+	<div class="panel-indent">
+		<p>@Html(Messages("file_upload.size_warning"))</p>
 	</div>
 	<label for="fileToUpload" class="visuallyhidden">
 		<span>@Html(Messages("file_upload.title"))</span>
