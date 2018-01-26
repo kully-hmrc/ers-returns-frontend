@@ -106,21 +106,21 @@ ers_start.large_files=If you have a .ods file that’s larger than 10MB or a .cs
 ers_start.help=The person acting as the company secretary must have approved this return and must agree to any declaration you make within this service.
 
 ers_start.you_need=Depending on your circumstances, you may need:
-ers_start.csop.bullet_1=to <a href="https://www.gov.uk/government/publications/company-share-option-plan-end-of-year-return-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.csop.bullet_1=to record any events related to the scheme in an ODS or CSV spreadsheet
 ers_start.csop.bullet_2=the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
 ers_start.csop.bullet_3=to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
 ers_start.csop.intro_para_2=If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.emi.bullet_1=to <a href="https://www.gov.uk/government/publications/enterprise-management-incentives-end-of-year-template">record any events related to the scheme or arrangement in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.emi.bullet_1=to record any events related to the scheme in an ODS or CSV spreadsheet
 ers_start.emi.bullet_2=the employer company’s name and address, Company Registration Number and Corporation Tax reference (and those of any qualifying subsidiary companies)
 ers_start.emi.intro_para_2=If relevant, qualifying subsidiary company details can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.saye.bullet_1=to <a href="https://www.gov.uk/government/publications/save-as-you-earn-end-of-year-template">record any events related to the scheme in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.saye.bullet_1=to record any events related to the scheme in an ODS or CSV spreadsheet
 ers_start.saye.bullet_2=the scheme organiser’s company name and address, Company Registration Number and Corporation Tax reference (and those of any participating group scheme members)
 ers_start.saye.bullet_3=to know any alterations made to key features of the scheme and know whether there’s been a variation in the share capital
 ers_start.saye.intro_para_2=If relevant, group scheme member details can be entered manually or uploaded in a .csv file (as appropriate).
 
-ers_start.sip.bullet_1=to <a href="https://www.gov.uk/government/publications/share-incentive-plan-end-of-year-template">record any events related to the plan in an OpenDocument Spreadsheet (.ods)</a> or comma separated values (.csv) file
+ers_start.sip.bullet_1=to record any events related to the scheme in an ODS or CSV spreadsheet
 ers_start.sip.bullet_2=the establishing company’s name and address, Company Registration Number and Corporation Tax reference (and those of any participating group plan members)
 ers_start.sip.bullet_3=the name and address of any trustees
 ers_start.sip.bullet_4=to know any alterations made to key features of the plan
