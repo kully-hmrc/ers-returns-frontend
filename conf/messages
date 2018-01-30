@@ -135,16 +135,16 @@ ers_start.cant_use = You can’t use this service if you have a:
 ers_start.cant_use_bullet_1 = ODS file that’s larger than 10MB
 ers_start.cant_use_bullet_2 = CSV file that’s larger than 100MB
 
-ers_start.ifrelevant=If relevant:
-ers_start.relevant_bullet_1=.ods files used to record events must be no larger than 10MB
-ers_start.relevant_bullet_2=.csv files used to record events must be no larger than 100MB
-ers_start.csop.relevant_bullet_3=group scheme member details can be entered manually or uploaded in a .csv file
-ers_start.emi.relevant_bullet_3=qualifying subsidiary company details can be entered manually or uploaded in a .csv file
-ers_start.saye.relevant_bullet_3=group scheme member details can be entered manually or uploaded in a .csv file
-ers_start.sip.relevant_bullet_3=group plan member details can be entered manually or uploaded in a .csv file
-ers_start.other.relevant_bullet_3=the details of any other companies covered by this return can be entered manually or uploaded in a .csv file
-ers_start.filesize=Email <a href="mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we’ll help you with your submission.
-ers_start.start_now_button=Start now
+ers_start.ifrelevant = If relevant:
+ers_start.relevant_bullet_1 = .ods files used to record events must be no larger than 10MB
+ers_start.relevant_bullet_2 = .csv files used to record events must be no larger than 100MB
+ers_start.csop.relevant_bullet_3 = group scheme member details can be entered manually or uploaded in a .csv file
+ers_start.emi.relevant_bullet_3 = qualifying subsidiary company details can be entered manually or uploaded in a .csv file
+ers_start.saye.relevant_bullet_3 = group scheme member details can be entered manually or uploaded in a .csv file
+ers_start.sip.relevant_bullet_3 = group plan member details can be entered manually or uploaded in a .csv file
+ers_start.other.relevant_bullet_3 = the details of any other companies covered by this return can be entered manually or uploaded in a .csv file
+ers_start.filesize = Email <a href="mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we’ll help you with your submission.
+ers_start.start_now_button = Start now
 
 ers_choose.title = Reportable events
 ers_choose.csop.question = Have options been granted, exercised, released (including exchanges), lapsed or cancelled during the tax year?
@@ -449,10 +449,10 @@ file_upload_errors.other.guidance = <a href = "https://www.gov.uk/government/pub
 
 ers_upload_successful.page_title = Successful upload
 
-csv_file_upload.file_title=Upload your CSV file
-csv_file_upload.first_file_title=Upload your first CSV file
-csv_file_upload.next_file_title=Upload your next CSV file
-CSV_file_upload.size_warning=If your file is larger than 100MB, you can’t use this service. Email <a href="mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we’ll help you with your submission.
+csv_file_upload.file_title = Upload your CSV file
+csv_file_upload.first_file_title = Upload your first CSV file
+csv_file_upload.next_file_title = Upload your next CSV file
+CSV_file_upload.size_warning = If your file is larger than 100MB, you can’t use this service. Email <a href="mailto:shareschemes@hmrc.gsi.gov.uk">shareschemes@hmrc.gsi.gov.uk</a> and we’ll help you with your submission.
 
 csv_file_upload.contact_us = Contact us on our feedback page
 csv_file_upload.file_size = if any of your files are larger than 100MB.
