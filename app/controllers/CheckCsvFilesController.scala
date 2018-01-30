@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,10 @@ import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
 import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 object CheckCsvFilesController extends CheckCsvFilesController {
   override val cacheUtil: CacheUtil = CacheUtil
@@ -45,7 +45,7 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
 
   def showCheckCsvFilesPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeType = request.session.get(screenSchemeInfo).get.split(" - ")(1).toUpperCase()
-    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
 
     val csvFilesList: List[CsvFiles] = PageBuilder.getCsvFilesList(schemeType)
     cacheUtil.fetch[CsvFilesCallbackList](CacheUtil.CHECK_CSV_FILES, schemeRef).map { cacheData =>
@@ -92,7 +92,7 @@ trait CheckCsvFilesController extends ERSReturnBaseController with Authenticator
       reloadWithError()
     }
     else {
-      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
       cacheUtil.cache(CacheUtil.CHECK_CSV_FILES, CsvFilesCallbackList(csvFilesCallbackList), schemeRef).map { data =>
         Redirect(routes.CsvFileUploadController.uploadFilePage())
       }.recover {

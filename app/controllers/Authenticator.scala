@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@ import play.api.mvc._
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.play.frontend.auth._
 import uk.gov.hmrc.play.frontend.auth.connectors.domain.{Accounts, EpayeAccount}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.CacheUtil
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.HeaderCarrierConverter
+
 
 trait Authenticator extends Actions with ErsConstants {
   private val cacheUtil: CacheUtil = CacheUtil
@@ -37,7 +39,7 @@ trait Authenticator extends Actions with ErsConstants {
     AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
       implicit user =>
         implicit request => {
-          implicit val hc = HeaderCarrier.fromHeadersAndSession(request.headers, Some(request.session))
+          implicit val hc = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
           FilterAgentsWrapperAsync(user, body)
         }
     }
@@ -47,7 +49,7 @@ trait Authenticator extends Actions with ErsConstants {
     AuthorisedFor(ERSRegime, pageVisibility = GGConfidence).async {
       implicit user =>
         implicit request =>
-          implicit val hc = HeaderCarrier.fromHeadersAndSession(request.headers, Some(request.session))
+          implicit val hc = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
           FilterAgentsWrapper(user, body)
     }
   }
@@ -56,7 +58,7 @@ trait Authenticator extends Actions with ErsConstants {
     implicit val formatRSParams = Json.format[ErsMetaData]
     val defined = authContext.principal.accounts.agent.isDefined
     if (defined) {
-      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
       cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, schemeRef).map { all =>
         body(delegationModelUser(all, authContext: AuthContext))(request)
       }
@@ -70,7 +72,7 @@ trait Authenticator extends Actions with ErsConstants {
     implicit val formatRSParams = Json.format[ErsMetaData]
     val defined = authContext.principal.accounts.agent.isDefined
     if (defined) {
-      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+      val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
       cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, schemeRef).flatMap { all =>
         body(delegationModelUser(all, authContext: AuthContext))(request)
       }

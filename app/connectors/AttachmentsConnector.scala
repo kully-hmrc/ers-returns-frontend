@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,11 +23,12 @@ import controllers.routes
 import play.api.Logger
 import play.api.mvc.Request
 import uk.gov.hmrc.play.config.ServicesConfig
-import uk.gov.hmrc.play.http.logging.SessionId
 import uk.gov.hmrc.play.http._
 import uk.gov.hmrc.play.partials.HeaderCarrierForPartials
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{HeaderCarrier, HttpGet, HttpPost, HttpReads, HttpResponse, Upstream4xxResponse, Upstream5xxResponse}
+import uk.gov.hmrc.play.http.logging.MdcLoggingExecutionContext
 
 trait UploadConfig extends ServicesConfig {
 
@@ -86,7 +87,7 @@ trait AttachmentsConnector {
     Logger.warn("Connecting to attachments SessionId before Get /uploader --> " + hc.sessionId)
     val newHc = hc.withExtraHeaders(("x-ersfe-session-id",hc.sessionId.map(_.toString).getOrElse("Not Provided")))
     Logger.warn(s"""Headers carrier now: ${newHc}""")
-    http.GET(uploadurl)(handleResponse(uploadurl),newHc)
+    http.GET(uploadurl)(handleResponse(uploadurl),newHc, MdcLoggingExecutionContext.fromLoggingDetails(newHc))
   }
 
   def getCsvFileUploadPartial()(implicit request: Request[_], hc: HeaderCarrier): Future[HttpResponse] = {
@@ -94,7 +95,7 @@ trait AttachmentsConnector {
     Logger.warn("Connecting to attachments SessionId before Get /uploader --> " + hc.sessionId)
     val newHc = hc.withExtraHeaders(("x-ersfe-session-id",hc.sessionId.map(_.toString).getOrElse("Not Provided")))
     Logger.warn(s"""Headers carrier now: ${newHc}""")
-    http.GET(uploadurl)(handleResponse(uploadurl),newHc)
+    http.GET(uploadurl)(handleResponse(uploadurl),newHc, MdcLoggingExecutionContext.fromLoggingDetails(newHc))
   }
 
   private def failureMessage(status: Int, url: String): String = s" returned status $status on URL: $url"

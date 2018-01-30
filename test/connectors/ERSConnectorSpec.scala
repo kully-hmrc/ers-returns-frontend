@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,11 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.domain.EmpRef
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.{HttpGet, HttpPost, HttpResponse}
 import uk.gov.hmrc.play.test.UnitSpec
 import utils.{ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HttpGet, HttpPost, HttpResponse }
 
 class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite with ERSFakeApplicationConfig {
 
@@ -85,7 +85,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
     "successful validation" in {
       reset(mockHttp)
       when(
-        mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
+        mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())
       ).thenReturn(
         Future.successful(HttpResponse(OK))
       )
@@ -97,7 +97,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
     "validation fails" in {
       reset(mockHttp)
       when(
-        mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
+        mockHttp.POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())
       ).thenReturn(
         Future.successful(HttpResponse(INTERNAL_SERVER_ERROR))
       )
@@ -110,7 +110,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
       reset(mockHttp)
       doThrow(
         new RuntimeException
-      ).when(mockHttp).POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
+      ).when(mockHttp).POST[ValidatorData, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())
 
       intercept[Exception] {
         ersConnectorUnderTest.validateFileData(callbackData, schemeInfo1)
@@ -147,7 +147,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
     "successful retrieving" in {
       reset(mockHttp)
       when(
-        mockHttp.POST[SchemeInfo, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
+        mockHttp.POST[SchemeInfo, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())
       ).thenReturn(
         Future.successful(HttpResponse(OK))
       )
@@ -159,7 +159,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
     "failed retrieving" in {
       reset(mockHttp)
       when(
-        mockHttp.POST[SchemeInfo, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
+        mockHttp.POST[SchemeInfo, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())
       ).thenReturn(
         Future.successful(HttpResponse(INTERNAL_SERVER_ERROR))
       )
@@ -171,7 +171,7 @@ class ErsConnectorSpec extends UnitSpec with MockitoSugar with OneAppPerSuite wi
     "throws exception" in {
       reset(mockHttp)
       when(
-        mockHttp.POST[SchemeInfo, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any())
+        mockHttp.POST[SchemeInfo, HttpResponse](Matchers.any(), Matchers.any(), Matchers.any())(Matchers.any(), Matchers.any(), Matchers.any(), Matchers.any())
       ).thenReturn(
         Future.failed(new RuntimeException)
       )

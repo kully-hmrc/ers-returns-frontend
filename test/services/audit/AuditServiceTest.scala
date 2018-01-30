@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ package services
 import org.scalatest.{Matchers, WordSpec}
 import play.api.test.FakeRequest
 import services.audit.{AuditService, AuditServiceConnector}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.model.DataEvent
+import uk.gov.hmrc.http.HeaderCarrier
 
 class AuditServiceTest   extends WordSpec with Matchers {
   "auditer should send message" in {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,15 @@
 
 package connectors
 
-import uk.gov.hmrc.play.audit.http.config.LoadAuditingConfig
 import uk.gov.hmrc.play.config.{RunMode, AppName}
-import uk.gov.hmrc.play.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext
 
 
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
-import uk.gov.hmrc.play.audit.model.AuditEvent
+import uk.gov.hmrc.play.audit.model.DataEvent
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.frontend.config.LoadAuditingConfig
 
 
 
@@ -36,7 +36,7 @@ trait CustomAuditConnector {
 
   val auditConnector: AuditConnector
 
-  def sendEvent(event: AuditEvent)(implicit hc: HeaderCarrier = HeaderCarrier(), ec: ExecutionContext): Unit =
+  def sendEvent(event: DataEvent)(implicit hc: HeaderCarrier = HeaderCarrier(), ec: ExecutionContext): Unit =
     auditConnector.sendEvent(event)
 }
 

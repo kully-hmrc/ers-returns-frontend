@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@ import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
 import play.api.mvc.{Action, AnyContent, Request, Result}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils._
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 object ReportableEventsController extends ReportableEventsController {
   override val cacheUtil: CacheUtil = CacheUtil
@@ -46,7 +46,7 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
   }
 
   def updateErsMetaData()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Object] = {
-    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     ersConnector.connectToEtmpSapRequest(schemeRef).flatMap { sapNumber =>
       cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, schemeRef).map { metaData =>
         val ersMetaData = ErsMetaData(
@@ -67,7 +67,7 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
   }
 
   def showReportableEventsPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     cacheUtil.fetch[ReportableEvents](CacheUtil.reportableEvents, schemeRef).map { activity =>
       Ok(views.html.reportable_events(activity.isNilReturn, RsFormMappings.chooseForm.fill(activity)))
     } recover {
@@ -93,7 +93,7 @@ trait ReportableEventsController extends ERSReturnBaseController with Authentica
         Future.successful(Ok(views.html.reportable_events(Some(""), errors)))
       },
       formData => {
-        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
         cacheUtil.cache(CacheUtil.reportableEvents, formData, schemeRef).map { _ =>
           if (formData.isNilReturn.get == PageBuilder.OPTION_NIL_RETURN) {
             Redirect(routes.SchemeOrganiserController.schemeOrganiserPage())

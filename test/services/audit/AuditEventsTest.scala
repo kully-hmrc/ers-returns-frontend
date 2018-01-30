@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import org.joda.time.DateTime
 import org.scalatest.{Matchers, WordSpec}
 import play.api.test.FakeRequest
 import services.audit.{AuditEvents, AuditService, AuditServiceConnector}
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.model.DataEvent
 import scala.collection.mutable.ListBuffer
+import uk.gov.hmrc.http.HeaderCarrier
 
 class AuditEventsTest    extends WordSpec with Matchers {
 

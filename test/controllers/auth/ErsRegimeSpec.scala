@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,10 +34,10 @@ import uk.gov.hmrc.play.frontend.auth.Actions
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.frontend.auth.connectors.domain._
 import uk.gov.hmrc.play.frontend.controller.FrontendController
-import uk.gov.hmrc.play.http.SessionKeys
 import utils.ERSFakeApplicationConfig
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.SessionKeys
 
 class ErsRegimeSpec extends PlaySpec with OneServerPerSuite with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach {
 
@@ -94,7 +94,7 @@ class ErsRegimeSpec extends PlaySpec with OneServerPerSuite with ERSFakeApplicat
       "with a psa account" must {
         "allow the user access to the page" in {
           lazy val newAuthority = authority.copy(uri = userId, accounts = Accounts(sa = saAccount, vat = vatAccount, epaye = epayeAccount))
-          when(mockAuthConnector.currentAuthority(Matchers.any())) thenReturn Future.successful(Some(newAuthority))
+          when(mockAuthConnector.currentAuthority(Matchers.any(),Matchers.any())) thenReturn Future.successful(Some(newAuthority))
           lazy val result = TestController.testRoute.apply(request)
           status(result) must be(OK)
         }
@@ -103,7 +103,7 @@ class ErsRegimeSpec extends PlaySpec with OneServerPerSuite with ERSFakeApplicat
       "without a psa account" must {
         "redirect the user to the unauthorised page" in {
           lazy val newAuthority = authority.copy(uri = userId, accounts = Accounts(org = orgAccount))
-          when(mockAuthConnector.currentAuthority(Matchers.any())) thenReturn Future.successful(Some(newAuthority))
+          when(mockAuthConnector.currentAuthority(Matchers.any(),Matchers.any())) thenReturn Future.successful(Some(newAuthority))
           lazy val result = TestController.testRoute.apply(request)
           status(result) must be(SEE_OTHER)
           redirectLocation(result) must be(Some("/submit-your-ers-annual-return/unauthorised"))

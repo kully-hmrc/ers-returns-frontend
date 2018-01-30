@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,11 +38,11 @@ import services.SessionService
 import uk.gov.hmrc.http.cache.client.CacheMap
 import uk.gov.hmrc.play.frontend.auth.AuthContext
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
-import uk.gov.hmrc.play.http.{HeaderCarrier, HttpResponse}
 import utils.{CacheUtil, ERSFakeApplicationConfig, Fixtures}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
 
 class FileUploadControllerSpec extends PlaySpec with OneAppPerSuite
   with MockitoSugar with ERSUsers with ErsConstants with LegacyI18nSupport
@@ -370,7 +370,7 @@ class FileUploadControllerSpec extends PlaySpec with OneAppPerSuite
     Matchers.any(), Matchers.any())).thenReturn(Future.successful(CheckFileType(Some("csv"))))
   when(mockCacheUtil.fetchOption[CsvFilesCallbackList](Matchers.any[String](), Matchers.any[String]())(Matchers.any(),
     Matchers.any(), Matchers.any())).thenReturn(Future.successful(Some(csvCallBackList)))
-  when(mockCacheUtil.getSchemeRefFromScreenSchemeInfo(anyString())).thenReturn("")
+  when(mockCacheUtil.getSchemeRefFromScreenSchemeInfo(Some(anyString()))).thenReturn("")
 
   object TestFileUploadController extends FileUploadController {
     val attachmentsConnector = mockAttachmentsConnector

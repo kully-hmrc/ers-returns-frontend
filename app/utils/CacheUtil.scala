@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@ import play.api.libs.json.JsValue
 import play.api.mvc.Request
 import services.SessionService
 import uk.gov.hmrc.http.cache.client.{CacheMap, ShortLivedCache}
-import uk.gov.hmrc.play.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
+import uk.gov.hmrc.http.HeaderCarrier
 
 object CacheUtil extends CacheUtil {
   def shortLivedCache = config.ShortLivedCache
@@ -246,10 +246,14 @@ trait CacheUtil {
     hc.sessionId.getOrElse(throw new RuntimeException("")).value
   }
 
-  def getSchemeRefFromScreenSchemeInfo(screenSchemeInfo:String):String = {
+  def getSchemeRefFromScreenSchemeInfo(screenSchemeInfo:Option[String]):String = {
     Logger.warn(s"CacheUtil: form getSchemeRefFromScreenSchemeInfo : ${screenSchemeInfo}.")
-    screenSchemeInfo.split(" - ").init.last
+    val schemeInfo = screenSchemeInfo.getOrElse("").split(" - ").init
+    if (schemeInfo.length == 0)
+      Logger.error(s"CacheUtil: screenSchemeInfo not in valid format : ${screenSchemeInfo}.")
+    schemeInfo.last
   }
+
   def isNilReturn(nilReturn:String) :Boolean = (nilReturn == PageBuilder.OPTION_NIL_RETURN)
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@ import play.api.i18n.Messages
 import play.api.i18n.Messages.Implicits._
 import play.api.mvc._
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
 
 import scala.concurrent._
+import uk.gov.hmrc.http.HeaderCarrier
 
 object AltAmendsController extends AltAmendsController {
   override val cacheUtil: CacheUtil = CacheUtil
@@ -45,7 +45,7 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
   }
 
   def showAltActivityPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     cacheUtil.fetch[GroupSchemeInfo](CacheUtil.GROUP_SCHEME_CACHE_CONTROLLER, schemeRef).flatMap { groupSchemeActivity =>
       cacheUtil.fetch[AltAmendsActivity](CacheUtil.altAmendsActivity, schemeRef).map { altAmendsActivity =>
         Ok(views.html.alterations_activity(altAmendsActivity.altActivity,
@@ -73,7 +73,7 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
 
   def showAltActivitySelected()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     val schemeRef = try {
-      cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+      cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     } catch {
       case _: Throwable => return Future(getGlobalErrorPage)
     }
@@ -104,7 +104,7 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
   }
 
   def showAltAmendsPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
-    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     cacheUtil.fetch[AltAmends](CacheUtil.ALT_AMENDS_CACHE_CONTROLLER, schemeRef).map { altAmends =>
       Ok(views.html.alterations_amends(altAmends))
     } recover {
@@ -133,7 +133,7 @@ trait AltAmendsController extends ERSReturnBaseController with Authenticator wit
           if (formData.altAmendsOther != None) formData.altAmendsOther else Option("0")
         )
         val schemeId = request.session.get(screenSchemeInfo).get.split(" - ").head
-        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
         cacheUtil.cache(CacheUtil.ALT_AMENDS_CACHE_CONTROLLER, altAmends, schemeRef).flatMap { all =>
           if (formData.altAmendsTerms == None
             && formData.altAmendsEligibility == None

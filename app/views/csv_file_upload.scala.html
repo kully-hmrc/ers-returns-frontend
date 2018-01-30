@@ -34,6 +34,7 @@
     } else {
         @header(Messages("csv_file_upload.next_file_title"))
     }
+
     <div id="errors" class="validation-summary visibility" role="group" aria-labelledby="error-summary-heading" tabindex="-1">
         <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
             @Html(Messages("validation.summary.heading"))
@@ -49,6 +50,7 @@
             @Html(Messages("csv_file_upload.files_to_upload_title"))
         }
     </h2>
+
     <p>
     @for(file <- csvFilesCallback if (file.callbackData.isDefined)) {
         <span class="uploaded files" data-file-name="@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span> @Messages("ers.uploaded")<br>
@@ -57,6 +59,11 @@
         <span id="@file.fileId" class="notUploaded files" data-file-name="@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".file_name"))">@Messages(getPageElement(schemeId,PAGE_CHECK_CSV_FILE,file.fileId+".description"))</span><br>
     }
     </p>
+
+    <div class="panel-indent">
+        <p>@Html(Messages("CSV_file_upload.size_warning"))</p>
+    </div>
+
     <label for="fileToUpload" class="visuallyhidden">
         <p>@if(csvFilesCallback.count(_.callbackData.isDefined) == 0) {
                 @if(csvFilesCallback.map(_.fileId).size == 1) {

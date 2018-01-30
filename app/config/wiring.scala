@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,10 @@ import play.api.Play
 import uk.gov.hmrc.crypto.ApplicationCrypto
 import uk.gov.hmrc.http.cache.client.{SessionCache, ShortLivedCache, ShortLivedHttpCaching}
 import uk.gov.hmrc.play.audit.http.HttpAuditing
-import uk.gov.hmrc.play.audit.http.config.LoadAuditingConfig
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.config.{AppName, RunMode, ServicesConfig}
 import uk.gov.hmrc.play.frontend.auth.connectors.AuthConnector
 import uk.gov.hmrc.play.frontend.filters.SessionCookieCryptoFilter
-import uk.gov.hmrc.play.http.HeaderCarrier
 import uk.gov.hmrc.play.http.ws._
 import uk.gov.hmrc.play.partials.CachedStaticHtmlPartialRetriever
 import uk.gov.hmrc.play.partials.FormPartialRetriever
@@ -33,18 +31,22 @@ import uk.gov.hmrc.play.partials.HeaderCarrierForPartialsConverter
 import play.Logger
 import play.api.Play.current
 import play.api.libs.ws.WSRequest
+import uk.gov.hmrc.http._
 
 import scala.concurrent.duration._
+import uk.gov.hmrc.play.frontend.config.LoadAuditingConfig
+
 
 
 object ERSFileValidatorAuditConnector extends AuditConnector with AppName with RunMode {
   override lazy val auditingConfig = LoadAuditingConfig(s"$env.auditing")
 }
 
-object WSHttp extends WSGet with WSPut with WSPost with WSDelete with WSPatch with AppName with RunMode with HttpAuditing {
+trait WSHttp extends WSGet with HttpGet with HttpPatch with HttpPut with HttpDelete with HttpPost with WSPut with WSPost with WSDelete with WSPatch with AppName with RunMode with HttpAuditing {
   override val hooks = Seq(AuditingHook)
   override val auditConnector = ERSFileValidatorAuditConnector
 }
+object WSHttp extends WSHttp
 
 object WSHttpWithCustomTimeOut extends WSHttp with AppName with RunMode  with HttpAuditing {
   override val hooks = Seq(AuditingHook)

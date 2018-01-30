@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,10 +29,10 @@ import play.api.i18n.Messages.Implicits._
 import play.api.mvc.{Request, Result}
 import services.audit.AuditEvents
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, ExternalUrls, _}
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 object ConfirmationPageController extends ConfirmationPageController {
   override val cacheUtil: CacheUtil = CacheUtil
@@ -56,7 +56,7 @@ trait ConfirmationPageController extends ERSReturnBaseController with Authentica
 
   def showConfirmationPage()(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
     if (request.session.get(screenSchemeInfo).isDefined == false) Logger.error(s"Session doesn't contain scheme info: ${request.session}")
-    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val schemeRef: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     val sessionBundelRef: String = request.session.get("bundelRef").getOrElse("")
     val sessionDateTimeSubmitted: String = request.session.get("dateTimeSubmitted").getOrElse("")
     if (sessionBundelRef == "") {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ import play.api.{Configuration, Logger, Play}
 import services.SessionService
 import services.pdf.{ApachePdfContentsStreamer, ErsReceiptPdfBuilderService}
 import uk.gov.hmrc.play.frontend.auth.AuthContext
-import uk.gov.hmrc.play.http.HeaderCarrier
 import utils.{CacheUtil, PageBuilder}
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 trait PdfGenerationController extends ERSReturnBaseController with Authenticator {
   val cacheUtil: CacheUtil
@@ -46,13 +46,13 @@ trait PdfGenerationController extends ERSReturnBaseController with Authenticator
   def generatePdf(bundle: String, dateSubmitted: String)(implicit authContext: AuthContext, request: Request[AnyRef], hc: HeaderCarrier): Future[Result] = {
 
     Logger.debug("ers returns frontend getting into the controller to generate the pdf")
-    val ref: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+    val ref: String = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
     val cache: Future[ErsMetaData] = cacheUtil.fetch[ErsMetaData](CacheUtil.ersMetaData, ref)
     cache.flatMap { all =>
       Logger.debug("ers returns frontend pdf generation: got the metadata")
       cacheUtil.getAllData(bundle, all).flatMap { alldata =>
         Logger.debug("ers returns frontend generation: got the cache map")
-        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo).get)
+        val schemeRef = cacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get(screenSchemeInfo))
 
         cacheUtil.fetchAll(schemeRef).map { all =>
           val filesUploaded: ListBuffer[String] = ListBuffer()
