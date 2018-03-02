@@ -726,3 +726,10 @@ ers_trustee_summary.altamends.section = Alterations made to this plan
 ers.global_errors.message = Sorry, there’s a technical problem and you can’t use the service at the moment. Please try again later.
 ers.global_errors.heading = Service unavailable
 ers.global_errors.title = Service unavailable
+
+
+#********************************************************************
+# ur banner text
+#********************************************************************
+urbanner.message.text = Help improve digital services by joining the HMRC user panel (opens in new window)
+urbanner.message.reject = No thanks
