@@ -8,7 +8,7 @@
     getHelpForm: Html  = HtmlFormat.empty,
     linkElement : Option[Html] = None,
     scriptElement: Option[Html] = None,
-    isUserResearchBannerVisible:Boolean = true
+    isUserResearchBannerVisible:Boolean = false
 )(mainContent: Html = HtmlFormat.empty)(implicit request: Request[_], context: config.ErsContext)
 
 @import layouts.{govuk_template => hmrcGovUkTemplate}
@@ -39,11 +39,12 @@
     true
 }
 
-@afterHeader = {
+@afterHeader = @{
     if(isUserResearchBannerVisible && urToggle) {
             helpers.fullWidthBanner(
                 Some(helpers.fullWidthBannerContentUr(
-                    messages("urbanner.message.text"),
+                    Messages("urbanner.message.text"),
+                     applicationConfig.urBannerLink,
                     externalLinkWarning = None
                 ))
             )

@@ -39,6 +39,8 @@ trait ApplicationConfig {
   val callbackCsvPageUrl: String
   val enableRetrieveSubmissionData: Boolean
   val sentViaSchedulerNoOfRowsLimit: Int
+  val urBannerToggle:Boolean
+  val urBannerLink: String
 
   val ggSignInUrl: String
 }
@@ -67,6 +69,9 @@ object ApplicationConfig extends ApplicationConfig with ServicesConfig {
   override lazy val successCsvPageUrl: String = frontendHost + loadConfig(s"$env.microservice.services.ers-returns-frontend.csv-success-page")
   override lazy val failureCsvPageUrl: String = frontendHost + loadConfig(s"$env.microservice.services.ers-returns-frontend.csv-failure-page")
   override lazy val callbackCsvPageUrl: String = platformHostUrl + loadConfig(s"$env.microservice.services.ers-returns-frontend.csv-callback-page")
+
+  override lazy val urBannerToggle:Boolean = loadConfig("urBanner.toggle").toBoolean
+  override lazy val urBannerLink: String = loadConfig("urBanner.link")
 
   override val ggSignInUrl: String = configuration.getString(s"$env.government-gateway-sign-in.host").getOrElse("")
 
