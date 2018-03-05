@@ -17,6 +17,7 @@
 package controllers
 
 import akka.stream.Materializer
+import config.ErsContextImpl
 import connectors.ErsConnector
 import metrics.Metrics
 import models.{ErsMetaData, ErsSummary, SchemeInfo}
@@ -38,7 +39,8 @@ import uk.gov.hmrc.play.test.UnitSpec
 import utils._
 
 import scala.concurrent.Future
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpResponse }
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import views.html.confirmation
 
 class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationConfig with MockitoSugar with BeforeAndAfterEach with OneAppPerSuite {
 
@@ -124,6 +126,15 @@ class ConfirmationPageControllerTest extends UnitSpec with ERSFakeApplicationCon
       val controllerUnderTest = buildFakeConfirmationPageController()
       val result = controllerUnderTest.confirmationPage().apply(Fixtures.buildFakeRequestWithSessionId("GET"))
       status(result) shouldBe Status.SEE_OTHER
+
+    }
+
+    "show user panel for confirmation page" in {
+      val controllerUnderTest = buildFakeConfirmationPageController()
+      val result = confirmation("", "", "", "")(Fixtures.buildFakeRequestWithSessionId("GET"), ErsContextImpl)
+      contentAsString(result)  should include("Help improve digital services by joining the HMRC user panel (opens in new window)")
+      contentAsString(result)  should include("No thanks")
+
     }
 
     "direct to ers errors page if bundle request throws exception" in {

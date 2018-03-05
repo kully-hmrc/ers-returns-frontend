@@ -7,7 +7,9 @@
     supportLinkEnabled: Boolean = true,
     getHelpForm: Html  = HtmlFormat.empty,
     linkElement : Option[Html] = None,
-    scriptElement: Option[Html] = None)(mainContent: Html = HtmlFormat.empty)(implicit request: Request[_], context: config.ErsContext)
+    scriptElement: Option[Html] = None,
+    isUserResearchBannerVisible:Boolean = false
+)(mainContent: Html = HtmlFormat.empty)(implicit request: Request[_], context: config.ErsContext)
 
 @import layouts.{govuk_template => hmrcGovUkTemplate}
 @import play.api.Play.current
@@ -33,8 +35,22 @@
 	    )
     }
 }
+@urToggle = @{
+    true
+}
 
-@afterHeader = {}
+@afterHeader = @{
+    if(isUserResearchBannerVisible && urToggle) {
+            helpers.fullWidthBanner(
+                Some(helpers.fullWidthBannerContentUr(
+                    Messages("urbanner.message.text"),
+                     applicationConfig.urBannerLink,
+                    externalLinkWarning = None
+                ))
+            )
+        }
+        else HtmlFormat.empty
+}
 
 @bodyEnd = {
     @uiLayouts.footer(
