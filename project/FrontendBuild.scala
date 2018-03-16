@@ -14,7 +14,7 @@ private object AppDependencies {
   private val playPartialVersion = "6.1.0"
   private val httpCachingVersion = "7.0.0"
   private val domainVersion = "4.1.0"
-  private val frontendBootstrapVersion = "8.8.0"
+  private val frontendBootstrapVersion = "8.19.0"
   private val hmrcTestVersion = "2.4.0"
   private val scalaTestVersion = "2.2.6"
   private val pegdownVersion = "1.6.0"
