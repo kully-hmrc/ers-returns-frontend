@@ -399,7 +399,6 @@ ers_summary_declaration.other.organiser = Company details
 
 ers_confirmation.page_title = Confirmation
 ers_confirmation.submitted = Your {0} annual return has been submitted
-ers_confirmation.tax_year = for tax year {0}
 ers_confirmation.date_and_time = Date and time submitted: {0}
 ers_confirmation.sub_heading = What next
 ers_confirmation.instructions = Allow 48 hours before you use HMRC Online services to check the status of your submission in Employment Related Securities (view schemes and arrangements).

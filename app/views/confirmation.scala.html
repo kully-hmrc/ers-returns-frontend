@@ -3,7 +3,6 @@
 @(dateSubmitted: String, bundle: String, taxYear: String, url: String)(implicit request: Request[AnyRef], context: config.ErsContext)
 @schemeId = @{request.session.get("screenSchemeInfo").get.split(" - ").head}
 @schemeRef = @{CacheUtil.getSchemeRefFromScreenSchemeInfo(request.session.get("screenSchemeInfo"))}
-@taxYearFull = @{request.session.get("screenSchemeInfo").get.split(" - ")(4)}
 
 @import play.api.Play.current
 @import play.api.i18n.Messages.Implicits._
@@ -17,7 +16,6 @@
 	<div class="success-banner"  id="confirmation-text-box">
 		<p>
 			<span class="heading-xlarge"><img src="assets/images/tick.png" alt="tick.">&nbsp;@Html(Messages("ers_confirmation.submitted",ContentUtil.getSchemeName(schemeId)))<br></span>
-			<span class="heading-large">@Html(Messages("ers_confirmation.tax_year",taxYearFull))</span>
 		</p>
 		<p class="font-medium">@Html(Messages("ers_confirmation.submission_ref"))<br>@bundle<br>@dateSubmitted</p>
 	</div>
